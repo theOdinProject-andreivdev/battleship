@@ -1,27 +1,30 @@
-const Plane = ({ x: headx, y: heady }, { x: bodyx, y: bodyy }) => {
-  const head = { x: headx, y: heady };
-  const body = { x: bodyx, y: bodyy };
+const Plane = ({ x: headx, y: heady }) => {
+  let head = { x: headx, y: heady };
 
-  const blocks = [
+  let blocks = [
     [
       { x: head.x - 1, y: head.y, type: 2 },
       { x: head.x, y: head.y, type: 0 },
       { x: head.x + 1, y: head.y, type: 2 },
+      { x: head.x + 2, y: head.y, type: 2 },
     ],
     [
-      { x: body.x - 1, y: body.y, type: 1 },
-      { x: body.x, y: body.y, type: 1 },
-      { x: body.x + 1, y: body.y, type: 1 },
+      { x: head.x - 1, y: head.y - 1, type: 1 },
+      { x: head.x, y: head.y - 1, type: 1 },
+      { x: head.x + 1, y: head.y - 1, type: 1 },
+      { x: head.x + 2, y: head.y - 1, type: 2 },
     ],
     [
-      { x: body.x - 1, y: body.y - 1, type: 2 },
-      { x: body.x, y: body.y - 1, type: 1 },
-      { x: body.x + 1, y: body.y - 1, type: 2 },
+      { x: head.x - 1, y: head.y - 2, type: 2 },
+      { x: head.x, y: head.y - 2, type: 1 },
+      { x: head.x + 1, y: head.y - 2, type: 2 },
+      { x: head.x + 2, y: head.y - 2, type: 2 },
     ],
     [
-      { x: body.x - 1, y: body.y - 2, type: 1 },
-      { x: body.x, y: body.y - 2, type: 1 },
-      { x: body.x + 1, y: body.y - 2, type: 1 },
+      { x: head.x - 1, y: head.y - 3, type: 1 },
+      { x: head.x, y: head.y - 3, type: 1 },
+      { x: head.x + 1, y: head.y - 3, type: 1 },
+      { x: head.x + 2, y: head.y - 3, type: 2 },
     ],
   ];
 
@@ -39,7 +42,49 @@ const Plane = ({ x: headx, y: heady }, { x: bodyx, y: bodyy }) => {
     });
   };
 
-  return { head, body, blocks, hit };
+  const rotate = () => {
+    let tmpblocks = [
+      [
+        { x: 0, y: 0, type: 0 },
+        { x: 0, y: 0, type: 0 },
+        { x: 0, y: 0, type: 0 },
+        { x: 0, y: 0, type: 0 },
+      ],
+      [
+        { x: 0, y: 0, type: 0 },
+        { x: 0, y: 0, type: 0 },
+        { x: 0, y: 0, type: 0 },
+        { x: 0, y: 0, type: 0 },
+      ],
+      [
+        { x: 0, y: 0, type: 0 },
+        { x: 0, y: 0, type: 0 },
+        { x: 0, y: 0, type: 0 },
+        { x: 0, y: 0, type: 0 },
+      ],
+      [
+        { x: 0, y: 0, type: 0 },
+        { x: 0, y: 0, type: 0 },
+        { x: 0, y: 0, type: 0 },
+        { x: 0, y: 0, type: 0 },
+      ],
+    ];
+
+    for (let i = 0; i < blocks.length; i++) {
+      for (let j = 0; j < blocks.length; j++) {
+        tmpblocks[i][j].x = blocks[i][j].x;
+        tmpblocks[i][j].y = blocks[i][j].y;
+        tmpblocks[i][j].type = blocks[blocks.length - j - 1][i].type;
+        if (tmpblocks[i][j].type == 0) {
+          head = { x: tmpblocks[i][j].x, y: tmpblocks[i][j].y };
+        }
+      }
+    }
+
+    blocks.splice(0, blocks.length, ...tmpblocks);
+  };
+
+  return { head, blocks, hit, rotate };
 };
 
 export default Plane;
