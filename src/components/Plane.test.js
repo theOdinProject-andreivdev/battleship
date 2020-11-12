@@ -15,28 +15,28 @@ it("tests plane blocks", () => {
 
   expect(plane.blocks).toStrictEqual([
     [
-      { x: 9, y: 10, type: 2 },
-      { x: 10, y: 10, type: 0 },
-      { x: 11, y: 10, type: 2 },
-      { x: 12, y: 10, type: 2 },
+      { x: 9, y: 10, type: plane.blockStatus.AIR },
+      { x: 10, y: 10, type: plane.blockStatus.HEAD },
+      { x: 11, y: 10, type: plane.blockStatus.AIR },
+      { x: 12, y: 10, type: plane.blockStatus.AIR },
     ],
     [
-      { x: 9, y: 9, type: 1 },
-      { x: 10, y: 9, type: 1 },
-      { x: 11, y: 9, type: 1 },
-      { x: 12, y: 9, type: 2 },
+      { x: 9, y: 9, type: plane.blockStatus.BODY },
+      { x: 10, y: 9, type: plane.blockStatus.BODY },
+      { x: 11, y: 9, type: plane.blockStatus.BODY },
+      { x: 12, y: 9, type: plane.blockStatus.AIR },
     ],
     [
-      { x: 9, y: 8, type: 2 },
-      { x: 10, y: 8, type: 1 },
-      { x: 11, y: 8, type: 2 },
-      { x: 12, y: 8, type: 2 },
+      { x: 9, y: 8, type: plane.blockStatus.AIR },
+      { x: 10, y: 8, type: plane.blockStatus.BODY },
+      { x: 11, y: 8, type: plane.blockStatus.AIR },
+      { x: 12, y: 8, type: plane.blockStatus.AIR },
     ],
     [
-      { x: 9, y: 7, type: 1 },
-      { x: 10, y: 7, type: 1 },
-      { x: 11, y: 7, type: 1 },
-      { x: 12, y: 7, type: 2 },
+      { x: 9, y: 7, type: plane.blockStatus.BODY },
+      { x: 10, y: 7, type: plane.blockStatus.BODY },
+      { x: 11, y: 7, type: plane.blockStatus.BODY },
+      { x: 12, y: 7, type: plane.blockStatus.AIR },
     ],
   ]);
 
@@ -49,30 +49,32 @@ it("tests plane hit", () => {
   const plane = Plane(head);
   plane.hit({ x: 9, y: 7 });
 
+  expect(plane.getDead()).toStrictEqual(false);
+
   expect(plane.blocks).toStrictEqual([
     [
-      { x: 9, y: 10, type: 2 },
-      { x: 10, y: 10, type: 0 },
-      { x: 11, y: 10, type: 2 },
-      { x: 12, y: 10, type: 2 },
+      { x: 9, y: 10, type: plane.blockStatus.AIR },
+      { x: 10, y: 10, type: plane.blockStatus.HEAD },
+      { x: 11, y: 10, type: plane.blockStatus.AIR },
+      { x: 12, y: 10, type: plane.blockStatus.AIR },
     ],
     [
-      { x: 9, y: 9, type: 1 },
-      { x: 10, y: 9, type: 1 },
-      { x: 11, y: 9, type: 1 },
-      { x: 12, y: 9, type: 2 },
+      { x: 9, y: 9, type: plane.blockStatus.BODY },
+      { x: 10, y: 9, type: plane.blockStatus.BODY },
+      { x: 11, y: 9, type: plane.blockStatus.BODY },
+      { x: 12, y: 9, type: plane.blockStatus.AIR },
     ],
     [
-      { x: 9, y: 8, type: 2 },
-      { x: 10, y: 8, type: 1 },
-      { x: 11, y: 8, type: 2 },
-      { x: 12, y: 8, type: 2 },
+      { x: 9, y: 8, type: plane.blockStatus.AIR },
+      { x: 10, y: 8, type: plane.blockStatus.BODY },
+      { x: 11, y: 8, type: plane.blockStatus.AIR },
+      { x: 12, y: 8, type: plane.blockStatus.AIR },
     ],
     [
-      { x: 9, y: 7, type: 3 },
-      { x: 10, y: 7, type: 1 },
-      { x: 11, y: 7, type: 1 },
-      { x: 12, y: 7, type: 2 },
+      { x: 9, y: 7, type: plane.blockStatus.HIT },
+      { x: 10, y: 7, type: plane.blockStatus.BODY },
+      { x: 11, y: 7, type: plane.blockStatus.BODY },
+      { x: 12, y: 7, type: plane.blockStatus.AIR },
     ],
   ]);
 
@@ -85,37 +87,39 @@ it("tests plane hit head", () => {
   const plane = Plane(head);
   plane.hit(head);
 
+  expect(plane.getDead()).toStrictEqual(true);
+
   expect(plane.blocks).toStrictEqual([
     [
-      { x: 9, y: 10, type: 2 },
-      { x: 10, y: 10, type: 3 },
-      { x: 11, y: 10, type: 2 },
-      { x: 12, y: 10, type: 2 },
+      { x: 9, y: 10, type: plane.blockStatus.AIR },
+      { x: 10, y: 10, type: plane.blockStatus.HIT },
+      { x: 11, y: 10, type: plane.blockStatus.AIR },
+      { x: 12, y: 10, type: plane.blockStatus.AIR },
     ],
     [
-      { x: 9, y: 9, type: 3 },
-      { x: 10, y: 9, type: 3 },
-      { x: 11, y: 9, type: 3 },
-      { x: 12, y: 9, type: 2 },
+      { x: 9, y: 9, type: plane.blockStatus.HIT },
+      { x: 10, y: 9, type: plane.blockStatus.HIT },
+      { x: 11, y: 9, type: plane.blockStatus.HIT },
+      { x: 12, y: 9, type: plane.blockStatus.AIR },
     ],
     [
-      { x: 9, y: 8, type: 2 },
-      { x: 10, y: 8, type: 3 },
-      { x: 11, y: 8, type: 2 },
-      { x: 12, y: 8, type: 2 },
+      { x: 9, y: 8, type: plane.blockStatus.AIR },
+      { x: 10, y: 8, type: plane.blockStatus.HIT },
+      { x: 11, y: 8, type: plane.blockStatus.AIR },
+      { x: 12, y: 8, type: plane.blockStatus.AIR },
     ],
     [
-      { x: 9, y: 7, type: 3 },
-      { x: 10, y: 7, type: 3 },
-      { x: 11, y: 7, type: 3 },
-      { x: 12, y: 7, type: 2 },
+      { x: 9, y: 7, type: plane.blockStatus.HIT },
+      { x: 10, y: 7, type: plane.blockStatus.HIT },
+      { x: 11, y: 7, type: plane.blockStatus.HIT },
+      { x: 12, y: 7, type: plane.blockStatus.AIR },
     ],
   ]);
 
   drawPlane(plane.blocks);
 });
 
-it("tests plane dead", () => {
+it("tests plane getDead", () => {
   const head = { x: 10, y: 10 };
 
   const plane = Plane(head);
@@ -130,30 +134,33 @@ it("tests plane dead", () => {
   plane.hit({ x: 9, y: 7 });
   plane.hit({ x: 10, y: 7 });
   plane.hit({ x: 11, y: 7 });
+
+  expect(plane.getDead()).toStrictEqual(true);
+
   expect(plane.blocks).toStrictEqual([
     [
-      { x: 9, y: 10, type: 2 },
-      { x: 10, y: 10, type: 3 },
-      { x: 11, y: 10, type: 2 },
-      { x: 12, y: 10, type: 2 },
+      { x: 9, y: 10, type: plane.blockStatus.AIR },
+      { x: 10, y: 10, type: plane.blockStatus.HIT },
+      { x: 11, y: 10, type: plane.blockStatus.AIR },
+      { x: 12, y: 10, type: plane.blockStatus.AIR },
     ],
     [
-      { x: 9, y: 9, type: 3 },
-      { x: 10, y: 9, type: 3 },
-      { x: 11, y: 9, type: 3 },
-      { x: 12, y: 9, type: 2 },
+      { x: 9, y: 9, type: plane.blockStatus.HIT },
+      { x: 10, y: 9, type: plane.blockStatus.HIT },
+      { x: 11, y: 9, type: plane.blockStatus.HIT },
+      { x: 12, y: 9, type: plane.blockStatus.AIR },
     ],
     [
-      { x: 9, y: 8, type: 2 },
-      { x: 10, y: 8, type: 3 },
-      { x: 11, y: 8, type: 2 },
-      { x: 12, y: 8, type: 2 },
+      { x: 9, y: 8, type: plane.blockStatus.AIR },
+      { x: 10, y: 8, type: plane.blockStatus.HIT },
+      { x: 11, y: 8, type: plane.blockStatus.AIR },
+      { x: 12, y: 8, type: plane.blockStatus.AIR },
     ],
     [
-      { x: 9, y: 7, type: 3 },
-      { x: 10, y: 7, type: 3 },
-      { x: 11, y: 7, type: 3 },
-      { x: 12, y: 7, type: 2 },
+      { x: 9, y: 7, type: plane.blockStatus.HIT },
+      { x: 10, y: 7, type: plane.blockStatus.HIT },
+      { x: 11, y: 7, type: plane.blockStatus.HIT },
+      { x: 12, y: 7, type: plane.blockStatus.AIR },
     ],
   ]);
 
@@ -166,30 +173,33 @@ it("tests plane hit outside plane", () => {
   const plane = Plane(head);
 
   plane.hit({ x: 9, y: 10 });
+
+  expect(plane.getDead()).toStrictEqual(false);
+
   expect(plane.blocks).toStrictEqual([
     [
-      { x: 9, y: 10, type: 3 },
-      { x: 10, y: 10, type: 0 },
-      { x: 11, y: 10, type: 2 },
-      { x: 12, y: 10, type: 2 },
+      { x: 9, y: 10, type: plane.blockStatus.HIT },
+      { x: 10, y: 10, type: plane.blockStatus.HEAD },
+      { x: 11, y: 10, type: plane.blockStatus.AIR },
+      { x: 12, y: 10, type: plane.blockStatus.AIR },
     ],
     [
-      { x: 9, y: 9, type: 1 },
-      { x: 10, y: 9, type: 1 },
-      { x: 11, y: 9, type: 1 },
-      { x: 12, y: 9, type: 2 },
+      { x: 9, y: 9, type: plane.blockStatus.BODY },
+      { x: 10, y: 9, type: plane.blockStatus.BODY },
+      { x: 11, y: 9, type: plane.blockStatus.BODY },
+      { x: 12, y: 9, type: plane.blockStatus.AIR },
     ],
     [
-      { x: 9, y: 8, type: 2 },
-      { x: 10, y: 8, type: 1 },
-      { x: 11, y: 8, type: 2 },
-      { x: 12, y: 8, type: 2 },
+      { x: 9, y: 8, type: plane.blockStatus.AIR },
+      { x: 10, y: 8, type: plane.blockStatus.BODY },
+      { x: 11, y: 8, type: plane.blockStatus.AIR },
+      { x: 12, y: 8, type: plane.blockStatus.AIR },
     ],
     [
-      { x: 9, y: 7, type: 1 },
-      { x: 10, y: 7, type: 1 },
-      { x: 11, y: 7, type: 1 },
-      { x: 12, y: 7, type: 2 },
+      { x: 9, y: 7, type: plane.blockStatus.BODY },
+      { x: 10, y: 7, type: plane.blockStatus.BODY },
+      { x: 11, y: 7, type: plane.blockStatus.BODY },
+      { x: 12, y: 7, type: plane.blockStatus.AIR },
     ],
   ]);
 
@@ -205,28 +215,28 @@ it("tests plane rotate", () => {
 
   expect(plane.blocks).toStrictEqual([
     [
-      { x: 9, y: 10, type: 1 },
-      { x: 10, y: 10, type: 2 },
-      { x: 11, y: 10, type: 1 },
-      { x: 12, y: 10, type: 2 },
+      { x: 9, y: 10, type: plane.blockStatus.BODY },
+      { x: 10, y: 10, type: plane.blockStatus.AIR },
+      { x: 11, y: 10, type: plane.blockStatus.BODY },
+      { x: 12, y: 10, type: plane.blockStatus.AIR },
     ],
     [
-      { x: 9, y: 9, type: 1 },
-      { x: 10, y: 9, type: 1 },
-      { x: 11, y: 9, type: 1 },
-      { x: 12, y: 9, type: 0 },
+      { x: 9, y: 9, type: plane.blockStatus.BODY },
+      { x: 10, y: 9, type: plane.blockStatus.BODY },
+      { x: 11, y: 9, type: plane.blockStatus.BODY },
+      { x: 12, y: 9, type: plane.blockStatus.HEAD },
     ],
     [
-      { x: 9, y: 8, type: 1 },
-      { x: 10, y: 8, type: 2 },
-      { x: 11, y: 8, type: 1 },
-      { x: 12, y: 8, type: 2 },
+      { x: 9, y: 8, type: plane.blockStatus.BODY },
+      { x: 10, y: 8, type: plane.blockStatus.AIR },
+      { x: 11, y: 8, type: plane.blockStatus.BODY },
+      { x: 12, y: 8, type: plane.blockStatus.AIR },
     ],
     [
-      { x: 9, y: 7, type: 2 },
-      { x: 10, y: 7, type: 2 },
-      { x: 11, y: 7, type: 2 },
-      { x: 12, y: 7, type: 2 },
+      { x: 9, y: 7, type: plane.blockStatus.AIR },
+      { x: 10, y: 7, type: plane.blockStatus.AIR },
+      { x: 11, y: 7, type: plane.blockStatus.AIR },
+      { x: 12, y: 7, type: plane.blockStatus.AIR },
     ],
   ]);
 
@@ -241,33 +251,34 @@ it("tests plane rotate and head hit", () => {
   plane.rotate();
   plane.hit({ x: 12, y: 9 });
 
+  expect(plane.getDead()).toStrictEqual(true);
+
   expect(plane.blocks).toStrictEqual([
     [
-      { x: 9, y: 10, type: 3 },
-      { x: 10, y: 10, type: 2 },
-      { x: 11, y: 10, type: 3 },
-      { x: 12, y: 10, type: 2 },
+      { x: 9, y: 10, type: plane.blockStatus.HIT },
+      { x: 10, y: 10, type: plane.blockStatus.AIR },
+      { x: 11, y: 10, type: plane.blockStatus.HIT },
+      { x: 12, y: 10, type: plane.blockStatus.AIR },
     ],
     [
-      { x: 9, y: 9, type: 3 },
-      { x: 10, y: 9, type: 3 },
-      { x: 11, y: 9, type: 3 },
-      { x: 12, y: 9, type: 3 },
+      { x: 9, y: 9, type: plane.blockStatus.HIT },
+      { x: 10, y: 9, type: plane.blockStatus.HIT },
+      { x: 11, y: 9, type: plane.blockStatus.HIT },
+      { x: 12, y: 9, type: plane.blockStatus.HIT },
     ],
     [
-      { x: 9, y: 8, type: 3 },
-      { x: 10, y: 8, type: 2 },
-      { x: 11, y: 8, type: 3 },
-      { x: 12, y: 8, type: 2 },
+      { x: 9, y: 8, type: plane.blockStatus.HIT },
+      { x: 10, y: 8, type: plane.blockStatus.AIR },
+      { x: 11, y: 8, type: plane.blockStatus.HIT },
+      { x: 12, y: 8, type: plane.blockStatus.AIR },
     ],
     [
-      { x: 9, y: 7, type: 2 },
-      { x: 10, y: 7, type: 2 },
-      { x: 11, y: 7, type: 2 },
-      { x: 12, y: 7, type: 2 },
+      { x: 9, y: 7, type: plane.blockStatus.AIR },
+      { x: 10, y: 7, type: plane.blockStatus.AIR },
+      { x: 11, y: 7, type: plane.blockStatus.AIR },
+      { x: 12, y: 7, type: plane.blockStatus.AIR },
     ],
   ]);
-
   drawPlane(plane.blocks);
 });
 
