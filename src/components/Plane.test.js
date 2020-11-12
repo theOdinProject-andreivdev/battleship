@@ -1,4 +1,5 @@
 import Plane from "./Plane";
+import blockType from "../util/blockType";
 
 it("tests plane head", () => {
   const head = { x: 10, y: 10 };
@@ -13,34 +14,34 @@ it("tests plane blocks", () => {
 
   const plane = Plane(head);
 
-  expect(plane.blocks).toStrictEqual([
+  expect(plane.getBlocks()).toStrictEqual([
     [
-      { x: 9, y: 10, type: plane.blockStatus.AIR },
-      { x: 10, y: 10, type: plane.blockStatus.HEAD },
-      { x: 11, y: 10, type: plane.blockStatus.AIR },
-      { x: 12, y: 10, type: plane.blockStatus.AIR },
+      { x: 9, y: 10, type: blockType.NOT_DEFINED },
+      { x: 10, y: 10, type: blockType.HEAD },
+      { x: 11, y: 10, type: blockType.NOT_DEFINED },
+      { x: 12, y: 10, type: blockType.NOT_DEFINED },
     ],
     [
-      { x: 9, y: 9, type: plane.blockStatus.BODY },
-      { x: 10, y: 9, type: plane.blockStatus.BODY },
-      { x: 11, y: 9, type: plane.blockStatus.BODY },
-      { x: 12, y: 9, type: plane.blockStatus.AIR },
+      { x: 9, y: 9, type: blockType.BODY },
+      { x: 10, y: 9, type: blockType.BODY },
+      { x: 11, y: 9, type: blockType.BODY },
+      { x: 12, y: 9, type: blockType.NOT_DEFINED },
     ],
     [
-      { x: 9, y: 8, type: plane.blockStatus.AIR },
-      { x: 10, y: 8, type: plane.blockStatus.BODY },
-      { x: 11, y: 8, type: plane.blockStatus.AIR },
-      { x: 12, y: 8, type: plane.blockStatus.AIR },
+      { x: 9, y: 8, type: blockType.NOT_DEFINED },
+      { x: 10, y: 8, type: blockType.BODY },
+      { x: 11, y: 8, type: blockType.NOT_DEFINED },
+      { x: 12, y: 8, type: blockType.NOT_DEFINED },
     ],
     [
-      { x: 9, y: 7, type: plane.blockStatus.BODY },
-      { x: 10, y: 7, type: plane.blockStatus.BODY },
-      { x: 11, y: 7, type: plane.blockStatus.BODY },
-      { x: 12, y: 7, type: plane.blockStatus.AIR },
+      { x: 9, y: 7, type: blockType.BODY },
+      { x: 10, y: 7, type: blockType.BODY },
+      { x: 11, y: 7, type: blockType.BODY },
+      { x: 12, y: 7, type: blockType.NOT_DEFINED },
     ],
   ]);
 
-  drawPlane(plane.blocks);
+  //drawPlane(plane.getBlocks());
 });
 
 it("tests plane hit", () => {
@@ -51,34 +52,34 @@ it("tests plane hit", () => {
 
   expect(plane.getDead()).toStrictEqual(false);
 
-  expect(plane.blocks).toStrictEqual([
+  expect(plane.getBlocks()).toStrictEqual([
     [
-      { x: 9, y: 10, type: plane.blockStatus.AIR },
-      { x: 10, y: 10, type: plane.blockStatus.HEAD },
-      { x: 11, y: 10, type: plane.blockStatus.AIR },
-      { x: 12, y: 10, type: plane.blockStatus.AIR },
+      { x: 9, y: 10, type: blockType.NOT_DEFINED },
+      { x: 10, y: 10, type: blockType.HEAD },
+      { x: 11, y: 10, type: blockType.NOT_DEFINED },
+      { x: 12, y: 10, type: blockType.NOT_DEFINED },
     ],
     [
-      { x: 9, y: 9, type: plane.blockStatus.BODY },
-      { x: 10, y: 9, type: plane.blockStatus.BODY },
-      { x: 11, y: 9, type: plane.blockStatus.BODY },
-      { x: 12, y: 9, type: plane.blockStatus.AIR },
+      { x: 9, y: 9, type: blockType.BODY },
+      { x: 10, y: 9, type: blockType.BODY },
+      { x: 11, y: 9, type: blockType.BODY },
+      { x: 12, y: 9, type: blockType.NOT_DEFINED },
     ],
     [
-      { x: 9, y: 8, type: plane.blockStatus.AIR },
-      { x: 10, y: 8, type: plane.blockStatus.BODY },
-      { x: 11, y: 8, type: plane.blockStatus.AIR },
-      { x: 12, y: 8, type: plane.blockStatus.AIR },
+      { x: 9, y: 8, type: blockType.NOT_DEFINED },
+      { x: 10, y: 8, type: blockType.BODY },
+      { x: 11, y: 8, type: blockType.NOT_DEFINED },
+      { x: 12, y: 8, type: blockType.NOT_DEFINED },
     ],
     [
-      { x: 9, y: 7, type: plane.blockStatus.HIT },
-      { x: 10, y: 7, type: plane.blockStatus.BODY },
-      { x: 11, y: 7, type: plane.blockStatus.BODY },
-      { x: 12, y: 7, type: plane.blockStatus.AIR },
+      { x: 9, y: 7, type: blockType.HIT },
+      { x: 10, y: 7, type: blockType.BODY },
+      { x: 11, y: 7, type: blockType.BODY },
+      { x: 12, y: 7, type: blockType.NOT_DEFINED },
     ],
   ]);
 
-  drawPlane(plane.blocks);
+  //drawPlane(plane.getBlocks());
 });
 
 it("tests plane hit head", () => {
@@ -89,34 +90,34 @@ it("tests plane hit head", () => {
 
   expect(plane.getDead()).toStrictEqual(true);
 
-  expect(plane.blocks).toStrictEqual([
+  expect(plane.getBlocks()).toStrictEqual([
     [
-      { x: 9, y: 10, type: plane.blockStatus.AIR },
-      { x: 10, y: 10, type: plane.blockStatus.HIT },
-      { x: 11, y: 10, type: plane.blockStatus.AIR },
-      { x: 12, y: 10, type: plane.blockStatus.AIR },
+      { x: 9, y: 10, type: blockType.NOT_DEFINED },
+      { x: 10, y: 10, type: blockType.HIT },
+      { x: 11, y: 10, type: blockType.NOT_DEFINED },
+      { x: 12, y: 10, type: blockType.NOT_DEFINED },
     ],
     [
-      { x: 9, y: 9, type: plane.blockStatus.HIT },
-      { x: 10, y: 9, type: plane.blockStatus.HIT },
-      { x: 11, y: 9, type: plane.blockStatus.HIT },
-      { x: 12, y: 9, type: plane.blockStatus.AIR },
+      { x: 9, y: 9, type: blockType.HIT },
+      { x: 10, y: 9, type: blockType.HIT },
+      { x: 11, y: 9, type: blockType.HIT },
+      { x: 12, y: 9, type: blockType.NOT_DEFINED },
     ],
     [
-      { x: 9, y: 8, type: plane.blockStatus.AIR },
-      { x: 10, y: 8, type: plane.blockStatus.HIT },
-      { x: 11, y: 8, type: plane.blockStatus.AIR },
-      { x: 12, y: 8, type: plane.blockStatus.AIR },
+      { x: 9, y: 8, type: blockType.NOT_DEFINED },
+      { x: 10, y: 8, type: blockType.HIT },
+      { x: 11, y: 8, type: blockType.NOT_DEFINED },
+      { x: 12, y: 8, type: blockType.NOT_DEFINED },
     ],
     [
-      { x: 9, y: 7, type: plane.blockStatus.HIT },
-      { x: 10, y: 7, type: plane.blockStatus.HIT },
-      { x: 11, y: 7, type: plane.blockStatus.HIT },
-      { x: 12, y: 7, type: plane.blockStatus.AIR },
+      { x: 9, y: 7, type: blockType.HIT },
+      { x: 10, y: 7, type: blockType.HIT },
+      { x: 11, y: 7, type: blockType.HIT },
+      { x: 12, y: 7, type: blockType.NOT_DEFINED },
     ],
   ]);
 
-  drawPlane(plane.blocks);
+  //drawPlane(plane.getBlocks());
 });
 
 it("tests plane getDead", () => {
@@ -137,34 +138,34 @@ it("tests plane getDead", () => {
 
   expect(plane.getDead()).toStrictEqual(true);
 
-  expect(plane.blocks).toStrictEqual([
+  expect(plane.getBlocks()).toStrictEqual([
     [
-      { x: 9, y: 10, type: plane.blockStatus.AIR },
-      { x: 10, y: 10, type: plane.blockStatus.HIT },
-      { x: 11, y: 10, type: plane.blockStatus.AIR },
-      { x: 12, y: 10, type: plane.blockStatus.AIR },
+      { x: 9, y: 10, type: blockType.NOT_DEFINED },
+      { x: 10, y: 10, type: blockType.HIT },
+      { x: 11, y: 10, type: blockType.NOT_DEFINED },
+      { x: 12, y: 10, type: blockType.NOT_DEFINED },
     ],
     [
-      { x: 9, y: 9, type: plane.blockStatus.HIT },
-      { x: 10, y: 9, type: plane.blockStatus.HIT },
-      { x: 11, y: 9, type: plane.blockStatus.HIT },
-      { x: 12, y: 9, type: plane.blockStatus.AIR },
+      { x: 9, y: 9, type: blockType.HIT },
+      { x: 10, y: 9, type: blockType.HIT },
+      { x: 11, y: 9, type: blockType.HIT },
+      { x: 12, y: 9, type: blockType.NOT_DEFINED },
     ],
     [
-      { x: 9, y: 8, type: plane.blockStatus.AIR },
-      { x: 10, y: 8, type: plane.blockStatus.HIT },
-      { x: 11, y: 8, type: plane.blockStatus.AIR },
-      { x: 12, y: 8, type: plane.blockStatus.AIR },
+      { x: 9, y: 8, type: blockType.NOT_DEFINED },
+      { x: 10, y: 8, type: blockType.HIT },
+      { x: 11, y: 8, type: blockType.NOT_DEFINED },
+      { x: 12, y: 8, type: blockType.NOT_DEFINED },
     ],
     [
-      { x: 9, y: 7, type: plane.blockStatus.HIT },
-      { x: 10, y: 7, type: plane.blockStatus.HIT },
-      { x: 11, y: 7, type: plane.blockStatus.HIT },
-      { x: 12, y: 7, type: plane.blockStatus.AIR },
+      { x: 9, y: 7, type: blockType.HIT },
+      { x: 10, y: 7, type: blockType.HIT },
+      { x: 11, y: 7, type: blockType.HIT },
+      { x: 12, y: 7, type: blockType.NOT_DEFINED },
     ],
   ]);
 
-  drawPlane(plane.blocks);
+  //drawPlane(plane.getBlocks());
 });
 
 it("tests plane hit outside plane", () => {
@@ -176,34 +177,34 @@ it("tests plane hit outside plane", () => {
 
   expect(plane.getDead()).toStrictEqual(false);
 
-  expect(plane.blocks).toStrictEqual([
+  expect(plane.getBlocks()).toStrictEqual([
     [
-      { x: 9, y: 10, type: plane.blockStatus.HIT },
-      { x: 10, y: 10, type: plane.blockStatus.HEAD },
-      { x: 11, y: 10, type: plane.blockStatus.AIR },
-      { x: 12, y: 10, type: plane.blockStatus.AIR },
+      { x: 9, y: 10, type: blockType.HIT },
+      { x: 10, y: 10, type: blockType.HEAD },
+      { x: 11, y: 10, type: blockType.NOT_DEFINED },
+      { x: 12, y: 10, type: blockType.NOT_DEFINED },
     ],
     [
-      { x: 9, y: 9, type: plane.blockStatus.BODY },
-      { x: 10, y: 9, type: plane.blockStatus.BODY },
-      { x: 11, y: 9, type: plane.blockStatus.BODY },
-      { x: 12, y: 9, type: plane.blockStatus.AIR },
+      { x: 9, y: 9, type: blockType.BODY },
+      { x: 10, y: 9, type: blockType.BODY },
+      { x: 11, y: 9, type: blockType.BODY },
+      { x: 12, y: 9, type: blockType.NOT_DEFINED },
     ],
     [
-      { x: 9, y: 8, type: plane.blockStatus.AIR },
-      { x: 10, y: 8, type: plane.blockStatus.BODY },
-      { x: 11, y: 8, type: plane.blockStatus.AIR },
-      { x: 12, y: 8, type: plane.blockStatus.AIR },
+      { x: 9, y: 8, type: blockType.NOT_DEFINED },
+      { x: 10, y: 8, type: blockType.BODY },
+      { x: 11, y: 8, type: blockType.NOT_DEFINED },
+      { x: 12, y: 8, type: blockType.NOT_DEFINED },
     ],
     [
-      { x: 9, y: 7, type: plane.blockStatus.BODY },
-      { x: 10, y: 7, type: plane.blockStatus.BODY },
-      { x: 11, y: 7, type: plane.blockStatus.BODY },
-      { x: 12, y: 7, type: plane.blockStatus.AIR },
+      { x: 9, y: 7, type: blockType.BODY },
+      { x: 10, y: 7, type: blockType.BODY },
+      { x: 11, y: 7, type: blockType.BODY },
+      { x: 12, y: 7, type: blockType.NOT_DEFINED },
     ],
   ]);
 
-  drawPlane(plane.blocks);
+  //drawPlane(plane.getBlocks());
 });
 
 it("tests plane rotate", () => {
@@ -213,34 +214,34 @@ it("tests plane rotate", () => {
 
   plane.rotate();
 
-  expect(plane.blocks).toStrictEqual([
+  expect(plane.getBlocks()).toStrictEqual([
     [
-      { x: 9, y: 10, type: plane.blockStatus.BODY },
-      { x: 10, y: 10, type: plane.blockStatus.AIR },
-      { x: 11, y: 10, type: plane.blockStatus.BODY },
-      { x: 12, y: 10, type: plane.blockStatus.AIR },
+      { x: 9, y: 10, type: blockType.BODY },
+      { x: 10, y: 10, type: blockType.NOT_DEFINED },
+      { x: 11, y: 10, type: blockType.BODY },
+      { x: 12, y: 10, type: blockType.NOT_DEFINED },
     ],
     [
-      { x: 9, y: 9, type: plane.blockStatus.BODY },
-      { x: 10, y: 9, type: plane.blockStatus.BODY },
-      { x: 11, y: 9, type: plane.blockStatus.BODY },
-      { x: 12, y: 9, type: plane.blockStatus.HEAD },
+      { x: 9, y: 9, type: blockType.BODY },
+      { x: 10, y: 9, type: blockType.BODY },
+      { x: 11, y: 9, type: blockType.BODY },
+      { x: 12, y: 9, type: blockType.HEAD },
     ],
     [
-      { x: 9, y: 8, type: plane.blockStatus.BODY },
-      { x: 10, y: 8, type: plane.blockStatus.AIR },
-      { x: 11, y: 8, type: plane.blockStatus.BODY },
-      { x: 12, y: 8, type: plane.blockStatus.AIR },
+      { x: 9, y: 8, type: blockType.BODY },
+      { x: 10, y: 8, type: blockType.NOT_DEFINED },
+      { x: 11, y: 8, type: blockType.BODY },
+      { x: 12, y: 8, type: blockType.NOT_DEFINED },
     ],
     [
-      { x: 9, y: 7, type: plane.blockStatus.AIR },
-      { x: 10, y: 7, type: plane.blockStatus.AIR },
-      { x: 11, y: 7, type: plane.blockStatus.AIR },
-      { x: 12, y: 7, type: plane.blockStatus.AIR },
+      { x: 9, y: 7, type: blockType.NOT_DEFINED },
+      { x: 10, y: 7, type: blockType.NOT_DEFINED },
+      { x: 11, y: 7, type: blockType.NOT_DEFINED },
+      { x: 12, y: 7, type: blockType.NOT_DEFINED },
     ],
   ]);
 
-  drawPlane(plane.blocks);
+  //drawPlane(plane.getBlocks());
 });
 
 it("tests plane rotate and head hit", () => {
@@ -253,33 +254,33 @@ it("tests plane rotate and head hit", () => {
 
   expect(plane.getDead()).toStrictEqual(true);
 
-  expect(plane.blocks).toStrictEqual([
+  expect(plane.getBlocks()).toStrictEqual([
     [
-      { x: 9, y: 10, type: plane.blockStatus.HIT },
-      { x: 10, y: 10, type: plane.blockStatus.AIR },
-      { x: 11, y: 10, type: plane.blockStatus.HIT },
-      { x: 12, y: 10, type: plane.blockStatus.AIR },
+      { x: 9, y: 10, type: blockType.HIT },
+      { x: 10, y: 10, type: blockType.NOT_DEFINED },
+      { x: 11, y: 10, type: blockType.HIT },
+      { x: 12, y: 10, type: blockType.NOT_DEFINED },
     ],
     [
-      { x: 9, y: 9, type: plane.blockStatus.HIT },
-      { x: 10, y: 9, type: plane.blockStatus.HIT },
-      { x: 11, y: 9, type: plane.blockStatus.HIT },
-      { x: 12, y: 9, type: plane.blockStatus.HIT },
+      { x: 9, y: 9, type: blockType.HIT },
+      { x: 10, y: 9, type: blockType.HIT },
+      { x: 11, y: 9, type: blockType.HIT },
+      { x: 12, y: 9, type: blockType.HIT },
     ],
     [
-      { x: 9, y: 8, type: plane.blockStatus.HIT },
-      { x: 10, y: 8, type: plane.blockStatus.AIR },
-      { x: 11, y: 8, type: plane.blockStatus.HIT },
-      { x: 12, y: 8, type: plane.blockStatus.AIR },
+      { x: 9, y: 8, type: blockType.HIT },
+      { x: 10, y: 8, type: blockType.NOT_DEFINED },
+      { x: 11, y: 8, type: blockType.HIT },
+      { x: 12, y: 8, type: blockType.NOT_DEFINED },
     ],
     [
-      { x: 9, y: 7, type: plane.blockStatus.AIR },
-      { x: 10, y: 7, type: plane.blockStatus.AIR },
-      { x: 11, y: 7, type: plane.blockStatus.AIR },
-      { x: 12, y: 7, type: plane.blockStatus.AIR },
+      { x: 9, y: 7, type: blockType.NOT_DEFINED },
+      { x: 10, y: 7, type: blockType.NOT_DEFINED },
+      { x: 11, y: 7, type: blockType.NOT_DEFINED },
+      { x: 12, y: 7, type: blockType.NOT_DEFINED },
     ],
   ]);
-  drawPlane(plane.blocks);
+  //drawPlane(plane.getBlocks());
 });
 
 function drawPlane(blocks) {

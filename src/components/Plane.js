@@ -1,37 +1,33 @@
+import blockType from "../util/blockType";
+
 const Plane = ({ x: headx, y: heady }) => {
   let head = { x: headx, y: heady };
   let dead = false;
 
-  const blockStatus = {
-    HEAD: 0,
-    BODY: 1,
-    AIR: 2,
-    HIT: 3,
-  };
   let blocks = [
     [
-      { x: head.x - 1, y: head.y, type: blockStatus.AIR },
-      { x: head.x, y: head.y, type: blockStatus.HEAD },
-      { x: head.x + 1, y: head.y, type: blockStatus.AIR },
-      { x: head.x + 2, y: head.y, type: blockStatus.AIR },
+      { x: head.x - 1, y: head.y, type: blockType.NOT_DEFINED },
+      { x: head.x, y: head.y, type: blockType.HEAD },
+      { x: head.x + 1, y: head.y, type: blockType.NOT_DEFINED },
+      { x: head.x + 2, y: head.y, type: blockType.NOT_DEFINED },
     ],
     [
-      { x: head.x - 1, y: head.y - 1, type: blockStatus.BODY },
-      { x: head.x, y: head.y - 1, type: blockStatus.BODY },
-      { x: head.x + 1, y: head.y - 1, type: blockStatus.BODY },
-      { x: head.x + 2, y: head.y - 1, type: blockStatus.AIR },
+      { x: head.x - 1, y: head.y - 1, type: blockType.BODY },
+      { x: head.x, y: head.y - 1, type: blockType.BODY },
+      { x: head.x + 1, y: head.y - 1, type: blockType.BODY },
+      { x: head.x + 2, y: head.y - 1, type: blockType.NOT_DEFINED },
     ],
     [
-      { x: head.x - 1, y: head.y - 2, type: blockStatus.AIR },
-      { x: head.x, y: head.y - 2, type: blockStatus.BODY },
-      { x: head.x + 1, y: head.y - 2, type: blockStatus.AIR },
-      { x: head.x + 2, y: head.y - 2, type: blockStatus.AIR },
+      { x: head.x - 1, y: head.y - 2, type: blockType.NOT_DEFINED },
+      { x: head.x, y: head.y - 2, type: blockType.BODY },
+      { x: head.x + 1, y: head.y - 2, type: blockType.NOT_DEFINED },
+      { x: head.x + 2, y: head.y - 2, type: blockType.NOT_DEFINED },
     ],
     [
-      { x: head.x - 1, y: head.y - 3, type: blockStatus.BODY },
-      { x: head.x, y: head.y - 3, type: blockStatus.BODY },
-      { x: head.x + 1, y: head.y - 3, type: blockStatus.BODY },
-      { x: head.x + 2, y: head.y - 3, type: blockStatus.AIR },
+      { x: head.x - 1, y: head.y - 3, type: blockType.BODY },
+      { x: head.x, y: head.y - 3, type: blockType.BODY },
+      { x: head.x + 1, y: head.y - 3, type: blockType.BODY },
+      { x: head.x + 2, y: head.y - 3, type: blockType.NOT_DEFINED },
     ],
   ];
 
@@ -44,12 +40,12 @@ const Plane = ({ x: headx, y: heady }) => {
     blocks.forEach((blockLine) => {
       blockLine.forEach((block) => {
         if (block.x == hitx && block.y == hity) {
-          block.type = blockStatus.HIT;
+          block.type = blockType.HIT;
         }
-        if (headHit && block.type != blockStatus.AIR)
-          block.type = blockStatus.HIT;
+        if (headHit && block.type != blockType.NOT_DEFINED)
+          block.type = blockType.HIT;
 
-        if (block.type == blockStatus.HEAD || block.type == blockStatus.BODY)
+        if (block.type == blockType.HEAD || block.type == blockType.BODY)
           dead = false;
       });
     });
@@ -88,7 +84,7 @@ const Plane = ({ x: headx, y: heady }) => {
         tmpblocks[i][j].x = blocks[i][j].x;
         tmpblocks[i][j].y = blocks[i][j].y;
         tmpblocks[i][j].type = blocks[blocks.length - j - 1][i].type;
-        if (tmpblocks[i][j].type == blockStatus.HEAD) {
+        if (tmpblocks[i][j].type == blockType.HEAD) {
           head = { x: tmpblocks[i][j].x, y: tmpblocks[i][j].y };
         }
       }
@@ -100,7 +96,11 @@ const Plane = ({ x: headx, y: heady }) => {
   const getDead = () => {
     return dead;
   };
-  return { head, blocks, hit, rotate, getDead, blockStatus };
+
+  const getBlocks = () => {
+    return blocks;
+  };
+  return { head, getBlocks, hit, rotate, getDead, blockType };
 };
 
 export default Plane;
