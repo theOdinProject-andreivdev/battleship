@@ -1,5 +1,6 @@
 import Gameboard from "../components/Gameboard";
 import Plane from "../components/Plane";
+import BlockUI from "./BlockUI";
 
 function GameboardUI() {
   const gameBoard = Gameboard();
@@ -12,14 +13,17 @@ function GameboardUI() {
 
   return (
     <div>
-      <div>This is a gameboard</div>
-      <table class="table">
+      <table className="table table-bordered">
         {gameBoard.getBlocks().map((br) => {
           return (
             <div>
               <tr>
                 {br.map((block) => {
-                  return <td>[{block.type}]</td>;
+                  return (
+                    <td>
+                      <BlockUI type={block.type} />
+                    </td>
+                  );
                 })}
               </tr>
             </div>
