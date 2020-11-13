@@ -40,8 +40,6 @@ it("tests plane blocks", () => {
       { x: 12, y: 13, type: blockType.NOT_DEFINED },
     ],
   ]);
-
-  //drawPlane(plane.getBlocks());
 });
 
 it("tests plane hit", () => {
@@ -114,8 +112,6 @@ it("tests plane hit head", () => {
       { x: 12, y: 13, type: blockType.NOT_DEFINED },
     ],
   ]);
-
-  //drawPlane(plane.getBlocks());
 });
 
 it("tests plane getDead", () => {
@@ -162,8 +158,6 @@ it("tests plane getDead", () => {
       { x: 12, y: 13, type: blockType.NOT_DEFINED },
     ],
   ]);
-
-  //drawPlane(plane.getBlocks());
 });
 
 it("tests plane hit outside plane", () => {
@@ -201,8 +195,6 @@ it("tests plane hit outside plane", () => {
       { x: 12, y: 13, type: blockType.NOT_DEFINED },
     ],
   ]);
-
-  //drawPlane(plane.getBlocks());
 });
 
 it("tests plane rotate", () => {
@@ -238,8 +230,6 @@ it("tests plane rotate", () => {
       { x: 12, y: 13, type: blockType.NOT_DEFINED },
     ],
   ]);
-
-  //drawPlane(plane.getBlocks());
 });
 
 it("tests plane rotate and head hit", () => {
@@ -278,23 +268,4 @@ it("tests plane rotate and head hit", () => {
       { x: 12, y: 13, type: blockType.NOT_DEFINED },
     ],
   ]);
-  //drawPlane(plane.getBlocks());
 });
-
-function drawPlane(blocks) {
-  let str = "";
-
-  for (let i = 0; i < blocks.length; i++) {
-    str = str.concat("\n");
-    for (let j = 0; j < blocks.length; j++) {
-      str = str.concat("x=" + blocks[i][j].x + " " + "y=" + blocks[i][j].y);
-      if (blocks[i][j].type == 0) str = str.concat("    h");
-      if (blocks[i][j].type == 1) str = str.concat("    @");
-      if (blocks[i][j].type == 2) str = str.concat("    _");
-      if (blocks[i][j].type == 3) str = str.concat("    x");
-      str = str.concat("    ");
-    }
-  }
-  console.log(str);
-  return str;
-}

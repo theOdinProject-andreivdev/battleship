@@ -66,7 +66,11 @@ const Gameboard = () => {
           plane.getBlocks().forEach((pbr) => {
             pbr.forEach((pb) => {
               if (b.x === pb.x && b.y === pb.y) {
-                if (pb.type === blockType.HEAD || pb.type === blockType.BODY)
+                if (
+                  pb.type === blockType.HEAD ||
+                  pb.type === blockType.BODY ||
+                  pb.type === blockType.HIT
+                )
                   b.type = pb.type;
               }
             });
@@ -116,7 +120,30 @@ const Gameboard = () => {
   const getPlanes = () => {
     return planes;
   };
-  return { boardSize, getBlocks, addPlane, removePlane, getPlanes, rotate };
+
+  const hit = ({ x: hitx, y: hity }) => {
+    planes.forEach((plane) => {
+      plane.hit({ x: hitx, y: hity });
+    });
+
+    blocks.forEach((br) => {
+      br.forEach((b) => {
+        if (b.x == hitx && b.y == hity) b.type = blockType.HIT;
+      });
+    });
+
+    updateBoard();
+  };
+
+  return {
+    boardSize,
+    getBlocks,
+    addPlane,
+    removePlane,
+    getPlanes,
+    rotate,
+    hit,
+  };
 };
 
 export default Gameboard;
