@@ -1483,3 +1483,139 @@ it("hits plane head", () => {
     ],
   ]);
 });
+
+it("adds multiple planes hits one in the head", () => {
+  const gameboard = Gameboard();
+  const plane1 = Plane({ x: 5, y: 5 });
+  const plane2 = Plane({ x: 3, y: 4 });
+  const plane3 = Plane({ x: 8, y: 4 });
+
+  expect(gameboard.addPlane(plane1)).toStrictEqual(true);
+  expect(gameboard.addPlane(plane2)).toStrictEqual(true);
+  expect(gameboard.addPlane(plane3)).toStrictEqual(true);
+
+  gameboard.hit({ x: 5, y: 5 });
+
+  expect(gameboard.getBlocks()).toStrictEqual([
+    [
+      { x: 0, y: 9, type: blockType.NOT_DEFINED },
+      { x: 1, y: 9, type: blockType.NOT_DEFINED },
+      { x: 2, y: 9, type: blockType.NOT_DEFINED },
+      { x: 3, y: 9, type: blockType.NOT_DEFINED },
+      { x: 4, y: 9, type: blockType.NOT_DEFINED },
+      { x: 5, y: 9, type: blockType.NOT_DEFINED },
+      { x: 6, y: 9, type: blockType.NOT_DEFINED },
+      { x: 7, y: 9, type: blockType.NOT_DEFINED },
+      { x: 8, y: 9, type: blockType.NOT_DEFINED },
+      { x: 9, y: 9, type: blockType.NOT_DEFINED },
+    ],
+    [
+      { x: 0, y: 8, type: blockType.NOT_DEFINED },
+      { x: 1, y: 8, type: blockType.NOT_DEFINED },
+      { x: 2, y: 8, type: blockType.NOT_DEFINED },
+      { x: 3, y: 8, type: blockType.NOT_DEFINED },
+      { x: 4, y: 8, type: blockType.HIT },
+      { x: 5, y: 8, type: blockType.HIT },
+      { x: 6, y: 8, type: blockType.HIT },
+      { x: 7, y: 8, type: blockType.NOT_DEFINED },
+      { x: 8, y: 8, type: blockType.NOT_DEFINED },
+      { x: 9, y: 8, type: blockType.NOT_DEFINED },
+    ],
+    [
+      { x: 0, y: 7, type: blockType.NOT_DEFINED },
+      { x: 1, y: 7, type: blockType.NOT_DEFINED },
+      { x: 2, y: 7, type: blockType.BODY },
+      { x: 3, y: 7, type: blockType.BODY },
+      { x: 4, y: 7, type: blockType.BODY },
+      { x: 5, y: 7, type: blockType.HIT },
+      { x: 6, y: 7, type: blockType.NOT_DEFINED },
+      { x: 7, y: 7, type: blockType.BODY },
+      { x: 8, y: 7, type: blockType.BODY },
+      { x: 9, y: 7, type: blockType.BODY },
+    ],
+    [
+      { x: 0, y: 6, type: blockType.NOT_DEFINED },
+      { x: 1, y: 6, type: blockType.NOT_DEFINED },
+      { x: 2, y: 6, type: blockType.NOT_DEFINED },
+      { x: 3, y: 6, type: blockType.BODY },
+      { x: 4, y: 6, type: blockType.HIT },
+      { x: 5, y: 6, type: blockType.HIT },
+      { x: 6, y: 6, type: blockType.HIT },
+      { x: 7, y: 6, type: blockType.NOT_DEFINED },
+      { x: 8, y: 6, type: blockType.BODY },
+      { x: 9, y: 6, type: blockType.NOT_DEFINED },
+    ],
+    [
+      { x: 0, y: 5, type: blockType.NOT_DEFINED },
+      { x: 1, y: 5, type: blockType.NOT_DEFINED },
+      { x: 2, y: 5, type: blockType.BODY },
+      { x: 3, y: 5, type: blockType.BODY },
+      { x: 4, y: 5, type: blockType.BODY },
+      { x: 5, y: 5, type: blockType.HIT },
+      { x: 6, y: 5, type: blockType.NOT_DEFINED },
+      { x: 7, y: 5, type: blockType.BODY },
+      { x: 8, y: 5, type: blockType.BODY },
+      { x: 9, y: 5, type: blockType.BODY },
+    ],
+    [
+      { x: 0, y: 4, type: blockType.NOT_DEFINED },
+      { x: 1, y: 4, type: blockType.NOT_DEFINED },
+      { x: 2, y: 4, type: blockType.NOT_DEFINED },
+      { x: 3, y: 4, type: blockType.HEAD },
+      { x: 4, y: 4, type: blockType.NOT_DEFINED },
+      { x: 5, y: 4, type: blockType.NOT_DEFINED },
+      { x: 6, y: 4, type: blockType.NOT_DEFINED },
+      { x: 7, y: 4, type: blockType.NOT_DEFINED },
+      { x: 8, y: 4, type: blockType.HEAD },
+      { x: 9, y: 4, type: blockType.NOT_DEFINED },
+    ],
+    [
+      { x: 0, y: 3, type: blockType.NOT_DEFINED },
+      { x: 1, y: 3, type: blockType.NOT_DEFINED },
+      { x: 2, y: 3, type: blockType.NOT_DEFINED },
+      { x: 3, y: 3, type: blockType.NOT_DEFINED },
+      { x: 4, y: 3, type: blockType.NOT_DEFINED },
+      { x: 5, y: 3, type: blockType.NOT_DEFINED },
+      { x: 6, y: 3, type: blockType.NOT_DEFINED },
+      { x: 7, y: 3, type: blockType.NOT_DEFINED },
+      { x: 8, y: 3, type: blockType.NOT_DEFINED },
+      { x: 9, y: 3, type: blockType.NOT_DEFINED },
+    ],
+    [
+      { x: 0, y: 2, type: blockType.NOT_DEFINED },
+      { x: 1, y: 2, type: blockType.NOT_DEFINED },
+      { x: 2, y: 2, type: blockType.NOT_DEFINED },
+      { x: 3, y: 2, type: blockType.NOT_DEFINED },
+      { x: 4, y: 2, type: blockType.NOT_DEFINED },
+      { x: 5, y: 2, type: blockType.NOT_DEFINED },
+      { x: 6, y: 2, type: blockType.NOT_DEFINED },
+      { x: 7, y: 2, type: blockType.NOT_DEFINED },
+      { x: 8, y: 2, type: blockType.NOT_DEFINED },
+      { x: 9, y: 2, type: blockType.NOT_DEFINED },
+    ],
+    [
+      { x: 0, y: 1, type: blockType.NOT_DEFINED },
+      { x: 1, y: 1, type: blockType.NOT_DEFINED },
+      { x: 2, y: 1, type: blockType.NOT_DEFINED },
+      { x: 3, y: 1, type: blockType.NOT_DEFINED },
+      { x: 4, y: 1, type: blockType.NOT_DEFINED },
+      { x: 5, y: 1, type: blockType.NOT_DEFINED },
+      { x: 6, y: 1, type: blockType.NOT_DEFINED },
+      { x: 7, y: 1, type: blockType.NOT_DEFINED },
+      { x: 8, y: 1, type: blockType.NOT_DEFINED },
+      { x: 9, y: 1, type: blockType.NOT_DEFINED },
+    ],
+    [
+      { x: 0, y: 0, type: blockType.NOT_DEFINED },
+      { x: 1, y: 0, type: blockType.NOT_DEFINED },
+      { x: 2, y: 0, type: blockType.NOT_DEFINED },
+      { x: 3, y: 0, type: blockType.NOT_DEFINED },
+      { x: 4, y: 0, type: blockType.NOT_DEFINED },
+      { x: 5, y: 0, type: blockType.NOT_DEFINED },
+      { x: 6, y: 0, type: blockType.NOT_DEFINED },
+      { x: 7, y: 0, type: blockType.NOT_DEFINED },
+      { x: 8, y: 0, type: blockType.NOT_DEFINED },
+      { x: 9, y: 0, type: blockType.NOT_DEFINED },
+    ],
+  ]);
+});
