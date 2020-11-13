@@ -35,11 +35,11 @@ const Plane = ({ x: headx, y: heady }) => {
     dead = true;
 
     let headHit = false;
-    if (hitx === head.x && hity === head.y) headHit = true;
+    if (hitx == head.x && hity == head.y) headHit = true;
 
     blocks.forEach((blockLine) => {
       blockLine.forEach((block) => {
-        if (block.x === hitx && block.y === hity) {
+        if (block.x == hitx && block.y == hity) {
           block.type = blockType.HIT;
         }
         if (headHit && block.type !== blockType.NOT_DEFINED)

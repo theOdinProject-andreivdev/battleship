@@ -114,7 +114,7 @@ const Gameboard = () => {
   };
 
   const getBlocks = () => {
-    return blocks;
+    return [...blocks];
   };
 
   const getPlanes = () => {
@@ -128,7 +128,9 @@ const Gameboard = () => {
 
     blocks.forEach((br) => {
       br.forEach((b) => {
-        if (b.x == hitx && b.y == hity) b.type = blockType.HIT;
+        if (b.x == hitx && b.y == hity) {
+          b.type = blockType.HIT;
+        }
       });
     });
 
