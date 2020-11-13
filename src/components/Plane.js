@@ -35,17 +35,17 @@ const Plane = ({ x: headx, y: heady }) => {
     dead = true;
 
     let headHit = false;
-    if (hitx == head.x && hity == head.y) headHit = true;
+    if (hitx === head.x && hity === head.y) headHit = true;
 
     blocks.forEach((blockLine) => {
       blockLine.forEach((block) => {
-        if (block.x == hitx && block.y == hity) {
+        if (block.x === hitx && block.y === hity) {
           block.type = blockType.HIT;
         }
-        if (headHit && block.type != blockType.NOT_DEFINED)
+        if (headHit && block.type !== blockType.NOT_DEFINED)
           block.type = blockType.HIT;
 
-        if (block.type == blockType.HEAD || block.type == blockType.BODY)
+        if (block.type === blockType.HEAD || block.type === blockType.BODY)
           dead = false;
       });
     });
@@ -84,7 +84,7 @@ const Plane = ({ x: headx, y: heady }) => {
         tmpblocks[i][j].x = blocks[i][j].x;
         tmpblocks[i][j].y = blocks[i][j].y;
         tmpblocks[i][j].type = blocks[blocks.length - j - 1][i].type;
-        if (tmpblocks[i][j].type == blockType.HEAD) {
+        if (tmpblocks[i][j].type === blockType.HEAD) {
           head = { x: tmpblocks[i][j].x, y: tmpblocks[i][j].y };
         }
       }

@@ -1,9 +1,9 @@
 const blockType = {
-  HEAD: 0,
-  BODY: 1,
-  NOT_DEFINED: 2,
-  HIT: 3,
-  AIR: 4,
+  HEAD: "H",
+  BODY: "B",
+  NOT_DEFINED: "_",
+  HIT: "x",
+  AIR: " ",
 };
 
 export default blockType;

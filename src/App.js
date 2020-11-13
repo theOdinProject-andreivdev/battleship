@@ -1,7 +1,8 @@
 import "./App.css";
+import GameboardUI from "./ui/GameboardUI";
 
 function App() {
-  return <div className="App"></div>;
+  return <GameboardUI></GameboardUI>;
 }
 
 export default App;

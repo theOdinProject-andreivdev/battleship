@@ -24,7 +24,7 @@ const Gameboard = () => {
           pb.y < 0 ||
           pb.y > boardSize - 1
         ) {
-          if (pb.type == blockType.HEAD || pb.type == blockType.BODY) {
+          if (pb.type === blockType.HEAD || pb.type === blockType.BODY) {
             outOfPlane = true;
             success = false;
           }
@@ -37,10 +37,10 @@ const Gameboard = () => {
       br.forEach((b) => {
         plane.getBlocks().forEach((pbr) => {
           pbr.forEach((pb) => {
-            if (b.x == pb.x && b.y == pb.y) {
+            if (b.x === pb.x && b.y === pb.y) {
               if (
-                (b.type == blockType.HEAD || b.type == blockType.BODY) &&
-                (pb.type == blockType.HEAD || pb.type == blockType.BODY)
+                (b.type === blockType.HEAD || b.type === blockType.BODY) &&
+                (pb.type === blockType.HEAD || pb.type === blockType.BODY)
               ) {
                 collision = true;
                 success = false;
@@ -65,8 +65,8 @@ const Gameboard = () => {
         br.forEach((b) => {
           plane.getBlocks().forEach((pbr) => {
             pbr.forEach((pb) => {
-              if (b.x == pb.x && b.y == pb.y) {
-                if (pb.type == blockType.HEAD || pb.type == blockType.BODY)
+              if (b.x === pb.x && b.y === pb.y) {
+                if (pb.type === blockType.HEAD || pb.type === blockType.BODY)
                   b.type = pb.type;
               }
             });
@@ -83,10 +83,10 @@ const Gameboard = () => {
           br.forEach((b) => {
             pl.getBlocks().forEach((pbr) => {
               pbr.forEach((pb) => {
-                if (b.x == pb.x && b.y == pb.y) {
+                if (b.x === pb.x && b.y === pb.y) {
                   if (
-                    (b.type == blockType.BODY || b.type == blockType.HEAD) &&
-                    (pb.type == blockType.BODY || pb.type == blockType.HEAD)
+                    (b.type === blockType.BODY || b.type === blockType.HEAD) &&
+                    (pb.type === blockType.BODY || pb.type === blockType.HEAD)
                   )
                     b.type = blockType.NOT_DEFINED;
                 }
@@ -98,7 +98,7 @@ const Gameboard = () => {
     });
 
     for (let i = 0; i < planes.length; i++) {
-      if (planes[i].head == plane.head) planes.splice(i, 1);
+      if (planes[i].head === plane.head) planes.splice(i, 1);
     }
   };
 
