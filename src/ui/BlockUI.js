@@ -28,7 +28,7 @@ function BlockUI(props) {
       <button
         type="button"
         className={`btn ${blocktype} m-0 p-0 ${block.x} ${block.y}`}
-        style={{ margin: "0xp", width: "4vh", height: "4vh" }}
+        style={{ margin: "0xp", width: "1.5rem", height: "1.5rem" }}
         data-x={block.x}
         data-y={block.y}
       >
