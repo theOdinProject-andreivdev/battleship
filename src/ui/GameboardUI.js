@@ -42,16 +42,37 @@ class GameboardUI extends Component {
       this.state.status === gameStatus.selecting ||
       this.state.status === gameStatus.dropped
     ) {
-      this.setState({ status: gameStatus.moving });
-      this.gameBoard.selectPlane({
-        x: e.target.dataset.x,
-        y: e.target.dataset.y,
-      });
-      this.gameBoard.moveOrigin = {
-        x: e.target.dataset.x,
-        y: e.target.dataset.y,
-      };
+      this.clicks++;
+      setTimeout(
+        function () {
+          this.clicks = 0;
+        }.bind(this),
+        this.clickdelay
+      );
+
+      if (this.clicks === 2) {
+        this.gameBoard.selectPlane({
+          x: e.target.dataset.x,
+          y: e.target.dataset.y,
+        });
+
+        this.gameBoard.rotate(this.gameBoard.getSelectedPlane());
+        this.setState({ gameBoardGrid: this.gameBoard.getBlocks() });
+        this.clicks = 0;
+        return;
+      } else {
+        this.setState({ status: gameStatus.moving });
+        this.gameBoard.selectPlane({
+          x: e.target.dataset.x,
+          y: e.target.dataset.y,
+        });
+        this.gameBoard.moveOrigin = {
+          x: e.target.dataset.x,
+          y: e.target.dataset.y,
+        };
+      }
     }
+    if (this.state.status === gameStatus.hitting) this.mouseClick(e);
   }
 
   mouseLeave(e) {
@@ -90,31 +111,7 @@ class GameboardUI extends Component {
   }
 
   mouseUp(e) {
-    if (this.state.status !== gameStatus.hitting) {
-      this.clicks++;
-      console.log(this.clicks);
-      setTimeout(
-        function () {
-          this.clicks = 0;
-          console.log("reset");
-        }.bind(this),
-        this.clickdelay
-      );
-
-      if (this.clicks === 2) {
-        this.gameBoard.selectPlane({
-          x: e.target.dataset.x,
-          y: e.target.dataset.y,
-        });
-
-        this.gameBoard.rotate(this.gameBoard.getSelectedPlane());
-        this.setState({ gameBoardGrid: this.gameBoard.getBlocks() });
-        this.clicks = 0;
-        return;
-      }
-      this.setState({ status: gameStatus.dropped });
-    }
-    if (this.state.status === gameStatus.hitting) this.mouseClick(e);
+    this.setState({ status: gameStatus.dropped });
   }
 
   mouseDouble(e) {

@@ -140,38 +140,6 @@ it("tests plane getDead", () => {
   ]);
 });
 
-it("tests plane hit outside plane", () => {
-  const head = { x: 10, y: 10 };
-
-  const plane = Plane(head);
-
-  plane.hit({ x: 9, y: 10 });
-
-  expect(plane.getDead()).toStrictEqual(false);
-
-  expect(plane.getBlocks()).toStrictEqual([
-    { x: 9, y: 10, type: blockType.HIT },
-    { x: 10, y: 10, type: blockType.HEAD },
-    { x: 11, y: 10, type: blockType.NOT_DEFINED },
-    { x: 12, y: 10, type: blockType.NOT_DEFINED },
-
-    { x: 9, y: 11, type: blockType.BODY },
-    { x: 10, y: 11, type: blockType.BODY },
-    { x: 11, y: 11, type: blockType.BODY },
-    { x: 12, y: 11, type: blockType.NOT_DEFINED },
-
-    { x: 9, y: 12, type: blockType.NOT_DEFINED },
-    { x: 10, y: 12, type: blockType.BODY },
-    { x: 11, y: 12, type: blockType.NOT_DEFINED },
-    { x: 12, y: 12, type: blockType.NOT_DEFINED },
-
-    { x: 9, y: 13, type: blockType.BODY },
-    { x: 10, y: 13, type: blockType.BODY },
-    { x: 11, y: 13, type: blockType.BODY },
-    { x: 12, y: 13, type: blockType.NOT_DEFINED },
-  ]);
-});
-
 it("tests plane rotate", () => {
   const head = { x: 10, y: 10 };
 
