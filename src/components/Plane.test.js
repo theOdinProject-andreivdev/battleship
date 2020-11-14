@@ -15,30 +15,25 @@ it("tests plane blocks", () => {
   const plane = Plane(head);
 
   expect(plane.getBlocks()).toStrictEqual([
-    [
-      { x: 9, y: 10, type: blockType.NOT_DEFINED },
-      { x: 10, y: 10, type: blockType.HEAD },
-      { x: 11, y: 10, type: blockType.NOT_DEFINED },
-      { x: 12, y: 10, type: blockType.NOT_DEFINED },
-    ],
-    [
-      { x: 9, y: 11, type: blockType.BODY },
-      { x: 10, y: 11, type: blockType.BODY },
-      { x: 11, y: 11, type: blockType.BODY },
-      { x: 12, y: 11, type: blockType.NOT_DEFINED },
-    ],
-    [
-      { x: 9, y: 12, type: blockType.NOT_DEFINED },
-      { x: 10, y: 12, type: blockType.BODY },
-      { x: 11, y: 12, type: blockType.NOT_DEFINED },
-      { x: 12, y: 12, type: blockType.NOT_DEFINED },
-    ],
-    [
-      { x: 9, y: 13, type: blockType.BODY },
-      { x: 10, y: 13, type: blockType.BODY },
-      { x: 11, y: 13, type: blockType.BODY },
-      { x: 12, y: 13, type: blockType.NOT_DEFINED },
-    ],
+    { x: 9, y: 10, type: blockType.NOT_DEFINED },
+    { x: 10, y: 10, type: blockType.HEAD },
+    { x: 11, y: 10, type: blockType.NOT_DEFINED },
+    { x: 12, y: 10, type: blockType.NOT_DEFINED },
+
+    { x: 9, y: 11, type: blockType.BODY },
+    { x: 10, y: 11, type: blockType.BODY },
+    { x: 11, y: 11, type: blockType.BODY },
+    { x: 12, y: 11, type: blockType.NOT_DEFINED },
+
+    { x: 9, y: 12, type: blockType.NOT_DEFINED },
+    { x: 10, y: 12, type: blockType.BODY },
+    { x: 11, y: 12, type: blockType.NOT_DEFINED },
+    { x: 12, y: 12, type: blockType.NOT_DEFINED },
+
+    { x: 9, y: 13, type: blockType.BODY },
+    { x: 10, y: 13, type: blockType.BODY },
+    { x: 11, y: 13, type: blockType.BODY },
+    { x: 12, y: 13, type: blockType.NOT_DEFINED },
   ]);
 });
 
@@ -51,30 +46,25 @@ it("tests plane hit", () => {
   expect(plane.getDead()).toStrictEqual(false);
 
   expect(plane.getBlocks()).toStrictEqual([
-    [
-      { x: 9, y: 10, type: blockType.NOT_DEFINED },
-      { x: 10, y: 10, type: blockType.HEAD },
-      { x: 11, y: 10, type: blockType.NOT_DEFINED },
-      { x: 12, y: 10, type: blockType.NOT_DEFINED },
-    ],
-    [
-      { x: 9, y: 11, type: blockType.HIT },
-      { x: 10, y: 11, type: blockType.BODY },
-      { x: 11, y: 11, type: blockType.BODY },
-      { x: 12, y: 11, type: blockType.NOT_DEFINED },
-    ],
-    [
-      { x: 9, y: 12, type: blockType.NOT_DEFINED },
-      { x: 10, y: 12, type: blockType.BODY },
-      { x: 11, y: 12, type: blockType.NOT_DEFINED },
-      { x: 12, y: 12, type: blockType.NOT_DEFINED },
-    ],
-    [
-      { x: 9, y: 13, type: blockType.BODY },
-      { x: 10, y: 13, type: blockType.BODY },
-      { x: 11, y: 13, type: blockType.BODY },
-      { x: 12, y: 13, type: blockType.NOT_DEFINED },
-    ],
+    { x: 9, y: 10, type: blockType.NOT_DEFINED },
+    { x: 10, y: 10, type: blockType.HEAD },
+    { x: 11, y: 10, type: blockType.NOT_DEFINED },
+    { x: 12, y: 10, type: blockType.NOT_DEFINED },
+
+    { x: 9, y: 11, type: blockType.HIT },
+    { x: 10, y: 11, type: blockType.BODY },
+    { x: 11, y: 11, type: blockType.BODY },
+    { x: 12, y: 11, type: blockType.NOT_DEFINED },
+
+    { x: 9, y: 12, type: blockType.NOT_DEFINED },
+    { x: 10, y: 12, type: blockType.BODY },
+    { x: 11, y: 12, type: blockType.NOT_DEFINED },
+    { x: 12, y: 12, type: blockType.NOT_DEFINED },
+
+    { x: 9, y: 13, type: blockType.BODY },
+    { x: 10, y: 13, type: blockType.BODY },
+    { x: 11, y: 13, type: blockType.BODY },
+    { x: 12, y: 13, type: blockType.NOT_DEFINED },
   ]);
 });
 
@@ -87,30 +77,25 @@ it("tests plane hit head", () => {
   expect(plane.getDead()).toStrictEqual(true);
 
   expect(plane.getBlocks()).toStrictEqual([
-    [
-      { x: 9, y: 10, type: blockType.NOT_DEFINED },
-      { x: 10, y: 10, type: blockType.HIT },
-      { x: 11, y: 10, type: blockType.NOT_DEFINED },
-      { x: 12, y: 10, type: blockType.NOT_DEFINED },
-    ],
-    [
-      { x: 9, y: 11, type: blockType.HIT },
-      { x: 10, y: 11, type: blockType.HIT },
-      { x: 11, y: 11, type: blockType.HIT },
-      { x: 12, y: 11, type: blockType.NOT_DEFINED },
-    ],
-    [
-      { x: 9, y: 12, type: blockType.NOT_DEFINED },
-      { x: 10, y: 12, type: blockType.HIT },
-      { x: 11, y: 12, type: blockType.NOT_DEFINED },
-      { x: 12, y: 12, type: blockType.NOT_DEFINED },
-    ],
-    [
-      { x: 9, y: 13, type: blockType.HIT },
-      { x: 10, y: 13, type: blockType.HIT },
-      { x: 11, y: 13, type: blockType.HIT },
-      { x: 12, y: 13, type: blockType.NOT_DEFINED },
-    ],
+    { x: 9, y: 10, type: blockType.NOT_DEFINED },
+    { x: 10, y: 10, type: blockType.HIT },
+    { x: 11, y: 10, type: blockType.NOT_DEFINED },
+    { x: 12, y: 10, type: blockType.NOT_DEFINED },
+
+    { x: 9, y: 11, type: blockType.HIT },
+    { x: 10, y: 11, type: blockType.HIT },
+    { x: 11, y: 11, type: blockType.HIT },
+    { x: 12, y: 11, type: blockType.NOT_DEFINED },
+
+    { x: 9, y: 12, type: blockType.NOT_DEFINED },
+    { x: 10, y: 12, type: blockType.HIT },
+    { x: 11, y: 12, type: blockType.NOT_DEFINED },
+    { x: 12, y: 12, type: blockType.NOT_DEFINED },
+
+    { x: 9, y: 13, type: blockType.HIT },
+    { x: 10, y: 13, type: blockType.HIT },
+    { x: 11, y: 13, type: blockType.HIT },
+    { x: 12, y: 13, type: blockType.NOT_DEFINED },
   ]);
 });
 
@@ -133,30 +118,25 @@ it("tests plane getDead", () => {
   expect(plane.getDead()).toStrictEqual(true);
 
   expect(plane.getBlocks()).toStrictEqual([
-    [
-      { x: 9, y: 10, type: blockType.NOT_DEFINED },
-      { x: 10, y: 10, type: blockType.HIT },
-      { x: 11, y: 10, type: blockType.NOT_DEFINED },
-      { x: 12, y: 10, type: blockType.NOT_DEFINED },
-    ],
-    [
-      { x: 9, y: 11, type: blockType.HIT },
-      { x: 10, y: 11, type: blockType.HIT },
-      { x: 11, y: 11, type: blockType.HIT },
-      { x: 12, y: 11, type: blockType.NOT_DEFINED },
-    ],
-    [
-      { x: 9, y: 12, type: blockType.NOT_DEFINED },
-      { x: 10, y: 12, type: blockType.HIT },
-      { x: 11, y: 12, type: blockType.NOT_DEFINED },
-      { x: 12, y: 12, type: blockType.NOT_DEFINED },
-    ],
-    [
-      { x: 9, y: 13, type: blockType.HIT },
-      { x: 10, y: 13, type: blockType.HIT },
-      { x: 11, y: 13, type: blockType.HIT },
-      { x: 12, y: 13, type: blockType.NOT_DEFINED },
-    ],
+    { x: 9, y: 10, type: blockType.NOT_DEFINED },
+    { x: 10, y: 10, type: blockType.HIT },
+    { x: 11, y: 10, type: blockType.NOT_DEFINED },
+    { x: 12, y: 10, type: blockType.NOT_DEFINED },
+
+    { x: 9, y: 11, type: blockType.HIT },
+    { x: 10, y: 11, type: blockType.HIT },
+    { x: 11, y: 11, type: blockType.HIT },
+    { x: 12, y: 11, type: blockType.NOT_DEFINED },
+
+    { x: 9, y: 12, type: blockType.NOT_DEFINED },
+    { x: 10, y: 12, type: blockType.HIT },
+    { x: 11, y: 12, type: blockType.NOT_DEFINED },
+    { x: 12, y: 12, type: blockType.NOT_DEFINED },
+
+    { x: 9, y: 13, type: blockType.HIT },
+    { x: 10, y: 13, type: blockType.HIT },
+    { x: 11, y: 13, type: blockType.HIT },
+    { x: 12, y: 13, type: blockType.NOT_DEFINED },
   ]);
 });
 
@@ -170,30 +150,25 @@ it("tests plane hit outside plane", () => {
   expect(plane.getDead()).toStrictEqual(false);
 
   expect(plane.getBlocks()).toStrictEqual([
-    [
-      { x: 9, y: 10, type: blockType.HIT },
-      { x: 10, y: 10, type: blockType.HEAD },
-      { x: 11, y: 10, type: blockType.NOT_DEFINED },
-      { x: 12, y: 10, type: blockType.NOT_DEFINED },
-    ],
-    [
-      { x: 9, y: 11, type: blockType.BODY },
-      { x: 10, y: 11, type: blockType.BODY },
-      { x: 11, y: 11, type: blockType.BODY },
-      { x: 12, y: 11, type: blockType.NOT_DEFINED },
-    ],
-    [
-      { x: 9, y: 12, type: blockType.NOT_DEFINED },
-      { x: 10, y: 12, type: blockType.BODY },
-      { x: 11, y: 12, type: blockType.NOT_DEFINED },
-      { x: 12, y: 12, type: blockType.NOT_DEFINED },
-    ],
-    [
-      { x: 9, y: 13, type: blockType.BODY },
-      { x: 10, y: 13, type: blockType.BODY },
-      { x: 11, y: 13, type: blockType.BODY },
-      { x: 12, y: 13, type: blockType.NOT_DEFINED },
-    ],
+    { x: 9, y: 10, type: blockType.HIT },
+    { x: 10, y: 10, type: blockType.HEAD },
+    { x: 11, y: 10, type: blockType.NOT_DEFINED },
+    { x: 12, y: 10, type: blockType.NOT_DEFINED },
+
+    { x: 9, y: 11, type: blockType.BODY },
+    { x: 10, y: 11, type: blockType.BODY },
+    { x: 11, y: 11, type: blockType.BODY },
+    { x: 12, y: 11, type: blockType.NOT_DEFINED },
+
+    { x: 9, y: 12, type: blockType.NOT_DEFINED },
+    { x: 10, y: 12, type: blockType.BODY },
+    { x: 11, y: 12, type: blockType.NOT_DEFINED },
+    { x: 12, y: 12, type: blockType.NOT_DEFINED },
+
+    { x: 9, y: 13, type: blockType.BODY },
+    { x: 10, y: 13, type: blockType.BODY },
+    { x: 11, y: 13, type: blockType.BODY },
+    { x: 12, y: 13, type: blockType.NOT_DEFINED },
   ]);
 });
 
@@ -205,30 +180,25 @@ it("tests plane rotate", () => {
   plane.rotate();
 
   expect(plane.getBlocks()).toStrictEqual([
-    [
-      { x: 9, y: 10, type: blockType.BODY },
-      { x: 10, y: 10, type: blockType.NOT_DEFINED },
-      { x: 11, y: 10, type: blockType.BODY },
-      { x: 12, y: 10, type: blockType.NOT_DEFINED },
-    ],
-    [
-      { x: 9, y: 11, type: blockType.BODY },
-      { x: 10, y: 11, type: blockType.BODY },
-      { x: 11, y: 11, type: blockType.BODY },
-      { x: 12, y: 11, type: blockType.HEAD },
-    ],
-    [
-      { x: 9, y: 12, type: blockType.BODY },
-      { x: 10, y: 12, type: blockType.NOT_DEFINED },
-      { x: 11, y: 12, type: blockType.BODY },
-      { x: 12, y: 12, type: blockType.NOT_DEFINED },
-    ],
-    [
-      { x: 9, y: 13, type: blockType.NOT_DEFINED },
-      { x: 10, y: 13, type: blockType.NOT_DEFINED },
-      { x: 11, y: 13, type: blockType.NOT_DEFINED },
-      { x: 12, y: 13, type: blockType.NOT_DEFINED },
-    ],
+    { x: 9, y: 10, type: blockType.BODY },
+    { x: 10, y: 10, type: blockType.NOT_DEFINED },
+    { x: 11, y: 10, type: blockType.BODY },
+    { x: 12, y: 10, type: blockType.NOT_DEFINED },
+
+    { x: 9, y: 11, type: blockType.BODY },
+    { x: 10, y: 11, type: blockType.BODY },
+    { x: 11, y: 11, type: blockType.BODY },
+    { x: 12, y: 11, type: blockType.HEAD },
+
+    { x: 9, y: 12, type: blockType.BODY },
+    { x: 10, y: 12, type: blockType.NOT_DEFINED },
+    { x: 11, y: 12, type: blockType.BODY },
+    { x: 12, y: 12, type: blockType.NOT_DEFINED },
+
+    { x: 9, y: 13, type: blockType.NOT_DEFINED },
+    { x: 10, y: 13, type: blockType.NOT_DEFINED },
+    { x: 11, y: 13, type: blockType.NOT_DEFINED },
+    { x: 12, y: 13, type: blockType.NOT_DEFINED },
   ]);
 });
 
@@ -243,29 +213,24 @@ it("tests plane rotate and head hit", () => {
   expect(plane.getDead()).toStrictEqual(true);
 
   expect(plane.getBlocks()).toStrictEqual([
-    [
-      { x: 9, y: 10, type: blockType.HIT },
-      { x: 10, y: 10, type: blockType.NOT_DEFINED },
-      { x: 11, y: 10, type: blockType.HIT },
-      { x: 12, y: 10, type: blockType.NOT_DEFINED },
-    ],
-    [
-      { x: 9, y: 11, type: blockType.HIT },
-      { x: 10, y: 11, type: blockType.HIT },
-      { x: 11, y: 11, type: blockType.HIT },
-      { x: 12, y: 11, type: blockType.HIT },
-    ],
-    [
-      { x: 9, y: 12, type: blockType.HIT },
-      { x: 10, y: 12, type: blockType.NOT_DEFINED },
-      { x: 11, y: 12, type: blockType.HIT },
-      { x: 12, y: 12, type: blockType.NOT_DEFINED },
-    ],
-    [
-      { x: 9, y: 13, type: blockType.NOT_DEFINED },
-      { x: 10, y: 13, type: blockType.NOT_DEFINED },
-      { x: 11, y: 13, type: blockType.NOT_DEFINED },
-      { x: 12, y: 13, type: blockType.NOT_DEFINED },
-    ],
+    { x: 9, y: 10, type: blockType.HIT },
+    { x: 10, y: 10, type: blockType.NOT_DEFINED },
+    { x: 11, y: 10, type: blockType.HIT },
+    { x: 12, y: 10, type: blockType.NOT_DEFINED },
+
+    { x: 9, y: 11, type: blockType.HIT },
+    { x: 10, y: 11, type: blockType.HIT },
+    { x: 11, y: 11, type: blockType.HIT },
+    { x: 12, y: 11, type: blockType.HIT },
+
+    { x: 9, y: 12, type: blockType.HIT },
+    { x: 10, y: 12, type: blockType.NOT_DEFINED },
+    { x: 11, y: 12, type: blockType.HIT },
+    { x: 12, y: 12, type: blockType.NOT_DEFINED },
+
+    { x: 9, y: 13, type: blockType.NOT_DEFINED },
+    { x: 10, y: 13, type: blockType.NOT_DEFINED },
+    { x: 11, y: 13, type: blockType.NOT_DEFINED },
+    { x: 12, y: 13, type: blockType.NOT_DEFINED },
   ]);
 });

@@ -137,7 +137,15 @@ const Plane = ({ x: headx, y: heady }) => {
   };
 
   const getBlocks = () => {
-    return blocks;
+    let tmpblocks = [];
+
+    blocks.forEach((br) => {
+      br.forEach((block) => {
+        tmpblocks.push(block);
+      });
+    });
+
+    return [...tmpblocks];
   };
   return { head, getBlocks, hit, rotate, getDead, blockType, move };
 };
