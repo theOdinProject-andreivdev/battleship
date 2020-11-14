@@ -4,8 +4,6 @@ import BlockUI from "./BlockUI";
 import uniqid from "uniqid";
 import { Component } from "react";
 import gameStatus from "../util/gameStatus";
-import blockType from "../util/blockType";
-import drawBlocks from "../util/drawBlocks";
 
 class GameboardUI extends Component {
   constructor(props) {
@@ -14,33 +12,29 @@ class GameboardUI extends Component {
     this.state = {
       status: gameStatus.selecting,
       gameBoardGrid: this.gameBoard.getBlocks(),
-      moveOrigin: { x: 0, y: 0 },
     };
 
     const plane1 = Plane({ x: 2, y: 2 });
-    this.gameBoard.addPlane(plane1);
+    this.addPlane(plane1);
 
     const plane2 = Plane({ x: 5, y: 5 });
-    this.gameBoard.addPlane(plane2);
+    this.addPlane(plane2);
+
+    this.clicks = 0;
+    this.clickdelay = 400;
   }
 
-  onBlockClick(e) {
-    e.preventDefault();
+  addPlane = (plane) => {
+    this.gameBoard.addPlane(plane);
+  };
 
-    /* 
-    switch (this.state.status) {
-      case gameStatus.placing:
-        break;
-      case gameStatus.playing:
-        this.gameBoard.hit({
-          x: e.target.dataset.x,
-          y: e.target.dataset.y,
-        });
-        this.setState({ gameBoardGrid: this.gameBoard.getBlocks() });
-        break;
-      default:
-        break;
-    } */
+  mouseClick(e) {
+    console.log("click");
+    this.gameBoard.hit({
+      x: e.target.dataset.x,
+      y: e.target.dataset.y,
+    });
+    this.setState({ gameBoardGrid: this.gameBoard.getBlocks() });
   }
 
   mouseDown(e) {
@@ -49,7 +43,14 @@ class GameboardUI extends Component {
       this.state.status === gameStatus.dropped
     ) {
       this.setState({ status: gameStatus.moving });
-      this.forceUpdate();
+      this.gameBoard.selectPlane({
+        x: e.target.dataset.x,
+        y: e.target.dataset.y,
+      });
+      this.gameBoard.moveOrigin = {
+        x: e.target.dataset.x,
+        y: e.target.dataset.y,
+      };
     }
   }
 
@@ -60,11 +61,13 @@ class GameboardUI extends Component {
     ) {
       if (e.target.dataset.x !== null && e.target.dataset.y !== null) {
         this.setState({ status: gameStatus.movingout });
-        this.setState({
-          moveOrigin: { x: e.target.dataset.x, y: e.target.dataset.y },
-        });
-        this.forceUpdate();
+
+        this.gameBoard.moveOrigin = {
+          x: e.target.dataset.x,
+          y: e.target.dataset.y,
+        };
       }
+      this.forceUpdate();
     }
   }
 
@@ -74,7 +77,7 @@ class GameboardUI extends Component {
         let destx = e.target.dataset.x;
         let desty = e.target.dataset.y;
 
-        this.gameBoard.movePlane(this.state.moveOrigin, {
+        this.gameBoard.moveSelectedPlane(this.gameBoard.moveOrigin, {
           x: destx,
           y: desty,
         });
@@ -87,7 +90,35 @@ class GameboardUI extends Component {
   }
 
   mouseUp(e) {
-    this.setState({ status: gameStatus.dropped });
+    if (this.state.status !== gameStatus.hitting) {
+      this.clicks++;
+      console.log(this.clicks);
+      setTimeout(
+        function () {
+          this.clicks = 0;
+          console.log("reset");
+        }.bind(this),
+        this.clickdelay
+      );
+
+      if (this.clicks === 2) {
+        this.gameBoard.selectPlane({
+          x: e.target.dataset.x,
+          y: e.target.dataset.y,
+        });
+
+        this.gameBoard.rotate(this.gameBoard.getSelectedPlane());
+        this.setState({ gameBoardGrid: this.gameBoard.getBlocks() });
+        this.clicks = 0;
+        return;
+      }
+      this.setState({ status: gameStatus.dropped });
+    }
+    if (this.state.status === gameStatus.hitting) this.mouseClick(e);
+  }
+
+  mouseDouble(e) {
+    console.log("doubleclick");
   }
 
   render() {
@@ -106,17 +137,13 @@ class GameboardUI extends Component {
               {this.state.gameBoardGrid.map((block) => {
                 return (
                   <div
+                    className="box"
                     key={uniqid()}
-                    onClick={this.onBlockClick.bind(this)}
                     onMouseDown={this.mouseDown.bind(this)}
                     onMouseLeave={this.mouseLeave.bind(this)}
                     onMouseOver={this.mouseEnter.bind(this)}
                     onMouseUp={this.mouseUp.bind(this)}
-                    style={{
-                      display: "flex",
-                      width: "100%",
-                      height: "100%",
-                    }}
+                    onDoubleClick={this.mouseDouble.bind(this)}
                   >
                     <BlockUI block={block} />
                   </div>

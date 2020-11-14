@@ -4,6 +4,7 @@ const gameStatus = {
   movingout: 3,
   movingin: 4,
   dropped: 5,
+  hitting: 6,
 };
 
 export default gameStatus;

@@ -1,33 +1,28 @@
-import Gameboard from "../components/Gameboard";
-import Plane from "../components/Plane";
-
 function BlockUI(props) {
   let blocktype = "";
-  let blocktext = "";
   let block = props.block;
   switch (props.block.type) {
     case "H":
       blocktype = "btn-primary";
-      blocktext = "H";
       break;
     case "B":
       blocktype = "btn-secondary";
-      blocktext = "B";
       break;
     case "_":
       blocktype = "btn-light";
-      blocktext = "_";
       break;
     case "X":
       blocktype = "btn-danger";
-      blocktext = "X";
+      break;
+    default:
       break;
   }
+
   return (
     <div
       className={`${blocktype} ${block.x} ${block.y}`}
       style={{
-        border: "1px solid black",
+        border: "1px solid darkgrey",
         margin: "0px",
         width: "100%",
         height: "100%",

@@ -94,19 +94,28 @@ const Gameboard = () => {
     }
   };
 
-  const movePlane = ({ x: xorg, y: yorg }, { x: xdest, y: ydest }) => {
-    let xdelta = xdest - xorg;
-    let ydelta = ydest - yorg;
+  let moveOrigin = { x: 0, y: 0 };
 
-    let selectedPlane;
-    let movable = true;
+  let selectedPlane;
 
+  const selectPlane = ({ x: xorg, y: yorg }) => {
+    let newSelectedPlane;
     planes.forEach((plane) => {
       plane.getBlocks().forEach((pb) => {
         if (pb.x === parseInt(xorg) && pb.y === parseInt(yorg))
-          selectedPlane = plane;
+          newSelectedPlane = plane;
       });
     });
+
+    if (newSelectedPlane !== selectedPlane && newSelectedPlane !== undefined)
+      selectedPlane = newSelectedPlane;
+  };
+
+  const moveSelectedPlane = ({ x: xorg, y: yorg }, { x: xdest, y: ydest }) => {
+    let xdelta = xdest - xorg;
+    let ydelta = ydest - yorg;
+
+    let movable = true;
 
     if (selectedPlane !== undefined) {
       selectedPlane.getBlocks().forEach((pb) => {
@@ -122,35 +131,20 @@ const Gameboard = () => {
       });
 
       planes.forEach((everyPlane) => {
-        if (everyPlane != selectedPlane) {
+        if (everyPlane !== selectedPlane) {
           everyPlane.getBlocks().forEach((epb) => {
             selectedPlane.getBlocks().forEach((pb) => {
               if (
-                (epb.type == blockType.HEAD || epb.type == blockType.BODY) &&
-                (pb.type == blockType.HEAD || pb.type == blockType.BODY)
+                (epb.type === blockType.HEAD || epb.type === blockType.BODY) &&
+                (pb.type === blockType.HEAD || pb.type === blockType.BODY)
               ) {
-                if (epb.x == pb.x + xdelta && epb.y == pb.y + ydelta)
+                if (epb.x === pb.x + xdelta && epb.y === pb.y + ydelta)
                   movable = false;
               }
             });
           });
         }
       });
-
-      /* selectedPlane.getBlocks().forEach((pb) => {
-        planes.forEach((everyPlane) => {
-          if (everyPlane != selectedPlane)
-            everyPlane.getBlocks().forEach((epb) => {
-              if (
-                pb.x + parseInt(xdelta) == epb.x &&
-                pb.y + parseInt(ydelta) == epb.y
-              )
-                if (pb.type == blockType.BODY || pb.type == blockType.HEAD)
-                  if (epb.type == blockType.BODY || epb.type == blockType.HEAD)
-                    movable = false;
-            });
-        });
-      }); */
 
       if (movable) {
         getBlocks().forEach((b) => {
@@ -188,6 +182,9 @@ const Gameboard = () => {
     return planes;
   };
 
+  const getSelectedPlane = () => {
+    return selectedPlane;
+  };
   const hit = ({ x: hitx, y: hity }) => {
     planes.forEach((plane) => {
       plane.hit({ x: hitx, y: hity });
@@ -212,7 +209,10 @@ const Gameboard = () => {
     getPlanes,
     rotate,
     hit,
-    movePlane,
+    moveSelectedPlane,
+    moveOrigin,
+    selectPlane,
+    getSelectedPlane,
   };
 };
 

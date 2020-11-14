@@ -1485,7 +1485,8 @@ it("moves plane selected on head", () => {
 
   expect(gameboard.addPlane(plane)).toStrictEqual(true);
 
-  gameboard.movePlane({ x: 5, y: 5 }, { x: 7, y: 6 });
+  gameboard.selectPlane({ x: 5, y: 5 });
+  gameboard.moveSelectedPlane({ x: 5, y: 5 }, { x: 7, y: 6 });
 
   expect(gameboard.getBlocks()).toStrictEqual([
     { x: 0, y: 9, type: blockType.NOT_DEFINED },
@@ -1606,7 +1607,8 @@ it("moves plane selected on body", () => {
 
   expect(gameboard.addPlane(plane)).toStrictEqual(true);
 
-  gameboard.movePlane({ x: 4, y: 6 }, { x: 6, y: 7 });
+  gameboard.selectPlane({ x: 4, y: 6 });
+  gameboard.moveSelectedPlane({ x: 4, y: 6 }, { x: 6, y: 7 });
 
   expect(gameboard.getBlocks()).toStrictEqual([
     { x: 0, y: 9, type: blockType.NOT_DEFINED },

@@ -6,7 +6,7 @@ it("tests plane head", () => {
 
   const plane = Plane(head);
 
-  expect(plane.head).toStrictEqual(head);
+  expect(plane.getHead()).toStrictEqual(head);
 });
 
 it("tests plane blocks", () => {

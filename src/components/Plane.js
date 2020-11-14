@@ -136,6 +136,10 @@ const Plane = ({ x: headx, y: heady }) => {
     return dead;
   };
 
+  const getHead = () => {
+    return head;
+  };
+
   const getBlocks = () => {
     let tmpblocks = [];
 
@@ -147,7 +151,7 @@ const Plane = ({ x: headx, y: heady }) => {
 
     return [...tmpblocks];
   };
-  return { head, getBlocks, hit, rotate, getDead, blockType, move };
+  return { getHead, getBlocks, hit, rotate, getDead, blockType, move };
 };
 
 export default Plane;
