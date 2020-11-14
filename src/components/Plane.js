@@ -123,8 +123,8 @@ const Plane = ({ x: headx, y: heady }) => {
 
     for (let i = 0; i < blocks.length; i++) {
       for (let j = 0; j < blocks.length; j++) {
-        tmpblocks[i][j].x = blocks[i][j].x + xdelta;
-        tmpblocks[i][j].y = blocks[i][j].y + ydelta;
+        tmpblocks[i][j].x = blocks[i][j].x + parseInt(xdelta);
+        tmpblocks[i][j].y = blocks[i][j].y + parseInt(ydelta);
         tmpblocks[i][j].type = blocks[i][j].type;
       }
     }

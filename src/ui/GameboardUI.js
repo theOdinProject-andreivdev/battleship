@@ -20,11 +20,16 @@ class GameboardUI extends Component {
 
     const plane1 = Plane({ x: 2, y: 2 });
     this.gameBoard.addPlane(plane1);
+
+    const plane2 = Plane({ x: 5, y: 5 });
+    this.gameBoard.addPlane(plane2);
   }
 
   onBlockClick(e) {
-    /*  e.preventDefault();
-    console.log("click");
+    e.preventDefault();
+
+    console.log(e.button);
+    /* 
     switch (this.state.status) {
       case gameStatus.placing:
         break;
@@ -42,8 +47,8 @@ class GameboardUI extends Component {
 
   mouseDown(e) {
     if (
-      this.state.status == gameStatus.selecting ||
-      this.state.status == gameStatus.dropped
+      this.state.status === gameStatus.selecting ||
+      this.state.status === gameStatus.dropped
     ) {
       console.log("down");
       this.setState({ status: gameStatus.moving });
@@ -53,27 +58,27 @@ class GameboardUI extends Component {
 
   mouseLeave(e) {
     if (
-      this.state.status == gameStatus.moving ||
-      this.state.status == gameStatus.movingin
+      this.state.status === gameStatus.moving ||
+      this.state.status === gameStatus.movingin
     ) {
-      if (e.target.dataset.x != null && e.target.dataset.y != null) {
+      if (e.target.dataset.x !== null && e.target.dataset.y !== null) {
         console.log("leave");
         this.setState({ status: gameStatus.movingout });
         this.setState({
           moveOrigin: { x: e.target.dataset.x, y: e.target.dataset.y },
         });
-        //this.forceUpdate();
+        this.forceUpdate();
       }
     }
   }
 
   mouseEnter(e) {
-    if (this.state.status == gameStatus.movingout) {
+    if (this.state.status === gameStatus.movingout) {
       console.log("enter");
       if (e.target.dataset.x != null && e.target.dataset.y != null) {
         let destx = e.target.dataset.x;
         let desty = e.target.dataset.y;
-
+        console.log(this.state.moveOrigin);
         console.log("destx:" + destx + " desty:" + desty);
 
         this.gameBoard.movePlane(this.state.moveOrigin, {
