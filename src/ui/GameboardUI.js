@@ -15,7 +15,7 @@ class GameboardUI extends Component {
     this.state = {
       status: gameStatus.selecting,
       gameBoardGrid: this.gameBoard.getBlocks(),
-      selectedPlane: {},
+      moveOrigin: { x: 0, y: 0 },
     };
 
     const plane1 = Plane({ x: 2, y: 2 });
@@ -45,26 +45,9 @@ class GameboardUI extends Component {
       this.state.status == gameStatus.selecting ||
       this.state.status == gameStatus.dropped
     ) {
-      console.log(
-        "selected x:" + e.target.dataset.x + " y:" + e.target.dataset.y
-      );
-      console.log(e.target.dataset.x + " " + e.target.dataset.y);
-
-      this.gameBoard.getPlanes().forEach((plane) => {
-        plane.getBlocks().forEach((pbr) => {
-          pbr.forEach((pb) => {
-            if (
-              pb.x == e.target.dataset.x &&
-              pb.y == e.target.dataset.y &&
-              (pb.type == blockType.HEAD || pb.type == blockType.BODY)
-            ) {
-              this.setState({ selectedPlane: plane });
-              this.setState({ status: gameStatus.moving });
-            }
-          });
-        });
-      });
-      //console.log(drawBlocks(this.gameBoard.getBlocks()));
+      console.log("down");
+      this.setState({ status: gameStatus.moving });
+      this.forceUpdate();
     }
   }
 
@@ -73,30 +56,40 @@ class GameboardUI extends Component {
       this.state.status == gameStatus.moving ||
       this.state.status == gameStatus.movingin
     ) {
-      console.log("leave x:" + e.target.dataset.x + " y:" + e.target.dataset.y);
-      this.gameBoard.removePlane(this.state.selectedPlane);
-      this.setState({ gameBoardGrid: this.gameBoard.getBlocks() });
-      this.setState({ status: gameStatus.movingout });
-      //console.log(drawBlocks(this.gameBoard.getBlocks()));
+      if (e.target.dataset.x != null && e.target.dataset.y != null) {
+        console.log("leave");
+        this.setState({ status: gameStatus.movingout });
+        this.setState({
+          moveOrigin: { x: e.target.dataset.x, y: e.target.dataset.y },
+        });
+        //this.forceUpdate();
+      }
     }
   }
 
   mouseEnter(e) {
     if (this.state.status == gameStatus.movingout) {
-      console.log("enter x:" + e.target.dataset.x + " y:" + e.target.dataset.y);
-      const plane = Plane({
-        x: parseInt(e.target.dataset.x),
-        y: parseInt(e.target.dataset.y),
-      });
-      this.setState({ selectedPlane: plane });
-      this.gameBoard.addPlane(plane);
+      console.log("enter");
+      if (e.target.dataset.x != null && e.target.dataset.y != null) {
+        let destx = e.target.dataset.x;
+        let desty = e.target.dataset.y;
+
+        console.log("destx:" + destx + " desty:" + desty);
+
+        this.gameBoard.movePlane(this.state.moveOrigin, {
+          x: destx,
+          y: desty,
+        });
+      }
+
       this.setState({ gameBoardGrid: this.gameBoard.getBlocks() });
       this.setState({ status: gameStatus.movingin });
-      //console.log(drawBlocks(this.gameBoard.getBlocks()));
+      this.forceUpdate();
     }
   }
 
   mouseUp(e) {
+    console.log("up");
     this.setState({ status: gameStatus.dropped });
   }
 

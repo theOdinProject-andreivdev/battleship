@@ -25,15 +25,26 @@ function BlockUI(props) {
   }
   return (
     <div>
-      <button
+      {/*       <button
         type="button"
-        className={`btn ${blocktype} m-0 p-0 ${block.x} ${block.y}`}
+        className={`btn ${blocktype} m-0 p-1 ${block.x} ${block.y}`}
         style={{ margin: "0xp", width: "1.5rem", height: "1.5rem" }}
         data-x={block.x}
         data-y={block.y}
       >
-        {/* {blocktext} */}
-      </button>
+      </button> */}
+
+      <div
+        className={`${blocktype} ${block.x} ${block.y}`}
+        style={{
+          width: "30px",
+          height: "30px",
+          border: "1px solid black",
+          margin: "0px",
+        }}
+        data-x={block.x}
+        data-y={block.y}
+      ></div>
     </div>
   );
 }

@@ -93,6 +93,45 @@ const Plane = ({ x: headx, y: heady }) => {
     blocks.splice(0, blocks.length, ...tmpblocks);
   };
 
+  const move = (xdelta, ydelta) => {
+    let tmpblocks = [
+      [
+        { x: 0, y: 0, type: 0 },
+        { x: 0, y: 0, type: 0 },
+        { x: 0, y: 0, type: 0 },
+        { x: 0, y: 0, type: 0 },
+      ],
+      [
+        { x: 0, y: 0, type: 0 },
+        { x: 0, y: 0, type: 0 },
+        { x: 0, y: 0, type: 0 },
+        { x: 0, y: 0, type: 0 },
+      ],
+      [
+        { x: 0, y: 0, type: 0 },
+        { x: 0, y: 0, type: 0 },
+        { x: 0, y: 0, type: 0 },
+        { x: 0, y: 0, type: 0 },
+      ],
+      [
+        { x: 0, y: 0, type: 0 },
+        { x: 0, y: 0, type: 0 },
+        { x: 0, y: 0, type: 0 },
+        { x: 0, y: 0, type: 0 },
+      ],
+    ];
+
+    for (let i = 0; i < blocks.length; i++) {
+      for (let j = 0; j < blocks.length; j++) {
+        tmpblocks[i][j].x = blocks[i][j].x + xdelta;
+        tmpblocks[i][j].y = blocks[i][j].y + ydelta;
+        tmpblocks[i][j].type = blocks[i][j].type;
+      }
+    }
+
+    blocks.splice(0, blocks.length, ...tmpblocks);
+  };
+
   const getDead = () => {
     return dead;
   };
@@ -100,7 +139,7 @@ const Plane = ({ x: headx, y: heady }) => {
   const getBlocks = () => {
     return blocks;
   };
-  return { head, getBlocks, hit, rotate, getDead, blockType };
+  return { head, getBlocks, hit, rotate, getDead, blockType, move };
 };
 
 export default Plane;
