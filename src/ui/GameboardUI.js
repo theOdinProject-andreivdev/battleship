@@ -122,10 +122,17 @@ class GameboardUI extends Component {
     return (
       <div>
         <div className="container">
-          <div className="card">
+          <div
+            className="card"
+            style={{
+              width: "240px",
+              height: "240px",
+            }}
+          >
             <div
               className="card-body"
               style={{
+                position: "relative",
                 display: "grid",
                 gridTemplateRows: "repeat(10, 20px)",
                 gridTemplateColumns: "repeat(10, 20px)",
