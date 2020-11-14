@@ -10,7 +10,6 @@ import drawBlocks from "../util/drawBlocks";
 class GameboardUI extends Component {
   constructor(props) {
     super(props);
-    console.log("Load UI");
     this.gameBoard = Gameboard();
     this.state = {
       status: gameStatus.selecting,
@@ -28,7 +27,6 @@ class GameboardUI extends Component {
   onBlockClick(e) {
     e.preventDefault();
 
-    console.log(e.button);
     /* 
     switch (this.state.status) {
       case gameStatus.placing:
@@ -50,7 +48,6 @@ class GameboardUI extends Component {
       this.state.status === gameStatus.selecting ||
       this.state.status === gameStatus.dropped
     ) {
-      console.log("down");
       this.setState({ status: gameStatus.moving });
       this.forceUpdate();
     }
@@ -62,7 +59,6 @@ class GameboardUI extends Component {
       this.state.status === gameStatus.movingin
     ) {
       if (e.target.dataset.x !== null && e.target.dataset.y !== null) {
-        console.log("leave");
         this.setState({ status: gameStatus.movingout });
         this.setState({
           moveOrigin: { x: e.target.dataset.x, y: e.target.dataset.y },
@@ -74,12 +70,9 @@ class GameboardUI extends Component {
 
   mouseEnter(e) {
     if (this.state.status === gameStatus.movingout) {
-      console.log("enter");
       if (e.target.dataset.x != null && e.target.dataset.y != null) {
         let destx = e.target.dataset.x;
         let desty = e.target.dataset.y;
-        console.log(this.state.moveOrigin);
-        console.log("destx:" + destx + " desty:" + desty);
 
         this.gameBoard.movePlane(this.state.moveOrigin, {
           x: destx,
@@ -94,7 +87,6 @@ class GameboardUI extends Component {
   }
 
   mouseUp(e) {
-    console.log("up");
     this.setState({ status: gameStatus.dropped });
   }
 
