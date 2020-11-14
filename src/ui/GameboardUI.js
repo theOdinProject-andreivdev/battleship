@@ -103,25 +103,30 @@ class GameboardUI extends Component {
       <div>
         <div className="container">
           <div className="card">
-            <div className="card-body">
-              {this.state.gameBoardGrid.map((br) => {
+            <div
+              className="card-body"
+              style={{
+                display: "grid",
+                gridTemplateRows: "repeat(10, 20px)",
+                gridTemplateColumns: "repeat(10, 20px)",
+              }}
+            >
+              {this.state.gameBoardGrid.map((block) => {
                 return (
-                  <div className="row p-0 m-0" key={uniqid()}>
-                    {br.map((block) => {
-                      return (
-                        <div
-                          className="col-auto p-0 m-0"
-                          key={uniqid()}
-                          onClick={this.onBlockClick.bind(this)}
-                          onMouseDown={this.mouseDown.bind(this)}
-                          onMouseLeave={this.mouseLeave.bind(this)}
-                          onMouseOver={this.mouseEnter.bind(this)}
-                          onMouseUp={this.mouseUp.bind(this)}
-                        >
-                          <BlockUI block={block} />
-                        </div>
-                      );
-                    })}
+                  <div
+                    key={uniqid()}
+                    onClick={this.onBlockClick.bind(this)}
+                    onMouseDown={this.mouseDown.bind(this)}
+                    onMouseLeave={this.mouseLeave.bind(this)}
+                    onMouseOver={this.mouseEnter.bind(this)}
+                    onMouseUp={this.mouseUp.bind(this)}
+                    style={{
+                      display: "flex",
+                      width: "100%",
+                      height: "100%",
+                    }}
+                  >
+                    <BlockUI block={block} />
                   </div>
                 );
               })}
