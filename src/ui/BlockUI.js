@@ -1,3 +1,5 @@
+import gameStatus from "../util/gameStatus";
+
 function BlockUI(props) {
   let blocktype = "";
   let block = props.block;
@@ -17,6 +19,8 @@ function BlockUI(props) {
     default:
       break;
   }
+
+  if (props.status == gameStatus.hidden) blocktype = "btn-light";
 
   return (
     <div

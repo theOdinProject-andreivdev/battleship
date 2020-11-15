@@ -10,7 +10,7 @@ class GameboardUI extends Component {
     super(props);
     this.gameBoard = Gameboard();
     this.state = {
-      status: gameStatus.selecting,
+      status: props.gameStatus,
       gameBoardGrid: this.gameBoard.getBlocks(),
     };
 
@@ -20,8 +20,17 @@ class GameboardUI extends Component {
     const plane2 = Plane({ x: 5, y: 5 });
     this.addPlane(plane2);
 
+    const plane3 = Plane({ x: 7, y: 1 });
+    this.addPlane(plane3);
+
     this.clicks = 0;
     this.clickdelay = 400;
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.gameStatus !== this.props.gameStatus) {
+      this.setState({ status: this.props.gameStatus });
+    }
   }
 
   addPlane = (plane) => {
@@ -29,7 +38,6 @@ class GameboardUI extends Component {
   };
 
   mouseClick(e) {
-    console.log("click");
     this.gameBoard.hit({
       x: e.target.dataset.x,
       y: e.target.dataset.y,
@@ -111,11 +119,9 @@ class GameboardUI extends Component {
   }
 
   mouseUp(e) {
-    this.setState({ status: gameStatus.dropped });
-  }
-
-  mouseDouble(e) {
-    console.log("doubleclick");
+    if (this.state.status !== gameStatus.hitting) {
+      this.setState({ status: gameStatus.dropped });
+    }
   }
 
   render() {
@@ -147,9 +153,8 @@ class GameboardUI extends Component {
                     onMouseLeave={this.mouseLeave.bind(this)}
                     onMouseOver={this.mouseEnter.bind(this)}
                     onMouseUp={this.mouseUp.bind(this)}
-                    onDoubleClick={this.mouseDouble.bind(this)}
                   >
-                    <BlockUI block={block} />
+                    <BlockUI block={block} status={this.state.status} />
                   </div>
                 );
               })}

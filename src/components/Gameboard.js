@@ -210,7 +210,7 @@ const Gameboard = () => {
     });
 
     getBlocks().forEach((b) => {
-      if (b.x === hitx && b.y === hity) {
+      if (b.x === parseInt(hitx) && b.y === parseInt(hity)) {
         b.type = blockType.HIT;
       }
     });
