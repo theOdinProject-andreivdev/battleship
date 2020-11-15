@@ -11,6 +11,7 @@ class GameboardUI extends Component {
     this.gameBoard = Gameboard();
     this.state = {
       status: props.gameStatus,
+      visible: props.visible,
       gameBoardGrid: this.gameBoard.getBlocks(),
     };
 
@@ -154,7 +155,7 @@ class GameboardUI extends Component {
                     onMouseOver={this.mouseEnter.bind(this)}
                     onMouseUp={this.mouseUp.bind(this)}
                   >
-                    <BlockUI block={block} status={this.state.status} />
+                    <BlockUI block={block} visible={this.state.visible} />
                   </div>
                 );
               })}

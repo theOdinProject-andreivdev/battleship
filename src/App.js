@@ -25,8 +25,8 @@ function App() {
               Place the planes!
             </div>
           )}
-          <GameboardUI gameStatus={board1Status}></GameboardUI>
-          <GameboardUI gameStatus={board2Status}></GameboardUI>
+          <GameboardUI gameStatus={board1Status} visible={true}></GameboardUI>
+          <GameboardUI gameStatus={board2Status} visible={false}></GameboardUI>
           <button type="button" className="btn btn-dark" onClick={onPlayClick}>
             Play!
           </button>

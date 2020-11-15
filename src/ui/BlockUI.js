@@ -20,7 +20,7 @@ function BlockUI(props) {
       break;
   }
 
-  if (props.status == gameStatus.hidden) blocktype = "btn-light";
+  if (props.visible === false) blocktype = "btn-light";
 
   return (
     <div
