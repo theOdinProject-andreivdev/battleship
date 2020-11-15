@@ -127,39 +127,37 @@ class GameboardUI extends Component {
 
   render() {
     return (
-      <div>
-        <div className="container">
+      <div className="container">
+        <div
+          className="card"
+          style={{
+            width: "240px",
+            height: "240px",
+          }}
+        >
           <div
-            className="card"
+            className="card-body"
             style={{
-              width: "240px",
-              height: "240px",
+              position: "relative",
+              display: "grid",
+              gridTemplateRows: "repeat(10, 20px)",
+              gridTemplateColumns: "repeat(10, 20px)",
             }}
           >
-            <div
-              className="card-body"
-              style={{
-                position: "relative",
-                display: "grid",
-                gridTemplateRows: "repeat(10, 20px)",
-                gridTemplateColumns: "repeat(10, 20px)",
-              }}
-            >
-              {this.state.gameBoardGrid.map((block) => {
-                return (
-                  <div
-                    className="box"
-                    key={uniqid()}
-                    onMouseDown={this.mouseDown.bind(this)}
-                    onMouseLeave={this.mouseLeave.bind(this)}
-                    onMouseOver={this.mouseEnter.bind(this)}
-                    onMouseUp={this.mouseUp.bind(this)}
-                  >
-                    <BlockUI block={block} visible={this.state.visible} />
-                  </div>
-                );
-              })}
-            </div>
+            {this.state.gameBoardGrid.map((block) => {
+              return (
+                <div
+                  className="box"
+                  key={uniqid()}
+                  onMouseDown={this.mouseDown.bind(this)}
+                  onMouseLeave={this.mouseLeave.bind(this)}
+                  onMouseOver={this.mouseEnter.bind(this)}
+                  onMouseUp={this.mouseUp.bind(this)}
+                >
+                  <BlockUI block={block} visible={this.state.visible} />
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>

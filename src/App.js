@@ -9,7 +9,8 @@ function App() {
 
   let onPlayClick = () => {
     console.log("hitting status");
-    setBoard1Status(gameStatus.hitting);
+    setBoard2Status(gameStatus.hitting);
+    setBoard1Status(gameStatus.locked);
   };
 
   return (
@@ -25,11 +26,33 @@ function App() {
               Place the planes!
             </div>
           )}
-          <GameboardUI gameStatus={board1Status} visible={true}></GameboardUI>
-          <GameboardUI gameStatus={board2Status} visible={false}></GameboardUI>
-          <button type="button" className="btn btn-dark" onClick={onPlayClick}>
-            Play!
-          </button>
+          <div className="container">
+            <div className="row justify-content-center">
+              <div className="col-auto mx-auto">
+                <GameboardUI
+                  gameStatus={board1Status}
+                  visible={true}
+                ></GameboardUI>
+              </div>
+              <div className="col-auto mx-auto">
+                <GameboardUI
+                  gameStatus={board2Status}
+                  visible={false}
+                ></GameboardUI>
+              </div>
+            </div>
+            <div className="row justify-content-center">
+              <div className="col-auto">
+                <button
+                  type="button"
+                  className="btn btn-dark m-3"
+                  onClick={onPlayClick}
+                >
+                  Play!
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

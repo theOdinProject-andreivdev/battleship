@@ -1,4 +1,4 @@
-import gameStatus from "../util/gameStatus";
+import blockType from "../util/blockType";
 
 function BlockUI(props) {
   let blocktype = "";
@@ -20,7 +20,8 @@ function BlockUI(props) {
       break;
   }
 
-  if (props.visible === false) blocktype = "btn-light";
+  if (props.visible === false && props.block.type != blockType.HIT)
+    blocktype = "btn-light";
 
   return (
     <div
