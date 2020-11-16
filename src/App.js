@@ -1,62 +1,108 @@
-import { useState } from "react";
+import { Component, useEffect, useState } from "react";
 import "./App.css";
 import GameboardUI from "./ui/GameboardUI";
 import gameStatus from "./util/gameStatus";
+import PubSub from "pubsub-js";
+import { render } from "@testing-library/react";
 
-function App() {
-  let [board1Status, setBoard1Status] = useState(gameStatus.selecting);
-  let [board2Status, setBoard2Status] = useState(gameStatus.hidden);
+class App extends Component {
+  constructor() {
+    super();
 
-  let onPlayClick = () => {
+    console.log("startup");
+    this.board1Status = gameStatus.selecting;
+    this.board2Status = gameStatus.hidden;
+
+    let gameEventsSubscriber = function (msg, data) {
+      if (msg == "gameEvent" && data == "player did hit") {
+        if (this.board2Status == gameStatus.hitting) {
+          console.log("player did hit");
+          this.board1Status = gameStatus.locked;
+          PubSub.publish("gameEvent", "ai trigger hit");
+        }
+      }
+    };
+    PubSub.clearAllSubscriptions();
+
+    PubSub.subscribe("gameEvent", gameEventsSubscriber.bind(this));
+
+    PubSub.publish("gameEvent", "start");
+  }
+
+  onPlayClick = () => {
     console.log("hitting status");
-    setBoard2Status(gameStatus.hitting);
-    setBoard1Status(gameStatus.locked);
+    this.board2Status = gameStatus.hitting;
+    this.board1Status = gameStatus.locked;
+    this.forceUpdate();
   };
 
-  return (
-    <div>
-      <div className="card" style={{ width: "100%" }}>
-        <div className="card-body">
-          {board1Status == gameStatus.selecting && (
-            <div
-              className="alert alert-info"
-              role="alert"
-              style={{ width: "50%", marginLeft: "25%", marginRight: "25%" }}
-            >
-              Place the planes!
-            </div>
-          )}
-          <div className="container">
-            <div className="row justify-content-center">
-              <div className="col-auto mx-auto">
-                <GameboardUI
-                  gameStatus={board1Status}
-                  visible={true}
-                ></GameboardUI>
-              </div>
-              <div className="col-auto mx-auto">
-                <GameboardUI
-                  gameStatus={board2Status}
-                  visible={false}
-                ></GameboardUI>
-              </div>
-            </div>
-            <div className="row justify-content-center">
-              <div className="col-auto">
-                <button
-                  type="button"
-                  className="btn btn-dark m-3"
-                  onClick={onPlayClick}
+  render() {
+    return (
+      <div>
+        <div className="card" style={{ width: "100%" }}>
+          <div className="card-body">
+            {this.board1Status == gameStatus.selecting && (
+              <div>
+                <div
+                  className="alert alert-primary"
+                  role="alert"
+                  style={{
+                    width: "50%",
+                    marginLeft: "25%",
+                    marginRight: "25%",
+                  }}
                 >
-                  Play!
-                </button>
+                  Place the planes!
+                </div>
+                <div
+                  className="alert alert-info"
+                  role="alert"
+                  style={{
+                    width: "50%",
+                    marginLeft: "25%",
+                    marginRight: "25%",
+                  }}
+                >
+                  Drag them around, double click to rotate
+                </div>
               </div>
+            )}
+            <div className="container">
+              <div className="row justify-content-center">
+                <div className="col-auto mx-auto">
+                  <GameboardUI
+                    gameStatus={this.board1Status}
+                    visible={true}
+                    type="player"
+                  ></GameboardUI>
+                </div>
+                <div className="col-auto mx-auto">
+                  <GameboardUI
+                    gameStatus={this.board2Status}
+                    visible={false}
+                    type="ai"
+                  ></GameboardUI>
+                </div>
+              </div>
+              {this.board1Status == gameStatus.selecting && (
+                <div className="row justify-content-center">
+                  <div className="col-auto">
+                    <button
+                      type="button"
+                      className="btn btn-dark m-3"
+                      onClick={this.onPlayClick.bind(this)}
+                    >
+                      Play!
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 export default App;

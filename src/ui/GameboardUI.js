@@ -4,6 +4,8 @@ import BlockUI from "./BlockUI";
 import uniqid from "uniqid";
 import { Component } from "react";
 import gameStatus from "../util/gameStatus";
+import PubSub from "pubsub-js";
+import blockType from "../util/blockType";
 
 class GameboardUI extends Component {
   constructor(props) {
@@ -12,6 +14,7 @@ class GameboardUI extends Component {
     this.state = {
       status: props.gameStatus,
       visible: props.visible,
+      type: props.type,
       gameBoardGrid: this.gameBoard.getBlocks(),
     };
 
@@ -26,6 +29,39 @@ class GameboardUI extends Component {
 
     this.clicks = 0;
     this.clickdelay = 400;
+    this.mounted = false;
+
+    var gameEventsSubscriber = function (msg, data) {
+      if (this.state.type == "player")
+        switch (data) {
+          case "ai trigger hit":
+            console.log("ai trigger hit");
+
+            let unhitBlocks = [];
+
+            this.gameBoard.getBlocks().forEach((block) => {
+              if (block.type != blockType.HIT) unhitBlocks.push(block);
+            });
+
+            let randomBlockIndex = Math.floor(
+              Math.random() * unhitBlocks.length
+            );
+
+            this.gameBoard.hit({
+              x: this.gameBoard.getBlocks()[randomBlockIndex].x,
+              y: this.gameBoard.getBlocks()[randomBlockIndex].y,
+            });
+
+            if (this.mounted)
+              this.setState({ gameBoardGrid: this.gameBoard.getBlocks() });
+        }
+    };
+
+    PubSub.subscribe("gameEvent", gameEventsSubscriber.bind(this));
+  }
+
+  componentDidMount() {
+    this.mounted = true;
   }
 
   componentDidUpdate(prevProps) {
@@ -43,7 +79,11 @@ class GameboardUI extends Component {
       x: e.target.dataset.x,
       y: e.target.dataset.y,
     });
+
     this.setState({ gameBoardGrid: this.gameBoard.getBlocks() });
+    if (this.state.type == "ai") {
+      PubSub.publish("gameEvent", "player did hit");
+    }
   }
 
   mouseDown(e) {

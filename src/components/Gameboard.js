@@ -1,4 +1,5 @@
 import blockType from "../util/blockType";
+import PubSub from "pubsub-js";
 
 const Gameboard = () => {
   const boardSize = 10;
@@ -214,7 +215,6 @@ const Gameboard = () => {
         b.type = blockType.HIT;
       }
     });
-
     updateBoard();
   };
 
