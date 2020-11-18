@@ -11,7 +11,7 @@ class App extends Component {
 
     console.log("startup");
     this.board1Status = gameStatus.selecting;
-    this.board2Status = gameStatus.hidden;
+    this.board2Status = gameStatus.locked;
     this.winner = "";
 
     let gameEventsSubscriber = function (msg, data) {
@@ -40,6 +40,10 @@ class App extends Component {
     this.board2Status = gameStatus.hitting;
     this.board1Status = gameStatus.locked;
     this.forceUpdate();
+  };
+
+  onPlayAgain = () => {
+    window.location.reload(false);
   };
 
   render() {
@@ -87,6 +91,17 @@ class App extends Component {
                 >
                   YOU WON!
                 </div>
+                <div className="row justify-content-center">
+                  <div className="col-auto">
+                    <button
+                      type="button"
+                      className="btn btn-dark m-3"
+                      onClick={this.onPlayAgain.bind(this)}
+                    >
+                      Play again!
+                    </button>
+                  </div>
+                </div>
               </div>
             )}
 
@@ -102,7 +117,7 @@ class App extends Component {
                 <div className="col-auto mx-auto">
                   <GameboardUI
                     gameStatus={this.board2Status}
-                    visible={false}
+                    visible={true}
                     type="ai"
                   ></GameboardUI>
                 </div>

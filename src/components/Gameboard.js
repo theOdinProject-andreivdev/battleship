@@ -1,6 +1,4 @@
 import blockType from "../util/blockType";
-import PubSub from "pubsub-js";
-
 const Gameboard = () => {
   const boardSize = 10;
   let blocks = [];
@@ -16,7 +14,6 @@ const Gameboard = () => {
 
   const addPlane = (plane) => {
     let success = true;
-    let outOfPlane = false;
     plane.getBlocks().forEach((pb) => {
       if (
         pb.x < 0 ||
@@ -25,13 +22,11 @@ const Gameboard = () => {
         pb.y > boardSize - 1
       ) {
         if (pb.type === blockType.HEAD || pb.type === blockType.BODY) {
-          outOfPlane = true;
           success = false;
         }
       }
     });
 
-    let collision = false;
     getBlocks().forEach((b) => {
       plane.getBlocks().forEach((pb) => {
         if (b.x === pb.x && b.y === pb.y) {
@@ -39,24 +34,23 @@ const Gameboard = () => {
             (b.type === blockType.HEAD || b.type === blockType.BODY) &&
             (pb.type === blockType.HEAD || pb.type === blockType.BODY)
           ) {
-            collision = true;
             success = false;
           }
         }
       });
     });
 
-    if (outOfPlane === false && collision === false) {
+    if (success) {
       planes.push(plane);
       updateBoard();
     }
-
     return success;
   };
 
   const updateBoard = () => {
     getBlocks().forEach((b) => {
-      if (b.type !== blockType.HIT) b.type = blockType.NOT_DEFINED;
+      if (b.type !== blockType.HIT && b.type !== blockType.HITMISS)
+        b.type = blockType.NOT_DEFINED;
     });
     planes.forEach((plane) => {
       getBlocks().forEach((b) => {
@@ -146,19 +140,19 @@ const Gameboard = () => {
     planes.forEach((eachPlane) => {
       eachPlane.getBlocks().forEach((eachpb) => {
         planes.forEach((otherPlane) => {
-          if (eachPlane != otherPlane)
+          if (eachPlane !== otherPlane)
             otherPlane.getBlocks().forEach((otherpb) => {
               if (
-                eachpb.x == otherpb.x &&
-                eachpb.y == otherpb.y &&
-                ((eachpb.type == blockType.BODY &&
-                  otherpb.type == blockType.BODY) ||
-                  (eachpb.type == blockType.HEAD &&
-                    otherpb.type == blockType.HEAD) ||
-                  (eachpb.type == blockType.HEAD &&
-                    otherpb.type == blockType.BODY) ||
-                  (eachpb.type == blockType.BODY &&
-                    otherpb.type == blockType.HEAD))
+                eachpb.x === otherpb.x &&
+                eachpb.y === otherpb.y &&
+                ((eachpb.type === blockType.BODY &&
+                  otherpb.type === blockType.BODY) ||
+                  (eachpb.type === blockType.HEAD &&
+                    otherpb.type === blockType.HEAD) ||
+                  (eachpb.type === blockType.HEAD &&
+                    otherpb.type === blockType.BODY) ||
+                  (eachpb.type === blockType.BODY &&
+                    otherpb.type === blockType.HEAD))
               ) {
                 plane.rotate();
                 plane.rotate();
@@ -206,15 +200,16 @@ const Gameboard = () => {
     return selectedPlane;
   };
   const hit = ({ x: hitx, y: hity }) => {
+    getBlocks().forEach((b) => {
+      if (b.x === parseInt(hitx) && b.y === parseInt(hity)) {
+        b.type = blockType.HITMISS;
+      }
+    });
+
     planes.forEach((plane) => {
       plane.hit({ x: hitx, y: hity });
     });
 
-    getBlocks().forEach((b) => {
-      if (b.x === parseInt(hitx) && b.y === parseInt(hity)) {
-        b.type = blockType.HIT;
-      }
-    });
     updateBoard();
   };
 

@@ -16,6 +16,9 @@ function BlockUI(props) {
     case "X":
       blocktype = "btn-danger";
       break;
+    case "Y":
+      blocktype = "btn-warning";
+      break;
     default:
       break;
   }

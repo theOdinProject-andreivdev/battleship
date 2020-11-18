@@ -18,27 +18,20 @@ class GameboardUI extends Component {
       gameBoardGrid: this.gameBoard.getBlocks(),
     };
 
-    const plane1 = Plane({ x: 2, y: 2 });
-    this.addPlane(plane1);
-
-    const plane2 = Plane({ x: 5, y: 5 });
-    this.addPlane(plane2);
-
-    const plane3 = Plane({ x: 7, y: 1 });
-    this.addPlane(plane3);
-
     this.clicks = 0;
     this.clickdelay = 400;
     this.mounted = false;
 
+    this.createRandomPlanes();
+
     var gameEventsSubscriber = function (msg, data) {
-      if (this.state.type == "player")
+      if (this.state.type === "player")
         switch (data) {
           case "ai trigger hit":
             let unhitBlocks = [];
 
             this.gameBoard.getBlocks().forEach((block) => {
-              if (block.type != blockType.HIT) unhitBlocks.push(block);
+              if (block.type !== blockType.HIT) unhitBlocks.push(block);
             });
 
             let randomBlockIndex = Math.floor(
@@ -52,11 +45,47 @@ class GameboardUI extends Component {
 
             if (this.mounted)
               this.setState({ gameBoardGrid: this.gameBoard.getBlocks() });
+            break;
+          default:
+            break;
         }
     };
 
     PubSub.subscribe("gameEvent", gameEventsSubscriber.bind(this));
   }
+
+  createRandomPlanes = () => {
+    let planes = [];
+    let index = 0;
+
+    while (index < 3) {
+      planes[index] = Plane({
+        x: Math.floor(
+          Math.random() * Math.sqrt(this.gameBoard.getBlocks().length)
+        ),
+        y: Math.floor(
+          Math.random() * Math.sqrt(this.gameBoard.getBlocks().length)
+        ),
+      });
+      let planeSet = false;
+      while (planeSet === false) {
+        planes[index] = null;
+        planes[index] = Plane({
+          x: Math.floor(
+            Math.random() * Math.sqrt(this.gameBoard.getBlocks().length)
+          ),
+          y: Math.floor(
+            Math.random() * Math.sqrt(this.gameBoard.getBlocks().length)
+          ),
+        });
+        planeSet = this.addPlane(planes[index]);
+        console.log(planeSet);
+
+        console.log(planes[index].getHead());
+      }
+      index++;
+    }
+  };
 
   componentDidMount() {
     this.mounted = true;
@@ -69,11 +98,11 @@ class GameboardUI extends Component {
   }
 
   addPlane = (plane) => {
-    this.gameBoard.addPlane(plane);
+    return this.gameBoard.addPlane(plane);
   };
 
   mouseClick(e) {
-    if (this.state.status == gameStatus.locked) return;
+    if (this.state.status === gameStatus.locked) return;
 
     this.gameBoard.hit({
       x: e.target.dataset.x,
@@ -81,12 +110,12 @@ class GameboardUI extends Component {
     });
 
     this.setState({ gameBoardGrid: this.gameBoard.getBlocks() });
-    if (this.state.type == "ai") {
+    if (this.state.type === "ai") {
       PubSub.publish("gameEvent", "player did hit");
 
       let anyPlaneAlive = false;
       this.gameBoard.getPlanes().forEach((plane) => {
-        if (plane.getDead() == false) {
+        if (plane.getDead() === false) {
           anyPlaneAlive = true;
         }
       });
@@ -96,7 +125,7 @@ class GameboardUI extends Component {
   }
 
   mouseDown(e) {
-    if (this.state.status == gameStatus.locked) return;
+    if (this.state.status === gameStatus.locked) return;
     if (
       this.state.status === gameStatus.selecting ||
       this.state.status === gameStatus.dropped
@@ -135,7 +164,7 @@ class GameboardUI extends Component {
   }
 
   mouseLeave(e) {
-    if (this.state.status == gameStatus.locked) return;
+    if (this.state.status === gameStatus.locked) return;
     if (
       this.state.status === gameStatus.moving ||
       this.state.status === gameStatus.movingin
@@ -153,7 +182,7 @@ class GameboardUI extends Component {
   }
 
   mouseEnter(e) {
-    if (this.state.status == gameStatus.locked) return;
+    if (this.state.status === gameStatus.locked) return;
     if (this.state.status === gameStatus.movingout) {
       if (e.target.dataset.x != null && e.target.dataset.y != null) {
         let destx = e.target.dataset.x;
@@ -172,7 +201,7 @@ class GameboardUI extends Component {
   }
 
   mouseUp(e) {
-    if (this.state.status == gameStatus.locked) return;
+    if (this.state.status === gameStatus.locked) return;
     if (this.state.status !== gameStatus.hitting) {
       this.setState({ status: gameStatus.dropped });
     }

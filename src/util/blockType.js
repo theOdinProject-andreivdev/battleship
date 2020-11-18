@@ -3,6 +3,7 @@ const blockType = {
   BODY: "B",
   NOT_DEFINED: "_",
   HIT: "X",
+  HITMISS: "Y",
   AIR: " ",
 };
 
