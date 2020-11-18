@@ -16,7 +16,7 @@ tbody tr td {
   padding: 0 !important;
   margin: 0 !important;
 }
-html,
-body {
-  overflow: hidden;
+
+html {
+  overscroll-behavior-y: contain;
 }

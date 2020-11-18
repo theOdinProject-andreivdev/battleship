@@ -217,19 +217,45 @@ class GameboardUI extends Component {
   }
 
   touchStart(e) {
-    console.log("touchstart " + e.target.dataset.x + " " + e.target.dataset.y);
+    e.preventDefault();
+    const block = document.elementFromPoint(
+      e.changedTouches[0].screenX,
+      e.changedTouches[0].screenY
+    );
+    this.gameBoard.selectPlane({
+      x: e.target.dataset.x,
+      y: e.target.dataset.y,
+    });
+    this.gameBoard.moveOrigin = {
+      x: block.dataset.x,
+      y: block.dataset.y,
+    };
+
+    console.log(e);
   }
 
   touchEnd(e) {
-    console.log("touchend " + e.target.dataset.x + " " + e.target.dataset.y);
+    e.preventDefault();
+    const block = document.elementFromPoint(
+      e.changedTouches[0].screenX,
+      e.changedTouches[0].screenY
+    );
+    this.gameBoard.moveSelectedPlane(this.gameBoard.moveOrigin, {
+      x: block.dataset.x,
+      y: block.dataset.y,
+    });
+
+    this.setState({ gameBoardGrid: this.gameBoard.getBlocks() });
+
+    this.forceUpdate();
+    console.log(e);
   }
-  touchCancel(e) {
-    console.log("touchCancel " + e.target.dataset.x + " " + e.target.dataset.y);
-  }
+
+  touchMove(e) {}
 
   render() {
     return (
-      <div className="container">
+      <div onTouchMove={this.touchMove.bind(this)} className="container">
         <div
           className="card"
           style={{
@@ -257,7 +283,6 @@ class GameboardUI extends Component {
                   onMouseUp={this.mouseUp.bind(this)}
                   onTouchStart={this.touchStart.bind(this)}
                   onTouchEnd={this.touchEnd.bind(this)}
-                  onTouchCancel={this.touchCancel.bind(this)}
                 >
                   <BlockUI block={block} visible={this.state.visible} />
                 </div>
