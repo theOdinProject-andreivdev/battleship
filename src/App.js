@@ -2,7 +2,7 @@ import { Component } from "react";
 import "./App.css";
 import GameboardUI from "./ui/GameboardUI";
 import gameStatus from "./util/gameStatus";
-import PubSub from "pubsub-js";
+import PubSub from "PubSub";
 
 class App extends Component {
   constructor() {
@@ -12,17 +12,17 @@ class App extends Component {
     this.board1Status = gameStatus.selecting;
     this.board2Status = gameStatus.locked;
     this.winner = "";
-    PubSub.immediateExceptions = true;
-    PubSub.clearAllSubscriptions();
 
-    PubSub.subscribe("gameEvent", (msg, data) => {
-      if (msg === "gameEvent" && data === "playerwin") {
+    this.pubsub = new PubSub();
+
+    this.pubsub.subscribe("gameEvent", (data) => {
+      if (data === "playerwin") {
         this.winner = "player";
         this.board1Status = gameStatus.locked;
         this.board2Status = gameStatus.locked;
         this.forceUpdate();
       }
-      if (msg === "gameEvent" && data === "aiwin") {
+      if (data === "aiwin") {
         this.winner = "ai";
         this.board1Status = gameStatus.locked;
         this.board2Status = gameStatus.locked;
@@ -30,16 +30,16 @@ class App extends Component {
       }
     });
 
-    PubSub.subscribe("player", (msg, data) => {
-      if (msg === "player" && data === "playerdidhit") {
+    this.pubsub.subscribe("player", (data) => {
+      if (data === "playerdidhit") {
         if (this.board2Status === gameStatus.hitting) {
           this.board1Status = gameStatus.locked;
-          PubSub.publish("ai", "aitriggerhit");
+          this.pubsub.publish("ai", "aitriggerhit");
         }
       }
     });
 
-    PubSub.publish("gameEvent", "start");
+    this.pubsub.publish("gameEvent", "start");
   }
 
   onPlayClick = () => {
@@ -146,6 +146,7 @@ class App extends Component {
                     gameStatus={this.board1Status}
                     visible={true}
                     boardType="player"
+                    pubsub={this.pubsub}
                   ></GameboardUI>
                 </div>
                 <div className="col-auto mx-auto">
@@ -153,6 +154,7 @@ class App extends Component {
                     gameStatus={this.board2Status}
                     visible={true}
                     boardType="ai"
+                    pubsub={this.pubsub}
                   ></GameboardUI>
                 </div>
               </div>

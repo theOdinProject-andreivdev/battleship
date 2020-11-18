@@ -4,7 +4,6 @@ import BlockUI from "./BlockUI";
 import uniqid from "uniqid";
 import { Component } from "react";
 import gameStatus from "../util/gameStatus";
-import PubSub from "pubsub-js";
 import blockType from "../util/blockType";
 
 class GameboardUI extends Component {
@@ -24,8 +23,9 @@ class GameboardUI extends Component {
 
     this.createRandomPlanes();
 
+    this.pubsub = props.pubsub;
     if (this.state.boardType === "player") {
-      PubSub.subscribe("ai", (msg, data) => {
+      this.pubsub.subscribe("ai", (data) => {
         if (data === "aitriggerhit") {
           let unhitBlocks = [];
 
@@ -67,7 +67,7 @@ class GameboardUI extends Component {
         anyPlaneAlive = true;
       }
     });
-    if (!anyPlaneAlive) PubSub.publish("gameEvent", `${winner}win`);
+    if (!anyPlaneAlive) this.pubsub.publish("gameEvent", `${winner}win`);
   };
 
   createRandomPlanes = () => {
@@ -127,7 +127,7 @@ class GameboardUI extends Component {
 
     this.setState({ gameBoardGrid: this.gameBoard.getBlocks() });
     if (this.state.boardType === "ai") {
-      PubSub.publish("player", "playerdidhit");
+      this.pubsub.publish("player", "playerdidhit");
       this.computeAndDeclareWinner("player");
     }
   }
