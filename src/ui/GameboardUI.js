@@ -25,6 +25,7 @@ class GameboardUI extends Component {
 
     this.pubsub = props.pubsub;
     if (this.state.boardType === "player") {
+      this.pubsub.unsubscribe("ai");
       this.pubsub.subscribe("ai", (data) => {
         if (data === "aitriggerhit") {
           let unhitBlocks = [];
