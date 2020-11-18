@@ -3,7 +3,7 @@ import Plane from "./Plane";
 import blockType from "../util/blockType";
 import drawBlocks from "../util/drawBlocks";
 
-it("tests gameboard creation", () => {
+xit("tests gameboard creation", () => {
   const gameBoard = Gameboard();
 
   expect(gameBoard.getBlocks()).toStrictEqual([
@@ -119,7 +119,7 @@ it("tests gameboard creation", () => {
   ]);
 });
 
-it("gameboard adds a plane", () => {
+xit("gameboard adds a plane", () => {
   const gameboard = Gameboard();
   const plane = Plane({ x: 5, y: 5 });
 
@@ -238,7 +238,7 @@ it("gameboard adds a plane", () => {
   ]);
 });
 
-it("does not add planes outside of gameboard", () => {
+xit("does not add planes outside of gameboard", () => {
   const gameBoard = Gameboard();
 
   expect(gameBoard.addPlane(Plane({ x: 0, y: 0 }))).toStrictEqual(false);
@@ -360,7 +360,7 @@ it("does not add planes outside of gameboard", () => {
   ]);
 });
 
-it("gameboard does not add collision plane", () => {
+xit("gameboard does not add collision plane", () => {
   const gameBoard = Gameboard();
 
   expect(gameBoard.addPlane(Plane({ x: 5, y: 5 }))).toStrictEqual(true);
@@ -483,7 +483,7 @@ it("gameboard does not add collision plane", () => {
   ]);
 });
 
-it("adds plane object to planes", () => {
+xit("adds plane object to planes", () => {
   const gameboard = Gameboard();
   const plane = Plane({ x: 5, y: 5 });
 
@@ -494,7 +494,7 @@ it("adds plane object to planes", () => {
   expect(gameboard.getPlanes()).toStrictEqual(planes);
 });
 
-it("adds multiple planes without collision", () => {
+xit("adds multiple planes wxithout collision", () => {
   const gameboard = Gameboard();
   const plane1 = Plane({ x: 5, y: 5 });
   const plane2 = Plane({ x: 3, y: 4 });
@@ -608,7 +608,7 @@ it("adds multiple planes without collision", () => {
   ]);
 });
 
-it("adds multiple planes object to planes", () => {
+xit("adds multiple planes object to planes", () => {
   const gameboard = Gameboard();
   const plane1 = Plane({ x: 1, y: 1 });
   const plane2 = Plane({ x: 5, y: 2 });
@@ -624,7 +624,7 @@ it("adds multiple planes object to planes", () => {
   expect(gameboard.getPlanes()).toStrictEqual(planes);
 });
 
-it("adds plane and rotates", () => {
+xit("adds plane and rotates", () => {
   const gameboard = Gameboard();
   const plane1 = Plane({ x: 1, y: 2 });
   const plane2 = Plane({ x: 7, y: 5 });
@@ -746,10 +746,10 @@ it("adds plane and rotates", () => {
   ]);
 });
 
-it("hits", () => {
+xit("hxits", () => {
   const gameboard = Gameboard();
 
-  gameboard.hit({ x: 2, y: 2 });
+  gameboard.hxit({ x: 2, y: 2 });
 
   expect(gameboard.getBlocks()).toStrictEqual([
     { x: 0, y: 9, type: blockType.NOT_DEFINED },
@@ -831,7 +831,7 @@ it("hits", () => {
 
     { x: 0, y: 2, type: blockType.NOT_DEFINED },
     { x: 1, y: 2, type: blockType.NOT_DEFINED },
-    { x: 2, y: 2, type: blockType.HITMISS },
+    { x: 2, y: 2, type: blockType.HxitMISS },
     { x: 3, y: 2, type: blockType.NOT_DEFINED },
     { x: 4, y: 2, type: blockType.NOT_DEFINED },
     { x: 5, y: 2, type: blockType.NOT_DEFINED },
@@ -864,13 +864,13 @@ it("hits", () => {
   ]);
 });
 
-it("hits near plane", () => {
+xit("hxits near plane", () => {
   const gameboard = Gameboard();
   const plane = Plane({ x: 5, y: 5 });
 
   gameboard.addPlane(plane);
 
-  gameboard.hit({ x: 4, y: 7 });
+  gameboard.hxit({ x: 4, y: 7 });
 
   expect(gameboard.getBlocks()).toStrictEqual([
     { x: 0, y: 9, type: blockType.NOT_DEFINED },
@@ -899,7 +899,7 @@ it("hits near plane", () => {
     { x: 1, y: 7, type: blockType.NOT_DEFINED },
     { x: 2, y: 7, type: blockType.NOT_DEFINED },
     { x: 3, y: 7, type: blockType.NOT_DEFINED },
-    { x: 4, y: 7, type: blockType.HITMISS },
+    { x: 4, y: 7, type: blockType.HxitMISS },
     { x: 5, y: 7, type: blockType.BODY },
     { x: 6, y: 7, type: blockType.NOT_DEFINED },
     { x: 7, y: 7, type: blockType.NOT_DEFINED },
@@ -985,13 +985,13 @@ it("hits near plane", () => {
   ]);
 });
 
-it("hits plane head", () => {
+xit("hxits plane head", () => {
   const gameboard = Gameboard();
   const plane = Plane({ x: 5, y: 5 });
 
   gameboard.addPlane(plane);
 
-  gameboard.hit({ x: 5, y: 5 });
+  gameboard.hxit({ x: 5, y: 5 });
 
   expect(gameboard.getBlocks()).toStrictEqual([
     { x: 0, y: 9, type: blockType.NOT_DEFINED },
@@ -1009,9 +1009,9 @@ it("hits plane head", () => {
     { x: 1, y: 8, type: blockType.NOT_DEFINED },
     { x: 2, y: 8, type: blockType.NOT_DEFINED },
     { x: 3, y: 8, type: blockType.NOT_DEFINED },
-    { x: 4, y: 8, type: blockType.HIT },
-    { x: 5, y: 8, type: blockType.HIT },
-    { x: 6, y: 8, type: blockType.HIT },
+    { x: 4, y: 8, type: blockType.Hxit },
+    { x: 5, y: 8, type: blockType.Hxit },
+    { x: 6, y: 8, type: blockType.Hxit },
     { x: 7, y: 8, type: blockType.NOT_DEFINED },
     { x: 8, y: 8, type: blockType.NOT_DEFINED },
     { x: 9, y: 8, type: blockType.NOT_DEFINED },
@@ -1021,7 +1021,7 @@ it("hits plane head", () => {
     { x: 2, y: 7, type: blockType.NOT_DEFINED },
     { x: 3, y: 7, type: blockType.NOT_DEFINED },
     { x: 4, y: 7, type: blockType.NOT_DEFINED },
-    { x: 5, y: 7, type: blockType.HIT },
+    { x: 5, y: 7, type: blockType.Hxit },
     { x: 6, y: 7, type: blockType.NOT_DEFINED },
     { x: 7, y: 7, type: blockType.NOT_DEFINED },
     { x: 8, y: 7, type: blockType.NOT_DEFINED },
@@ -1031,9 +1031,9 @@ it("hits plane head", () => {
     { x: 1, y: 6, type: blockType.NOT_DEFINED },
     { x: 2, y: 6, type: blockType.NOT_DEFINED },
     { x: 3, y: 6, type: blockType.NOT_DEFINED },
-    { x: 4, y: 6, type: blockType.HIT },
-    { x: 5, y: 6, type: blockType.HIT },
-    { x: 6, y: 6, type: blockType.HIT },
+    { x: 4, y: 6, type: blockType.Hxit },
+    { x: 5, y: 6, type: blockType.Hxit },
+    { x: 6, y: 6, type: blockType.Hxit },
     { x: 7, y: 6, type: blockType.NOT_DEFINED },
     { x: 8, y: 6, type: blockType.NOT_DEFINED },
     { x: 9, y: 6, type: blockType.NOT_DEFINED },
@@ -1043,7 +1043,7 @@ it("hits plane head", () => {
     { x: 2, y: 5, type: blockType.NOT_DEFINED },
     { x: 3, y: 5, type: blockType.NOT_DEFINED },
     { x: 4, y: 5, type: blockType.NOT_DEFINED },
-    { x: 5, y: 5, type: blockType.HIT },
+    { x: 5, y: 5, type: blockType.Hxit },
     { x: 6, y: 5, type: blockType.NOT_DEFINED },
     { x: 7, y: 5, type: blockType.NOT_DEFINED },
     { x: 8, y: 5, type: blockType.NOT_DEFINED },
@@ -1106,7 +1106,7 @@ it("hits plane head", () => {
   ]);
 });
 
-it("adds multiple planes hits one in the head", () => {
+xit("adds multiple planes hxits one in the head", () => {
   const gameboard = Gameboard();
   const plane1 = Plane({ x: 5, y: 5 });
   const plane2 = Plane({ x: 3, y: 4 });
@@ -1116,7 +1116,7 @@ it("adds multiple planes hits one in the head", () => {
   expect(gameboard.addPlane(plane2)).toStrictEqual(true);
   expect(gameboard.addPlane(plane3)).toStrictEqual(true);
 
-  gameboard.hit({ x: 5, y: 5 });
+  gameboard.hxit({ x: 5, y: 5 });
 
   expect(gameboard.getBlocks()).toStrictEqual([
     { x: 0, y: 9, type: blockType.NOT_DEFINED },
@@ -1134,9 +1134,9 @@ it("adds multiple planes hits one in the head", () => {
     { x: 1, y: 8, type: blockType.NOT_DEFINED },
     { x: 2, y: 8, type: blockType.NOT_DEFINED },
     { x: 3, y: 8, type: blockType.NOT_DEFINED },
-    { x: 4, y: 8, type: blockType.HIT },
-    { x: 5, y: 8, type: blockType.HIT },
-    { x: 6, y: 8, type: blockType.HIT },
+    { x: 4, y: 8, type: blockType.Hxit },
+    { x: 5, y: 8, type: blockType.Hxit },
+    { x: 6, y: 8, type: blockType.Hxit },
     { x: 7, y: 8, type: blockType.NOT_DEFINED },
     { x: 8, y: 8, type: blockType.NOT_DEFINED },
     { x: 9, y: 8, type: blockType.NOT_DEFINED },
@@ -1146,7 +1146,7 @@ it("adds multiple planes hits one in the head", () => {
     { x: 2, y: 7, type: blockType.BODY },
     { x: 3, y: 7, type: blockType.BODY },
     { x: 4, y: 7, type: blockType.BODY },
-    { x: 5, y: 7, type: blockType.HIT },
+    { x: 5, y: 7, type: blockType.Hxit },
     { x: 6, y: 7, type: blockType.NOT_DEFINED },
     { x: 7, y: 7, type: blockType.BODY },
     { x: 8, y: 7, type: blockType.BODY },
@@ -1156,9 +1156,9 @@ it("adds multiple planes hits one in the head", () => {
     { x: 1, y: 6, type: blockType.NOT_DEFINED },
     { x: 2, y: 6, type: blockType.NOT_DEFINED },
     { x: 3, y: 6, type: blockType.BODY },
-    { x: 4, y: 6, type: blockType.HIT },
-    { x: 5, y: 6, type: blockType.HIT },
-    { x: 6, y: 6, type: blockType.HIT },
+    { x: 4, y: 6, type: blockType.Hxit },
+    { x: 5, y: 6, type: blockType.Hxit },
+    { x: 6, y: 6, type: blockType.Hxit },
     { x: 7, y: 6, type: blockType.NOT_DEFINED },
     { x: 8, y: 6, type: blockType.BODY },
     { x: 9, y: 6, type: blockType.NOT_DEFINED },
@@ -1168,7 +1168,7 @@ it("adds multiple planes hits one in the head", () => {
     { x: 2, y: 5, type: blockType.BODY },
     { x: 3, y: 5, type: blockType.BODY },
     { x: 4, y: 5, type: blockType.BODY },
-    { x: 5, y: 5, type: blockType.HIT },
+    { x: 5, y: 5, type: blockType.Hxit },
     { x: 6, y: 5, type: blockType.NOT_DEFINED },
     { x: 7, y: 5, type: blockType.BODY },
     { x: 8, y: 5, type: blockType.BODY },
@@ -1231,7 +1231,7 @@ it("adds multiple planes hits one in the head", () => {
   ]);
 });
 
-it("moves plane selected on head", () => {
+xit("moves plane selected on head", () => {
   const gameboard = Gameboard();
   const plane = Plane({ x: 5, y: 5 });
 
@@ -1353,7 +1353,7 @@ it("moves plane selected on head", () => {
   ]);
 });
 
-it("moves plane selected on body", () => {
+xit("moves plane selected on body", () => {
   const gameboard = Gameboard();
   const plane = Plane({ x: 5, y: 5 });
 
