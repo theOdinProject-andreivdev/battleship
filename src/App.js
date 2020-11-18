@@ -1,9 +1,8 @@
-import { Component, useEffect, useState } from "react";
+import { Component } from "react";
 import "./App.css";
 import GameboardUI from "./ui/GameboardUI";
 import gameStatus from "./util/gameStatus";
 import PubSub from "pubsub-js";
-import { render } from "@testing-library/react";
 
 class App extends Component {
   constructor() {
@@ -13,30 +12,32 @@ class App extends Component {
     this.board1Status = gameStatus.selecting;
     this.board2Status = gameStatus.locked;
     this.winner = "";
+    PubSub.immediateExceptions = true;
+    PubSub.clearAllSubscriptions();
 
-    let gameEventsSubscriber = function (msg, data) {
-      if (msg == "gameEvent" && data == "player did hit") {
-        if (this.board2Status == gameStatus.hitting) {
-          this.board1Status = gameStatus.locked;
-          PubSub.publish("gameEvent", "ai trigger hit");
-        }
-      }
-      if (msg == "gameEvent" && data == "player win") {
+    PubSub.subscribe("gameEvent", (msg, data) => {
+      if (msg === "gameEvent" && data === "playerwin") {
         this.winner = "player";
         this.board1Status = gameStatus.locked;
         this.board2Status = gameStatus.locked;
         this.forceUpdate();
       }
-      if (msg == "gameEvent" && data == "ai win") {
+      if (msg === "gameEvent" && data === "aiwin") {
         this.winner = "ai";
         this.board1Status = gameStatus.locked;
         this.board2Status = gameStatus.locked;
         this.forceUpdate();
       }
-    };
-    PubSub.clearAllSubscriptions();
+    });
 
-    PubSub.subscribe("gameEvent", gameEventsSubscriber.bind(this));
+    PubSub.subscribe("player", (msg, data) => {
+      if (msg === "player" && data === "playerdidhit") {
+        if (this.board2Status === gameStatus.hitting) {
+          this.board1Status = gameStatus.locked;
+          PubSub.publish("ai", "aitriggerhit");
+        }
+      }
+    });
 
     PubSub.publish("gameEvent", "start");
   }
@@ -44,7 +45,7 @@ class App extends Component {
   onPlayClick = () => {
     console.log("hitting status");
     this.board2Status = gameStatus.hitting;
-    this.board1Status = gameStatus.locked;
+    this.board1Status = gameStatus.hitting;
     this.forceUpdate();
   };
 
@@ -57,7 +58,7 @@ class App extends Component {
       <div>
         <div className="card" style={{ width: "100%" }}>
           <div className="card-body">
-            {this.board1Status == gameStatus.selecting && (
+            {this.board1Status === gameStatus.selecting && (
               <div>
                 <div
                   className="alert alert-primary"
@@ -84,7 +85,7 @@ class App extends Component {
               </div>
             )}
 
-            {this.winner == "player" && (
+            {this.winner === "player" && (
               <div>
                 <div
                   className="alert alert-primary"
@@ -111,7 +112,7 @@ class App extends Component {
               </div>
             )}
 
-            {this.winner == "ai" && (
+            {this.winner === "ai" && (
               <div>
                 <div
                   className="alert alert-primary"
@@ -144,18 +145,18 @@ class App extends Component {
                   <GameboardUI
                     gameStatus={this.board1Status}
                     visible={true}
-                    type="player"
+                    boardType="player"
                   ></GameboardUI>
                 </div>
                 <div className="col-auto mx-auto">
                   <GameboardUI
                     gameStatus={this.board2Status}
                     visible={true}
-                    type="ai"
+                    boardType="ai"
                   ></GameboardUI>
                 </div>
               </div>
-              {this.board1Status == gameStatus.selecting && (
+              {this.board1Status === gameStatus.selecting && (
                 <div className="row justify-content-center">
                   <div className="col-auto">
                     <button

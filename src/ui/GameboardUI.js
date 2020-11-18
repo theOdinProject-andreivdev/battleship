@@ -14,7 +14,7 @@ class GameboardUI extends Component {
     this.state = {
       status: props.gameStatus,
       visible: props.visible,
-      type: props.type,
+      boardType: props.boardType,
       gameBoardGrid: this.gameBoard.getBlocks(),
     };
 
@@ -24,36 +24,40 @@ class GameboardUI extends Component {
 
     this.createRandomPlanes();
 
-    var gameEventsSubscriber = function (msg, data) {
-      if (this.state.type === "player")
-        switch (data) {
-          case "ai trigger hit":
-            let unhitBlocks = [];
+    if (this.state.boardType === "player") {
+      PubSub.subscribe("ai", (msg, data) => {
+        if (data === "aitriggerhit") {
+          let unhitBlocks = [];
 
-            this.gameBoard.getBlocks().forEach((block) => {
-              if (block.type !== blockType.HIT) unhitBlocks.push(block);
-            });
+          this.gameBoard.getBlocks().forEach((block) => {
+            if (
+              block.type !== blockType.HIT &&
+              block.type !== blockType.HITMISS
+            )
+              unhitBlocks.push(block);
+          });
 
-            let randomBlockIndex = Math.floor(
-              Math.random() * unhitBlocks.length
-            );
+          let randomBlockIndex = Math.floor(Math.random() * unhitBlocks.length);
+          this.alreadyHit = false;
+          this.gameBoard.getBlocks().forEach((block) => {
+            if (
+              block.x === unhitBlocks[randomBlockIndex].x &&
+              block.y === unhitBlocks[randomBlockIndex].y
+            ) {
+              this.gameBoard.hit({
+                x: block.x,
+                y: block.y,
+              });
+            }
+          });
 
-            this.gameBoard.hit({
-              x: this.gameBoard.getBlocks()[randomBlockIndex].x,
-              y: this.gameBoard.getBlocks()[randomBlockIndex].y,
-            });
+          this.computeAndDeclareWinner("ai");
 
-            this.computeAndDeclareWinner("ai");
-
-            if (this.mounted)
-              this.setState({ gameBoardGrid: this.gameBoard.getBlocks() });
-            break;
-          default:
-            break;
+          if (this.mounted)
+            this.setState({ gameBoardGrid: this.gameBoard.getBlocks() });
         }
-    };
-
-    PubSub.subscribe("gameEvent", gameEventsSubscriber.bind(this));
+      });
+    }
   }
 
   computeAndDeclareWinner = (winner) => {
@@ -63,8 +67,7 @@ class GameboardUI extends Component {
         anyPlaneAlive = true;
       }
     });
-
-    if (!anyPlaneAlive) PubSub.publish("gameEvent", `${winner} win`);
+    if (!anyPlaneAlive) PubSub.publish("gameEvent", `${winner}win`);
   };
 
   createRandomPlanes = () => {
@@ -95,10 +98,6 @@ class GameboardUI extends Component {
 
         for (let i = 0; i < Math.random() * 2; i++)
           this.gameBoard.rotate(planes[index]);
-
-        console.log(planeSet);
-
-        console.log(planes[index].getHead());
       }
       index++;
     }
@@ -127,9 +126,8 @@ class GameboardUI extends Component {
     });
 
     this.setState({ gameBoardGrid: this.gameBoard.getBlocks() });
-    if (this.state.type === "ai") {
-      PubSub.publish("gameEvent", "player did hit");
-
+    if (this.state.boardType === "ai") {
+      PubSub.publish("player", "playerdidhit");
       this.computeAndDeclareWinner("player");
     }
   }

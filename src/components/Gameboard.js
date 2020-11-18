@@ -1,3 +1,4 @@
+import { publish } from "pubsub-js";
 import blockType from "../util/blockType";
 const Gameboard = () => {
   const boardSize = 10;
@@ -49,19 +50,30 @@ const Gameboard = () => {
 
   const updateBoard = () => {
     getBlocks().forEach((b) => {
-      if (b.type !== blockType.HIT && b.type !== blockType.HITMISS)
-        b.type = blockType.NOT_DEFINED;
+      if (b.type !== blockType.HITMISS) b.type = blockType.NOT_DEFINED;
     });
+
     planes.forEach((plane) => {
       getBlocks().forEach((b) => {
         plane.getBlocks().forEach((pb) => {
           if (b.x === pb.x && b.y === pb.y) {
             if (
-              pb.type === blockType.HEAD ||
-              pb.type === blockType.BODY ||
-              pb.type === blockType.HIT
+              (pb.type === blockType.HEAD || pb.type === blockType.BODY) &&
+              b.type === blockType.NOT_DEFINED
             )
               b.type = pb.type;
+
+            if (
+              pb.type === blockType.HITMISS &&
+              b.type === blockType.NOT_DEFINED
+            )
+              b.type = blockType.HITMISS;
+
+            if (pb.type === blockType.HIT && b.type === blockType.NOT_DEFINED)
+              b.type = blockType.HIT;
+
+            if (pb.type === blockType.HIT && b.type === blockType.HITMISS)
+              b.type = blockType.HIT;
           }
         });
       });
@@ -200,6 +212,8 @@ const Gameboard = () => {
     return selectedPlane;
   };
   const hit = ({ x: hitx, y: hity }) => {
+    console.log(hitx + " " + hity);
+    console.log(planes);
     getBlocks().forEach((b) => {
       if (b.x === parseInt(hitx) && b.y === parseInt(hity)) {
         b.type = blockType.HITMISS;

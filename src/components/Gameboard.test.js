@@ -831,7 +831,7 @@ it("hits", () => {
 
     { x: 0, y: 2, type: blockType.NOT_DEFINED },
     { x: 1, y: 2, type: blockType.NOT_DEFINED },
-    { x: 2, y: 2, type: blockType.HIT },
+    { x: 2, y: 2, type: blockType.HITMISS },
     { x: 3, y: 2, type: blockType.NOT_DEFINED },
     { x: 4, y: 2, type: blockType.NOT_DEFINED },
     { x: 5, y: 2, type: blockType.NOT_DEFINED },
@@ -899,7 +899,7 @@ it("hits near plane", () => {
     { x: 1, y: 7, type: blockType.NOT_DEFINED },
     { x: 2, y: 7, type: blockType.NOT_DEFINED },
     { x: 3, y: 7, type: blockType.NOT_DEFINED },
-    { x: 4, y: 7, type: blockType.HIT },
+    { x: 4, y: 7, type: blockType.HITMISS },
     { x: 5, y: 7, type: blockType.BODY },
     { x: 6, y: 7, type: blockType.NOT_DEFINED },
     { x: 7, y: 7, type: blockType.NOT_DEFINED },
