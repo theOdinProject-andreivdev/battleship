@@ -12,14 +12,20 @@ class App extends Component {
     console.log("startup");
     this.board1Status = gameStatus.selecting;
     this.board2Status = gameStatus.hidden;
+    this.winner = "";
 
     let gameEventsSubscriber = function (msg, data) {
       if (msg == "gameEvent" && data == "player did hit") {
         if (this.board2Status == gameStatus.hitting) {
-          console.log("player did hit");
           this.board1Status = gameStatus.locked;
           PubSub.publish("gameEvent", "ai trigger hit");
         }
+      }
+      if (msg == "gameEvent" && data == "player win") {
+        this.winner = "player";
+        this.board1Status = gameStatus.locked;
+        this.board2Status = gameStatus.locked;
+        this.forceUpdate();
       }
     };
     PubSub.clearAllSubscriptions();
@@ -67,6 +73,23 @@ class App extends Component {
                 </div>
               </div>
             )}
+
+            {this.winner == "player" && (
+              <div>
+                <div
+                  className="alert alert-primary"
+                  role="alert"
+                  style={{
+                    width: "50%",
+                    marginLeft: "25%",
+                    marginRight: "25%",
+                  }}
+                >
+                  YOU WON!
+                </div>
+              </div>
+            )}
+
             <div className="container">
               <div className="row justify-content-center">
                 <div className="col-auto mx-auto">

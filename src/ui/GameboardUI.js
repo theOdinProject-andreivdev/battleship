@@ -35,8 +35,6 @@ class GameboardUI extends Component {
       if (this.state.type == "player")
         switch (data) {
           case "ai trigger hit":
-            console.log("ai trigger hit");
-
             let unhitBlocks = [];
 
             this.gameBoard.getBlocks().forEach((block) => {
@@ -75,6 +73,8 @@ class GameboardUI extends Component {
   };
 
   mouseClick(e) {
+    if (this.state.status == gameStatus.locked) return;
+
     this.gameBoard.hit({
       x: e.target.dataset.x,
       y: e.target.dataset.y,
@@ -83,10 +83,20 @@ class GameboardUI extends Component {
     this.setState({ gameBoardGrid: this.gameBoard.getBlocks() });
     if (this.state.type == "ai") {
       PubSub.publish("gameEvent", "player did hit");
+
+      let anyPlaneAlive = false;
+      this.gameBoard.getPlanes().forEach((plane) => {
+        if (plane.getDead() == false) {
+          anyPlaneAlive = true;
+        }
+      });
+
+      if (!anyPlaneAlive) PubSub.publish("gameEvent", "player win");
     }
   }
 
   mouseDown(e) {
+    if (this.state.status == gameStatus.locked) return;
     if (
       this.state.status === gameStatus.selecting ||
       this.state.status === gameStatus.dropped
@@ -125,6 +135,7 @@ class GameboardUI extends Component {
   }
 
   mouseLeave(e) {
+    if (this.state.status == gameStatus.locked) return;
     if (
       this.state.status === gameStatus.moving ||
       this.state.status === gameStatus.movingin
@@ -142,6 +153,7 @@ class GameboardUI extends Component {
   }
 
   mouseEnter(e) {
+    if (this.state.status == gameStatus.locked) return;
     if (this.state.status === gameStatus.movingout) {
       if (e.target.dataset.x != null && e.target.dataset.y != null) {
         let destx = e.target.dataset.x;
@@ -160,6 +172,7 @@ class GameboardUI extends Component {
   }
 
   mouseUp(e) {
+    if (this.state.status == gameStatus.locked) return;
     if (this.state.status !== gameStatus.hitting) {
       this.setState({ status: gameStatus.dropped });
     }
