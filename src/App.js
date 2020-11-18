@@ -27,6 +27,12 @@ class App extends Component {
         this.board2Status = gameStatus.locked;
         this.forceUpdate();
       }
+      if (msg == "gameEvent" && data == "ai win") {
+        this.winner = "ai";
+        this.board1Status = gameStatus.locked;
+        this.board2Status = gameStatus.locked;
+        this.forceUpdate();
+      }
     };
     PubSub.clearAllSubscriptions();
 
@@ -90,6 +96,33 @@ class App extends Component {
                   }}
                 >
                   YOU WON!
+                </div>
+                <div className="row justify-content-center">
+                  <div className="col-auto">
+                    <button
+                      type="button"
+                      className="btn btn-dark m-3"
+                      onClick={this.onPlayAgain.bind(this)}
+                    >
+                      Play again!
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {this.winner == "ai" && (
+              <div>
+                <div
+                  className="alert alert-primary"
+                  role="alert"
+                  style={{
+                    width: "50%",
+                    marginLeft: "25%",
+                    marginRight: "25%",
+                  }}
+                >
+                  YOU LOST!
                 </div>
                 <div className="row justify-content-center">
                   <div className="col-auto">

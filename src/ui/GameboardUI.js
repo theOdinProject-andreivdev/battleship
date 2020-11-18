@@ -43,6 +43,8 @@ class GameboardUI extends Component {
               y: this.gameBoard.getBlocks()[randomBlockIndex].y,
             });
 
+            this.computeAndDeclareWinner("ai");
+
             if (this.mounted)
               this.setState({ gameBoardGrid: this.gameBoard.getBlocks() });
             break;
@@ -53,6 +55,17 @@ class GameboardUI extends Component {
 
     PubSub.subscribe("gameEvent", gameEventsSubscriber.bind(this));
   }
+
+  computeAndDeclareWinner = (winner) => {
+    let anyPlaneAlive = false;
+    this.gameBoard.getPlanes().forEach((plane) => {
+      if (plane.getDead() === false) {
+        anyPlaneAlive = true;
+      }
+    });
+
+    if (!anyPlaneAlive) PubSub.publish("gameEvent", `${winner} win`);
+  };
 
   createRandomPlanes = () => {
     let planes = [];
@@ -79,6 +92,10 @@ class GameboardUI extends Component {
           ),
         });
         planeSet = this.addPlane(planes[index]);
+
+        for (let i = 0; i < Math.random() * 2; i++)
+          this.gameBoard.rotate(planes[index]);
+
         console.log(planeSet);
 
         console.log(planes[index].getHead());
@@ -113,14 +130,7 @@ class GameboardUI extends Component {
     if (this.state.type === "ai") {
       PubSub.publish("gameEvent", "player did hit");
 
-      let anyPlaneAlive = false;
-      this.gameBoard.getPlanes().forEach((plane) => {
-        if (plane.getDead() === false) {
-          anyPlaneAlive = true;
-        }
-      });
-
-      if (!anyPlaneAlive) PubSub.publish("gameEvent", "player win");
+      this.computeAndDeclareWinner("player");
     }
   }
 
