@@ -23,7 +23,11 @@ function BlockUI(props) {
       break;
   }
 
-  if (props.visible === false && props.block.type != blockType.HIT)
+  if (
+    props.visible === false &&
+    props.block.type !== blockType.HIT &&
+    props.block.type !== blockType.HITMISS
+  )
     blocktype = "btn-light";
 
   return (

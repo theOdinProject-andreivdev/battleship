@@ -216,6 +216,17 @@ class GameboardUI extends Component {
     }
   }
 
+  touchStart(e) {
+    console.log("touchstart " + e.target.dataset.x + " " + e.target.dataset.y);
+  }
+
+  touchEnd(e) {
+    console.log("touchend " + e.target.dataset.x + " " + e.target.dataset.y);
+  }
+  touchCancel(e) {
+    console.log("touchCancel " + e.target.dataset.x + " " + e.target.dataset.y);
+  }
+
   render() {
     return (
       <div className="container">
@@ -244,6 +255,9 @@ class GameboardUI extends Component {
                   onMouseLeave={this.mouseLeave.bind(this)}
                   onMouseOver={this.mouseEnter.bind(this)}
                   onMouseUp={this.mouseUp.bind(this)}
+                  onTouchStart={this.touchStart.bind(this)}
+                  onTouchEnd={this.touchEnd.bind(this)}
+                  onTouchCancel={this.touchCancel.bind(this)}
                 >
                   <BlockUI block={block} visible={this.state.visible} />
                 </div>

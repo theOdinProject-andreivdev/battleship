@@ -7,6 +7,8 @@ const gameStatus = {
   hitting: 6,
   locked: 7,
   hideen: 8,
+  touchSelecting: 9,
+  touchDropped: 10,
 };
 
 export default gameStatus;

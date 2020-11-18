@@ -45,7 +45,7 @@ class App extends Component {
   onPlayClick = () => {
     console.log("hitting status");
     this.board2Status = gameStatus.hitting;
-    this.board1Status = gameStatus.hitting;
+    this.board1Status = gameStatus.locked;
     this.forceUpdate();
   };
 
@@ -149,28 +149,28 @@ class App extends Component {
                     pubsub={this.pubsub}
                   ></GameboardUI>
                 </div>
+                {this.board1Status === gameStatus.selecting && (
+                  <div className="row justify-content-center">
+                    <div className="col-auto">
+                      <button
+                        type="button"
+                        className="btn btn-dark m-3"
+                        onClick={this.onPlayClick.bind(this)}
+                      >
+                        Play!
+                      </button>
+                    </div>
+                  </div>
+                )}
                 <div className="col-auto mx-auto">
                   <GameboardUI
                     gameStatus={this.board2Status}
-                    visible={true}
+                    visible={false}
                     boardType="ai"
                     pubsub={this.pubsub}
                   ></GameboardUI>
                 </div>
               </div>
-              {this.board1Status === gameStatus.selecting && (
-                <div className="row justify-content-center">
-                  <div className="col-auto">
-                    <button
-                      type="button"
-                      className="btn btn-dark m-3"
-                      onClick={this.onPlayClick.bind(this)}
-                    >
-                      Play!
-                    </button>
-                  </div>
-                </div>
-              )}
             </div>
           </div>
         </div>
