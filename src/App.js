@@ -163,12 +163,14 @@ class App extends Component {
                   </div>
                 )}
                 <div className="col-auto mx-auto">
-                  <GameboardUI
-                    gameStatus={this.board2Status}
-                    visible={false}
-                    boardType="ai"
-                    pubsub={this.pubsub}
-                  ></GameboardUI>
+                  {this.board1Status !== gameStatus.selecting && (
+                    <GameboardUI
+                      gameStatus={this.board2Status}
+                      visible={false}
+                      boardType="ai"
+                      pubsub={this.pubsub}
+                    ></GameboardUI>
+                  )}
                 </div>
               </div>
             </div>

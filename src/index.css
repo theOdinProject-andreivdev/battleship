@@ -1,22 +1,35 @@
-body {
+body,
+.wrapper {
+  /* Break the flow */
+  position: absolute;
+  top: 0;
+
+  /* Give them all the available space */
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+
+  /* Remove the margins if any */
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+
+  /* Allow them to scroll down the document */
+  overflow-y: hidden;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+body {
+  /* Sending body at the bottom of the stack */
+  z-index: 1;
 }
 
-tbody tr td {
-  padding: 0 !important;
-  margin: 0 !important;
+.wrapper {
+  /* Making the wrapper stack above the body */
+  z-index: 2;
 }
-
-html {
-  overscroll-behavior-y: contain;
+.wrapper {
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 1.5em;
+  padding-right: 1.5em;
+  padding-left: 1.5em;
+  max-width: 1080px;
 }

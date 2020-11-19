@@ -20,6 +20,7 @@ class GameboardUI extends Component {
     this.clicks = 0;
     this.clickdelay = 400;
     this.mounted = false;
+    this.lastmove = null;
 
     this.createRandomPlanes();
 
@@ -134,6 +135,7 @@ class GameboardUI extends Component {
   }
 
   mouseDown(e) {
+    if (this.is_touch_device()) return;
     if (this.state.status === gameStatus.locked) return;
     if (
       this.state.status === gameStatus.selecting ||
@@ -173,6 +175,7 @@ class GameboardUI extends Component {
   }
 
   mouseLeave(e) {
+    if (this.is_touch_device()) return;
     if (this.state.status === gameStatus.locked) return;
     if (
       this.state.status === gameStatus.moving ||
@@ -191,6 +194,7 @@ class GameboardUI extends Component {
   }
 
   mouseEnter(e) {
+    if (this.is_touch_device()) return;
     if (this.state.status === gameStatus.locked) return;
     if (this.state.status === gameStatus.movingout) {
       if (e.target.dataset.x != null && e.target.dataset.y != null) {
@@ -210,6 +214,7 @@ class GameboardUI extends Component {
   }
 
   mouseUp(e) {
+    if (this.is_touch_device()) return;
     if (this.state.status === gameStatus.locked) return;
     if (this.state.status !== gameStatus.hitting) {
       this.setState({ status: gameStatus.dropped });
@@ -217,46 +222,89 @@ class GameboardUI extends Component {
   }
 
   touchStart(e) {
-    e.preventDefault();
-    const block = document.elementFromPoint(
-      e.changedTouches[0].screenX,
-      e.changedTouches[0].screenY
-    );
-    this.gameBoard.selectPlane({
-      x: e.target.dataset.x,
-      y: e.target.dataset.y,
-    });
-    this.gameBoard.moveOrigin = {
-      x: block.dataset.x,
-      y: block.dataset.y,
-    };
+    console.log(this.state.status);
+    this.lastmove = e;
+    if (this.state.status === gameStatus.locked) return;
+    if (this.state.status === gameStatus.selecting)
+      if (e.target.dataset != undefined) {
+        this.clicks++;
+        setTimeout(
+          function () {
+            this.clicks = 0;
+          }.bind(this),
+          this.clickdelay
+        );
 
-    console.log(e);
+        if (this.clicks === 2) {
+          this.gameBoard.selectPlane({
+            x: e.target.dataset.x,
+            y: e.target.dataset.y,
+          });
+
+          if (this.gameBoard.getSelectedPlane() !== undefined)
+            this.gameBoard.rotate(this.gameBoard.getSelectedPlane());
+          this.setState({ gameBoardGrid: this.gameBoard.getBlocks() });
+          this.clicks = 0;
+        } else {
+          const block = document.elementFromPoint(
+            e.changedTouches[0].pageX,
+            e.changedTouches[0].pageY
+          );
+          this.gameBoard.selectPlane({
+            x: e.target.dataset.x,
+            y: e.target.dataset.y,
+          });
+          console.log("selected plane");
+          this.gameBoard.moveOrigin = {
+            x: block.dataset.x,
+            y: block.dataset.y,
+          };
+        }
+      }
+    if (this.state.status === gameStatus.hitting) {
+      this.mouseClick(e);
+    }
+  }
+
+  touchMove(e) {
+    this.lastmove = e;
   }
 
   touchEnd(e) {
-    e.preventDefault();
-    const block = document.elementFromPoint(
-      e.changedTouches[0].screenX,
-      e.changedTouches[0].screenY
-    );
-    this.gameBoard.moveSelectedPlane(this.gameBoard.moveOrigin, {
-      x: block.dataset.x,
-      y: block.dataset.y,
-    });
+    if (this.state.status === gameStatus.selecting) {
+      const block = document.elementFromPoint(
+        this.lastmove.changedTouches[0].pageX,
+        this.lastmove.changedTouches[0].pageY
+      );
 
-    this.setState({ gameBoardGrid: this.gameBoard.getBlocks() });
+      console.log(block.dataset.x + " " + block.dataset.y);
+      if (e.target.dataset.x !== undefined) {
+        if (
+          block.dataset.x >= 0 &&
+          block.dataset.x < 10 &&
+          block.dataset.y >= 0 &&
+          block.dataset.y < 10
+        )
+          this.gameBoard.moveSelectedPlane(this.gameBoard.moveOrigin, {
+            x: block.dataset.x,
+            y: block.dataset.y,
+          });
+      }
+      this.setState({ gameBoardGrid: this.gameBoard.getBlocks() });
 
-    this.forceUpdate();
-    console.log(e);
+      this.forceUpdate();
+    }
   }
 
-  touchMove(e) {}
+  is_touch_device() {
+    return "ontouchstart" in window;
+  }
 
   render() {
     return (
-      <div onTouchMove={this.touchMove.bind(this)} className="container">
+      <div className="container">
         <div
+          onTouchMove={this.touchMove.bind(this)}
           className="card"
           style={{
             width: "240px",
