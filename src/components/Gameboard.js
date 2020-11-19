@@ -212,8 +212,6 @@ const Gameboard = () => {
     return selectedPlane;
   };
   const hit = ({ x: hitx, y: hity }) => {
-    console.log(hitx + " " + hity);
-    console.log(planes);
     getBlocks().forEach((b) => {
       if (b.x === parseInt(hitx) && b.y === parseInt(hity)) {
         b.type = blockType.HITMISS;

@@ -30,15 +30,6 @@ class App extends Component {
       }
     });
 
-    this.pubsub.subscribe("player", (data) => {
-      if (data === "playerdidhit") {
-        if (this.board2Status === gameStatus.hitting) {
-          this.board1Status = gameStatus.locked;
-          this.pubsub.publish("ai", "aitriggerhit");
-        }
-      }
-    });
-
     this.pubsub.publish("gameEvent", "start");
   }
 

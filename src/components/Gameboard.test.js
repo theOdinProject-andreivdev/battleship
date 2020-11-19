@@ -3,7 +3,7 @@ import Plane from "./Plane";
 import blockType from "../util/blockType";
 import drawBlocks from "../util/drawBlocks";
 
-xit("tests gameboard creation", () => {
+it("tests gameboard creation", () => {
   const gameBoard = Gameboard();
 
   expect(gameBoard.getBlocks()).toStrictEqual([
@@ -119,7 +119,7 @@ xit("tests gameboard creation", () => {
   ]);
 });
 
-xit("gameboard adds a plane", () => {
+it("gameboard adds a plane", () => {
   const gameboard = Gameboard();
   const plane = Plane({ x: 5, y: 5 });
 
@@ -141,9 +141,9 @@ xit("gameboard adds a plane", () => {
     { x: 1, y: 8, type: blockType.NOT_DEFINED },
     { x: 2, y: 8, type: blockType.NOT_DEFINED },
     { x: 3, y: 8, type: blockType.NOT_DEFINED },
-    { x: 4, y: 8, type: blockType.BODY },
-    { x: 5, y: 8, type: blockType.BODY },
-    { x: 6, y: 8, type: blockType.BODY },
+    { x: 4, y: 8, type: blockType.NOT_DEFINED },
+    { x: 5, y: 8, type: blockType.NOT_DEFINED },
+    { x: 6, y: 8, type: blockType.NOT_DEFINED },
     { x: 7, y: 8, type: blockType.NOT_DEFINED },
     { x: 8, y: 8, type: blockType.NOT_DEFINED },
     { x: 9, y: 8, type: blockType.NOT_DEFINED },
@@ -153,7 +153,7 @@ xit("gameboard adds a plane", () => {
     { x: 2, y: 7, type: blockType.NOT_DEFINED },
     { x: 3, y: 7, type: blockType.NOT_DEFINED },
     { x: 4, y: 7, type: blockType.NOT_DEFINED },
-    { x: 5, y: 7, type: blockType.BODY },
+    { x: 5, y: 7, type: blockType.NOT_DEFINED },
     { x: 6, y: 7, type: blockType.NOT_DEFINED },
     { x: 7, y: 7, type: blockType.NOT_DEFINED },
     { x: 8, y: 7, type: blockType.NOT_DEFINED },
@@ -163,9 +163,9 @@ xit("gameboard adds a plane", () => {
     { x: 1, y: 6, type: blockType.NOT_DEFINED },
     { x: 2, y: 6, type: blockType.NOT_DEFINED },
     { x: 3, y: 6, type: blockType.NOT_DEFINED },
-    { x: 4, y: 6, type: blockType.BODY },
-    { x: 5, y: 6, type: blockType.BODY },
-    { x: 6, y: 6, type: blockType.BODY },
+    { x: 4, y: 6, type: blockType.NOT_DEFINED },
+    { x: 5, y: 6, type: blockType.NOT_DEFINED },
+    { x: 6, y: 6, type: blockType.NOT_DEFINED },
     { x: 7, y: 6, type: blockType.NOT_DEFINED },
     { x: 8, y: 6, type: blockType.NOT_DEFINED },
     { x: 9, y: 6, type: blockType.NOT_DEFINED },
@@ -185,9 +185,9 @@ xit("gameboard adds a plane", () => {
     { x: 1, y: 4, type: blockType.NOT_DEFINED },
     { x: 2, y: 4, type: blockType.NOT_DEFINED },
     { x: 3, y: 4, type: blockType.NOT_DEFINED },
-    { x: 4, y: 4, type: blockType.NOT_DEFINED },
-    { x: 5, y: 4, type: blockType.NOT_DEFINED },
-    { x: 6, y: 4, type: blockType.NOT_DEFINED },
+    { x: 4, y: 4, type: blockType.BODY },
+    { x: 5, y: 4, type: blockType.BODY },
+    { x: 6, y: 4, type: blockType.BODY },
     { x: 7, y: 4, type: blockType.NOT_DEFINED },
     { x: 8, y: 4, type: blockType.NOT_DEFINED },
     { x: 9, y: 4, type: blockType.NOT_DEFINED },
@@ -197,7 +197,7 @@ xit("gameboard adds a plane", () => {
     { x: 2, y: 3, type: blockType.NOT_DEFINED },
     { x: 3, y: 3, type: blockType.NOT_DEFINED },
     { x: 4, y: 3, type: blockType.NOT_DEFINED },
-    { x: 5, y: 3, type: blockType.NOT_DEFINED },
+    { x: 5, y: 3, type: blockType.BODY },
     { x: 6, y: 3, type: blockType.NOT_DEFINED },
     { x: 7, y: 3, type: blockType.NOT_DEFINED },
     { x: 8, y: 3, type: blockType.NOT_DEFINED },
@@ -207,9 +207,9 @@ xit("gameboard adds a plane", () => {
     { x: 1, y: 2, type: blockType.NOT_DEFINED },
     { x: 2, y: 2, type: blockType.NOT_DEFINED },
     { x: 3, y: 2, type: blockType.NOT_DEFINED },
-    { x: 4, y: 2, type: blockType.NOT_DEFINED },
-    { x: 5, y: 2, type: blockType.NOT_DEFINED },
-    { x: 6, y: 2, type: blockType.NOT_DEFINED },
+    { x: 4, y: 2, type: blockType.BODY },
+    { x: 5, y: 2, type: blockType.BODY },
+    { x: 6, y: 2, type: blockType.BODY },
     { x: 7, y: 2, type: blockType.NOT_DEFINED },
     { x: 8, y: 2, type: blockType.NOT_DEFINED },
     { x: 9, y: 2, type: blockType.NOT_DEFINED },
@@ -238,14 +238,16 @@ xit("gameboard adds a plane", () => {
   ]);
 });
 
-xit("does not add planes outside of gameboard", () => {
+it("does not add planes outside of gameboard", () => {
   const gameBoard = Gameboard();
 
-  expect(gameBoard.addPlane(Plane({ x: 0, y: 0 }))).toStrictEqual(false);
-  expect(gameBoard.addPlane(Plane({ x: 1, y: 7 }))).toStrictEqual(false);
-  expect(gameBoard.addPlane(Plane({ x: 9, y: 0 }))).toStrictEqual(false);
+  expect(gameBoard.addPlane(Plane({ x: 0, y: 3 }))).toStrictEqual(false);
+  expect(gameBoard.addPlane(Plane({ x: 0, y: 7 }))).toStrictEqual(false);
+  expect(gameBoard.addPlane(Plane({ x: 9, y: 3 }))).toStrictEqual(false);
   expect(gameBoard.addPlane(Plane({ x: 9, y: 7 }))).toStrictEqual(false);
-  expect(gameBoard.addPlane(Plane({ x: 5, y: 7 }))).toStrictEqual(false);
+
+  expect(gameBoard.addPlane(Plane({ x: 5, y: 2 }))).toStrictEqual(false);
+  expect(gameBoard.addPlane(Plane({ x: 5, y: 10 }))).toStrictEqual(false);
 
   expect(gameBoard.getBlocks()).toStrictEqual([
     { x: 0, y: 9, type: blockType.NOT_DEFINED },
@@ -360,7 +362,7 @@ xit("does not add planes outside of gameboard", () => {
   ]);
 });
 
-xit("gameboard does not add collision plane", () => {
+it("gameboard does not add collision plane", () => {
   const gameBoard = Gameboard();
 
   expect(gameBoard.addPlane(Plane({ x: 5, y: 5 }))).toStrictEqual(true);
@@ -386,9 +388,9 @@ xit("gameboard does not add collision plane", () => {
     { x: 1, y: 8, type: blockType.NOT_DEFINED },
     { x: 2, y: 8, type: blockType.NOT_DEFINED },
     { x: 3, y: 8, type: blockType.NOT_DEFINED },
-    { x: 4, y: 8, type: blockType.BODY },
-    { x: 5, y: 8, type: blockType.BODY },
-    { x: 6, y: 8, type: blockType.BODY },
+    { x: 4, y: 8, type: blockType.NOT_DEFINED },
+    { x: 5, y: 8, type: blockType.NOT_DEFINED },
+    { x: 6, y: 8, type: blockType.NOT_DEFINED },
     { x: 7, y: 8, type: blockType.NOT_DEFINED },
     { x: 8, y: 8, type: blockType.NOT_DEFINED },
     { x: 9, y: 8, type: blockType.NOT_DEFINED },
@@ -398,7 +400,7 @@ xit("gameboard does not add collision plane", () => {
     { x: 2, y: 7, type: blockType.NOT_DEFINED },
     { x: 3, y: 7, type: blockType.NOT_DEFINED },
     { x: 4, y: 7, type: blockType.NOT_DEFINED },
-    { x: 5, y: 7, type: blockType.BODY },
+    { x: 5, y: 7, type: blockType.NOT_DEFINED },
     { x: 6, y: 7, type: blockType.NOT_DEFINED },
     { x: 7, y: 7, type: blockType.NOT_DEFINED },
     { x: 8, y: 7, type: blockType.NOT_DEFINED },
@@ -408,9 +410,9 @@ xit("gameboard does not add collision plane", () => {
     { x: 1, y: 6, type: blockType.NOT_DEFINED },
     { x: 2, y: 6, type: blockType.NOT_DEFINED },
     { x: 3, y: 6, type: blockType.NOT_DEFINED },
-    { x: 4, y: 6, type: blockType.BODY },
-    { x: 5, y: 6, type: blockType.BODY },
-    { x: 6, y: 6, type: blockType.BODY },
+    { x: 4, y: 6, type: blockType.NOT_DEFINED },
+    { x: 5, y: 6, type: blockType.NOT_DEFINED },
+    { x: 6, y: 6, type: blockType.NOT_DEFINED },
     { x: 7, y: 6, type: blockType.NOT_DEFINED },
     { x: 8, y: 6, type: blockType.NOT_DEFINED },
     { x: 9, y: 6, type: blockType.NOT_DEFINED },
@@ -430,9 +432,9 @@ xit("gameboard does not add collision plane", () => {
     { x: 1, y: 4, type: blockType.NOT_DEFINED },
     { x: 2, y: 4, type: blockType.NOT_DEFINED },
     { x: 3, y: 4, type: blockType.NOT_DEFINED },
-    { x: 4, y: 4, type: blockType.NOT_DEFINED },
-    { x: 5, y: 4, type: blockType.NOT_DEFINED },
-    { x: 6, y: 4, type: blockType.NOT_DEFINED },
+    { x: 4, y: 4, type: blockType.BODY },
+    { x: 5, y: 4, type: blockType.BODY },
+    { x: 6, y: 4, type: blockType.BODY },
     { x: 7, y: 4, type: blockType.NOT_DEFINED },
     { x: 8, y: 4, type: blockType.NOT_DEFINED },
     { x: 9, y: 4, type: blockType.NOT_DEFINED },
@@ -442,7 +444,7 @@ xit("gameboard does not add collision plane", () => {
     { x: 2, y: 3, type: blockType.NOT_DEFINED },
     { x: 3, y: 3, type: blockType.NOT_DEFINED },
     { x: 4, y: 3, type: blockType.NOT_DEFINED },
-    { x: 5, y: 3, type: blockType.NOT_DEFINED },
+    { x: 5, y: 3, type: blockType.BODY },
     { x: 6, y: 3, type: blockType.NOT_DEFINED },
     { x: 7, y: 3, type: blockType.NOT_DEFINED },
     { x: 8, y: 3, type: blockType.NOT_DEFINED },
@@ -452,9 +454,9 @@ xit("gameboard does not add collision plane", () => {
     { x: 1, y: 2, type: blockType.NOT_DEFINED },
     { x: 2, y: 2, type: blockType.NOT_DEFINED },
     { x: 3, y: 2, type: blockType.NOT_DEFINED },
-    { x: 4, y: 2, type: blockType.NOT_DEFINED },
-    { x: 5, y: 2, type: blockType.NOT_DEFINED },
-    { x: 6, y: 2, type: blockType.NOT_DEFINED },
+    { x: 4, y: 2, type: blockType.BODY },
+    { x: 5, y: 2, type: blockType.BODY },
+    { x: 6, y: 2, type: blockType.BODY },
     { x: 7, y: 2, type: blockType.NOT_DEFINED },
     { x: 8, y: 2, type: blockType.NOT_DEFINED },
     { x: 9, y: 2, type: blockType.NOT_DEFINED },
@@ -483,7 +485,7 @@ xit("gameboard does not add collision plane", () => {
   ]);
 });
 
-xit("adds plane object to planes", () => {
+it("adds plane object to planes", () => {
   const gameboard = Gameboard();
   const plane = Plane({ x: 5, y: 5 });
 
@@ -494,7 +496,7 @@ xit("adds plane object to planes", () => {
   expect(gameboard.getPlanes()).toStrictEqual(planes);
 });
 
-xit("adds multiple planes wxithout collision", () => {
+it("adds multiple planes wxithout collision", () => {
   const gameboard = Gameboard();
   const plane1 = Plane({ x: 5, y: 5 });
   const plane2 = Plane({ x: 3, y: 4 });
@@ -515,86 +517,95 @@ xit("adds multiple planes wxithout collision", () => {
     { x: 7, y: 9, type: blockType.NOT_DEFINED },
     { x: 8, y: 9, type: blockType.NOT_DEFINED },
     { x: 9, y: 9, type: blockType.NOT_DEFINED },
+
     { x: 0, y: 8, type: blockType.NOT_DEFINED },
     { x: 1, y: 8, type: blockType.NOT_DEFINED },
     { x: 2, y: 8, type: blockType.NOT_DEFINED },
     { x: 3, y: 8, type: blockType.NOT_DEFINED },
-    { x: 4, y: 8, type: blockType.BODY },
-    { x: 5, y: 8, type: blockType.BODY },
-    { x: 6, y: 8, type: blockType.BODY },
+    { x: 4, y: 8, type: blockType.NOT_DEFINED },
+    { x: 5, y: 8, type: blockType.NOT_DEFINED },
+    { x: 6, y: 8, type: blockType.NOT_DEFINED },
     { x: 7, y: 8, type: blockType.NOT_DEFINED },
     { x: 8, y: 8, type: blockType.NOT_DEFINED },
     { x: 9, y: 8, type: blockType.NOT_DEFINED },
+
     { x: 0, y: 7, type: blockType.NOT_DEFINED },
     { x: 1, y: 7, type: blockType.NOT_DEFINED },
-    { x: 2, y: 7, type: blockType.BODY },
-    { x: 3, y: 7, type: blockType.BODY },
-    { x: 4, y: 7, type: blockType.BODY },
-    { x: 5, y: 7, type: blockType.BODY },
+    { x: 2, y: 7, type: blockType.NOT_DEFINED },
+    { x: 3, y: 7, type: blockType.NOT_DEFINED },
+    { x: 4, y: 7, type: blockType.NOT_DEFINED },
+    { x: 5, y: 7, type: blockType.NOT_DEFINED },
     { x: 6, y: 7, type: blockType.NOT_DEFINED },
-    { x: 7, y: 7, type: blockType.BODY },
-    { x: 8, y: 7, type: blockType.BODY },
-    { x: 9, y: 7, type: blockType.BODY },
+    { x: 7, y: 7, type: blockType.NOT_DEFINED },
+    { x: 8, y: 7, type: blockType.NOT_DEFINED },
+    { x: 9, y: 7, type: blockType.NOT_DEFINED },
+
     { x: 0, y: 6, type: blockType.NOT_DEFINED },
     { x: 1, y: 6, type: blockType.NOT_DEFINED },
     { x: 2, y: 6, type: blockType.NOT_DEFINED },
-    { x: 3, y: 6, type: blockType.BODY },
-    { x: 4, y: 6, type: blockType.BODY },
-    { x: 5, y: 6, type: blockType.BODY },
-    { x: 6, y: 6, type: blockType.BODY },
+    { x: 3, y: 6, type: blockType.NOT_DEFINED },
+    { x: 4, y: 6, type: blockType.NOT_DEFINED },
+    { x: 5, y: 6, type: blockType.NOT_DEFINED },
+    { x: 6, y: 6, type: blockType.NOT_DEFINED },
     { x: 7, y: 6, type: blockType.NOT_DEFINED },
-    { x: 8, y: 6, type: blockType.BODY },
+    { x: 8, y: 6, type: blockType.NOT_DEFINED },
     { x: 9, y: 6, type: blockType.NOT_DEFINED },
+
     { x: 0, y: 5, type: blockType.NOT_DEFINED },
     { x: 1, y: 5, type: blockType.NOT_DEFINED },
-    { x: 2, y: 5, type: blockType.BODY },
-    { x: 3, y: 5, type: blockType.BODY },
-    { x: 4, y: 5, type: blockType.BODY },
+    { x: 2, y: 5, type: blockType.NOT_DEFINED },
+    { x: 3, y: 5, type: blockType.NOT_DEFINED },
+    { x: 4, y: 5, type: blockType.NOT_DEFINED },
     { x: 5, y: 5, type: blockType.HEAD },
     { x: 6, y: 5, type: blockType.NOT_DEFINED },
-    { x: 7, y: 5, type: blockType.BODY },
-    { x: 8, y: 5, type: blockType.BODY },
-    { x: 9, y: 5, type: blockType.BODY },
+    { x: 7, y: 5, type: blockType.NOT_DEFINED },
+    { x: 8, y: 5, type: blockType.NOT_DEFINED },
+    { x: 9, y: 5, type: blockType.NOT_DEFINED },
+
     { x: 0, y: 4, type: blockType.NOT_DEFINED },
     { x: 1, y: 4, type: blockType.NOT_DEFINED },
     { x: 2, y: 4, type: blockType.NOT_DEFINED },
     { x: 3, y: 4, type: blockType.HEAD },
-    { x: 4, y: 4, type: blockType.NOT_DEFINED },
-    { x: 5, y: 4, type: blockType.NOT_DEFINED },
-    { x: 6, y: 4, type: blockType.NOT_DEFINED },
+    { x: 4, y: 4, type: blockType.BODY },
+    { x: 5, y: 4, type: blockType.BODY },
+    { x: 6, y: 4, type: blockType.BODY },
     { x: 7, y: 4, type: blockType.NOT_DEFINED },
     { x: 8, y: 4, type: blockType.HEAD },
     { x: 9, y: 4, type: blockType.NOT_DEFINED },
+
     { x: 0, y: 3, type: blockType.NOT_DEFINED },
     { x: 1, y: 3, type: blockType.NOT_DEFINED },
-    { x: 2, y: 3, type: blockType.NOT_DEFINED },
-    { x: 3, y: 3, type: blockType.NOT_DEFINED },
-    { x: 4, y: 3, type: blockType.NOT_DEFINED },
-    { x: 5, y: 3, type: blockType.NOT_DEFINED },
+    { x: 2, y: 3, type: blockType.BODY },
+    { x: 3, y: 3, type: blockType.BODY },
+    { x: 4, y: 3, type: blockType.BODY },
+    { x: 5, y: 3, type: blockType.BODY },
     { x: 6, y: 3, type: blockType.NOT_DEFINED },
-    { x: 7, y: 3, type: blockType.NOT_DEFINED },
-    { x: 8, y: 3, type: blockType.NOT_DEFINED },
-    { x: 9, y: 3, type: blockType.NOT_DEFINED },
+    { x: 7, y: 3, type: blockType.BODY },
+    { x: 8, y: 3, type: blockType.BODY },
+    { x: 9, y: 3, type: blockType.BODY },
+
     { x: 0, y: 2, type: blockType.NOT_DEFINED },
     { x: 1, y: 2, type: blockType.NOT_DEFINED },
     { x: 2, y: 2, type: blockType.NOT_DEFINED },
-    { x: 3, y: 2, type: blockType.NOT_DEFINED },
-    { x: 4, y: 2, type: blockType.NOT_DEFINED },
-    { x: 5, y: 2, type: blockType.NOT_DEFINED },
-    { x: 6, y: 2, type: blockType.NOT_DEFINED },
+    { x: 3, y: 2, type: blockType.BODY },
+    { x: 4, y: 2, type: blockType.BODY },
+    { x: 5, y: 2, type: blockType.BODY },
+    { x: 6, y: 2, type: blockType.BODY },
     { x: 7, y: 2, type: blockType.NOT_DEFINED },
-    { x: 8, y: 2, type: blockType.NOT_DEFINED },
+    { x: 8, y: 2, type: blockType.BODY },
     { x: 9, y: 2, type: blockType.NOT_DEFINED },
+
     { x: 0, y: 1, type: blockType.NOT_DEFINED },
     { x: 1, y: 1, type: blockType.NOT_DEFINED },
-    { x: 2, y: 1, type: blockType.NOT_DEFINED },
-    { x: 3, y: 1, type: blockType.NOT_DEFINED },
-    { x: 4, y: 1, type: blockType.NOT_DEFINED },
+    { x: 2, y: 1, type: blockType.BODY },
+    { x: 3, y: 1, type: blockType.BODY },
+    { x: 4, y: 1, type: blockType.BODY },
     { x: 5, y: 1, type: blockType.NOT_DEFINED },
     { x: 6, y: 1, type: blockType.NOT_DEFINED },
-    { x: 7, y: 1, type: blockType.NOT_DEFINED },
-    { x: 8, y: 1, type: blockType.NOT_DEFINED },
-    { x: 9, y: 1, type: blockType.NOT_DEFINED },
+    { x: 7, y: 1, type: blockType.BODY },
+    { x: 8, y: 1, type: blockType.BODY },
+    { x: 9, y: 1, type: blockType.BODY },
+
     { x: 0, y: 0, type: blockType.NOT_DEFINED },
     { x: 1, y: 0, type: blockType.NOT_DEFINED },
     { x: 2, y: 0, type: blockType.NOT_DEFINED },
@@ -608,10 +619,10 @@ xit("adds multiple planes wxithout collision", () => {
   ]);
 });
 
-xit("adds multiple planes object to planes", () => {
+it("adds multiple planes object to planes", () => {
   const gameboard = Gameboard();
-  const plane1 = Plane({ x: 1, y: 1 });
-  const plane2 = Plane({ x: 5, y: 2 });
+  const plane1 = Plane({ x: 2, y: 4 });
+  const plane2 = Plane({ x: 5, y: 5 });
   const plane3 = Plane({ x: 7, y: 6 });
   const planes = [];
   planes.push(plane1);
@@ -624,9 +635,9 @@ xit("adds multiple planes object to planes", () => {
   expect(gameboard.getPlanes()).toStrictEqual(planes);
 });
 
-xit("adds plane and rotates", () => {
+it("adds plane and rotates", () => {
   const gameboard = Gameboard();
-  const plane1 = Plane({ x: 1, y: 2 });
+  const plane1 = Plane({ x: 1, y: 3 });
   const plane2 = Plane({ x: 7, y: 5 });
 
   gameboard.addPlane(plane1);
@@ -662,9 +673,9 @@ xit("adds plane and rotates", () => {
     { x: 3, y: 7, type: blockType.NOT_DEFINED },
     { x: 4, y: 7, type: blockType.NOT_DEFINED },
     { x: 5, y: 7, type: blockType.NOT_DEFINED },
-    { x: 6, y: 7, type: blockType.BODY },
+    { x: 6, y: 7, type: blockType.NOT_DEFINED },
     { x: 7, y: 7, type: blockType.NOT_DEFINED },
-    { x: 8, y: 7, type: blockType.BODY },
+    { x: 8, y: 7, type: blockType.NOT_DEFINED },
     { x: 9, y: 7, type: blockType.NOT_DEFINED },
 
     { x: 0, y: 6, type: blockType.NOT_DEFINED },
@@ -673,14 +684,14 @@ xit("adds plane and rotates", () => {
     { x: 3, y: 6, type: blockType.NOT_DEFINED },
     { x: 4, y: 6, type: blockType.NOT_DEFINED },
     { x: 5, y: 6, type: blockType.NOT_DEFINED },
-    { x: 6, y: 6, type: blockType.BODY },
-    { x: 7, y: 6, type: blockType.BODY },
-    { x: 8, y: 6, type: blockType.BODY },
-    { x: 9, y: 6, type: blockType.HEAD },
+    { x: 6, y: 6, type: blockType.NOT_DEFINED },
+    { x: 7, y: 6, type: blockType.NOT_DEFINED },
+    { x: 8, y: 6, type: blockType.NOT_DEFINED },
+    { x: 9, y: 6, type: blockType.NOT_DEFINED },
 
-    { x: 0, y: 5, type: blockType.BODY },
-    { x: 1, y: 5, type: blockType.BODY },
-    { x: 2, y: 5, type: blockType.BODY },
+    { x: 0, y: 5, type: blockType.NOT_DEFINED },
+    { x: 1, y: 5, type: blockType.NOT_DEFINED },
+    { x: 2, y: 5, type: blockType.NOT_DEFINED },
     { x: 3, y: 5, type: blockType.NOT_DEFINED },
     { x: 4, y: 5, type: blockType.NOT_DEFINED },
     { x: 5, y: 5, type: blockType.NOT_DEFINED },
@@ -690,30 +701,30 @@ xit("adds plane and rotates", () => {
     { x: 9, y: 5, type: blockType.NOT_DEFINED },
 
     { x: 0, y: 4, type: blockType.NOT_DEFINED },
-    { x: 1, y: 4, type: blockType.BODY },
+    { x: 1, y: 4, type: blockType.NOT_DEFINED },
     { x: 2, y: 4, type: blockType.NOT_DEFINED },
     { x: 3, y: 4, type: blockType.NOT_DEFINED },
     { x: 4, y: 4, type: blockType.NOT_DEFINED },
     { x: 5, y: 4, type: blockType.NOT_DEFINED },
-    { x: 6, y: 4, type: blockType.NOT_DEFINED },
-    { x: 7, y: 4, type: blockType.NOT_DEFINED },
-    { x: 8, y: 4, type: blockType.NOT_DEFINED },
-    { x: 9, y: 4, type: blockType.NOT_DEFINED },
+    { x: 6, y: 4, type: blockType.BODY },
+    { x: 7, y: 4, type: blockType.BODY },
+    { x: 8, y: 4, type: blockType.BODY },
+    { x: 9, y: 4, type: blockType.HEAD },
 
-    { x: 0, y: 3, type: blockType.BODY },
-    { x: 1, y: 3, type: blockType.BODY },
-    { x: 2, y: 3, type: blockType.BODY },
+    { x: 0, y: 3, type: blockType.NOT_DEFINED },
+    { x: 1, y: 3, type: blockType.HEAD },
+    { x: 2, y: 3, type: blockType.NOT_DEFINED },
     { x: 3, y: 3, type: blockType.NOT_DEFINED },
     { x: 4, y: 3, type: blockType.NOT_DEFINED },
     { x: 5, y: 3, type: blockType.NOT_DEFINED },
-    { x: 6, y: 3, type: blockType.NOT_DEFINED },
+    { x: 6, y: 3, type: blockType.BODY },
     { x: 7, y: 3, type: blockType.NOT_DEFINED },
-    { x: 8, y: 3, type: blockType.NOT_DEFINED },
+    { x: 8, y: 3, type: blockType.BODY },
     { x: 9, y: 3, type: blockType.NOT_DEFINED },
 
-    { x: 0, y: 2, type: blockType.NOT_DEFINED },
-    { x: 1, y: 2, type: blockType.HEAD },
-    { x: 2, y: 2, type: blockType.NOT_DEFINED },
+    { x: 0, y: 2, type: blockType.BODY },
+    { x: 1, y: 2, type: blockType.BODY },
+    { x: 2, y: 2, type: blockType.BODY },
     { x: 3, y: 2, type: blockType.NOT_DEFINED },
     { x: 4, y: 2, type: blockType.NOT_DEFINED },
     { x: 5, y: 2, type: blockType.NOT_DEFINED },
@@ -723,7 +734,7 @@ xit("adds plane and rotates", () => {
     { x: 9, y: 2, type: blockType.NOT_DEFINED },
 
     { x: 0, y: 1, type: blockType.NOT_DEFINED },
-    { x: 1, y: 1, type: blockType.NOT_DEFINED },
+    { x: 1, y: 1, type: blockType.BODY },
     { x: 2, y: 1, type: blockType.NOT_DEFINED },
     { x: 3, y: 1, type: blockType.NOT_DEFINED },
     { x: 4, y: 1, type: blockType.NOT_DEFINED },
@@ -733,9 +744,9 @@ xit("adds plane and rotates", () => {
     { x: 8, y: 1, type: blockType.NOT_DEFINED },
     { x: 9, y: 1, type: blockType.NOT_DEFINED },
 
-    { x: 0, y: 0, type: blockType.NOT_DEFINED },
-    { x: 1, y: 0, type: blockType.NOT_DEFINED },
-    { x: 2, y: 0, type: blockType.NOT_DEFINED },
+    { x: 0, y: 0, type: blockType.BODY },
+    { x: 1, y: 0, type: blockType.BODY },
+    { x: 2, y: 0, type: blockType.BODY },
     { x: 3, y: 0, type: blockType.NOT_DEFINED },
     { x: 4, y: 0, type: blockType.NOT_DEFINED },
     { x: 5, y: 0, type: blockType.NOT_DEFINED },
@@ -746,10 +757,10 @@ xit("adds plane and rotates", () => {
   ]);
 });
 
-xit("hxits", () => {
+it("hits", () => {
   const gameboard = Gameboard();
 
-  gameboard.hxit({ x: 2, y: 2 });
+  gameboard.hit({ x: 5, y: 5 });
 
   expect(gameboard.getBlocks()).toStrictEqual([
     { x: 0, y: 9, type: blockType.NOT_DEFINED },
@@ -801,7 +812,7 @@ xit("hxits", () => {
     { x: 2, y: 5, type: blockType.NOT_DEFINED },
     { x: 3, y: 5, type: blockType.NOT_DEFINED },
     { x: 4, y: 5, type: blockType.NOT_DEFINED },
-    { x: 5, y: 5, type: blockType.NOT_DEFINED },
+    { x: 5, y: 5, type: blockType.HITMISS },
     { x: 6, y: 5, type: blockType.NOT_DEFINED },
     { x: 7, y: 5, type: blockType.NOT_DEFINED },
     { x: 8, y: 5, type: blockType.NOT_DEFINED },
@@ -831,7 +842,7 @@ xit("hxits", () => {
 
     { x: 0, y: 2, type: blockType.NOT_DEFINED },
     { x: 1, y: 2, type: blockType.NOT_DEFINED },
-    { x: 2, y: 2, type: blockType.HxitMISS },
+    { x: 2, y: 2, type: blockType.NOT_DEFINED },
     { x: 3, y: 2, type: blockType.NOT_DEFINED },
     { x: 4, y: 2, type: blockType.NOT_DEFINED },
     { x: 5, y: 2, type: blockType.NOT_DEFINED },
@@ -864,13 +875,13 @@ xit("hxits", () => {
   ]);
 });
 
-xit("hxits near plane", () => {
+it("hits near plane", () => {
   const gameboard = Gameboard();
   const plane = Plane({ x: 5, y: 5 });
 
   gameboard.addPlane(plane);
 
-  gameboard.hxit({ x: 4, y: 7 });
+  gameboard.hit({ x: 7, y: 7 });
 
   expect(gameboard.getBlocks()).toStrictEqual([
     { x: 0, y: 9, type: blockType.NOT_DEFINED },
@@ -888,9 +899,9 @@ xit("hxits near plane", () => {
     { x: 1, y: 8, type: blockType.NOT_DEFINED },
     { x: 2, y: 8, type: blockType.NOT_DEFINED },
     { x: 3, y: 8, type: blockType.NOT_DEFINED },
-    { x: 4, y: 8, type: blockType.BODY },
-    { x: 5, y: 8, type: blockType.BODY },
-    { x: 6, y: 8, type: blockType.BODY },
+    { x: 4, y: 8, type: blockType.NOT_DEFINED },
+    { x: 5, y: 8, type: blockType.NOT_DEFINED },
+    { x: 6, y: 8, type: blockType.NOT_DEFINED },
     { x: 7, y: 8, type: blockType.NOT_DEFINED },
     { x: 8, y: 8, type: blockType.NOT_DEFINED },
     { x: 9, y: 8, type: blockType.NOT_DEFINED },
@@ -899,10 +910,10 @@ xit("hxits near plane", () => {
     { x: 1, y: 7, type: blockType.NOT_DEFINED },
     { x: 2, y: 7, type: blockType.NOT_DEFINED },
     { x: 3, y: 7, type: blockType.NOT_DEFINED },
-    { x: 4, y: 7, type: blockType.HxitMISS },
-    { x: 5, y: 7, type: blockType.BODY },
+    { x: 4, y: 7, type: blockType.NOT_DEFINED },
+    { x: 5, y: 7, type: blockType.NOT_DEFINED },
     { x: 6, y: 7, type: blockType.NOT_DEFINED },
-    { x: 7, y: 7, type: blockType.NOT_DEFINED },
+    { x: 7, y: 7, type: blockType.HITMISS },
     { x: 8, y: 7, type: blockType.NOT_DEFINED },
     { x: 9, y: 7, type: blockType.NOT_DEFINED },
 
@@ -910,9 +921,9 @@ xit("hxits near plane", () => {
     { x: 1, y: 6, type: blockType.NOT_DEFINED },
     { x: 2, y: 6, type: blockType.NOT_DEFINED },
     { x: 3, y: 6, type: blockType.NOT_DEFINED },
-    { x: 4, y: 6, type: blockType.BODY },
-    { x: 5, y: 6, type: blockType.BODY },
-    { x: 6, y: 6, type: blockType.BODY },
+    { x: 4, y: 6, type: blockType.NOT_DEFINED },
+    { x: 5, y: 6, type: blockType.NOT_DEFINED },
+    { x: 6, y: 6, type: blockType.NOT_DEFINED },
     { x: 7, y: 6, type: blockType.NOT_DEFINED },
     { x: 8, y: 6, type: blockType.NOT_DEFINED },
     { x: 9, y: 6, type: blockType.NOT_DEFINED },
@@ -932,9 +943,9 @@ xit("hxits near plane", () => {
     { x: 1, y: 4, type: blockType.NOT_DEFINED },
     { x: 2, y: 4, type: blockType.NOT_DEFINED },
     { x: 3, y: 4, type: blockType.NOT_DEFINED },
-    { x: 4, y: 4, type: blockType.NOT_DEFINED },
-    { x: 5, y: 4, type: blockType.NOT_DEFINED },
-    { x: 6, y: 4, type: blockType.NOT_DEFINED },
+    { x: 4, y: 4, type: blockType.BODY },
+    { x: 5, y: 4, type: blockType.BODY },
+    { x: 6, y: 4, type: blockType.BODY },
     { x: 7, y: 4, type: blockType.NOT_DEFINED },
     { x: 8, y: 4, type: blockType.NOT_DEFINED },
     { x: 9, y: 4, type: blockType.NOT_DEFINED },
@@ -944,7 +955,7 @@ xit("hxits near plane", () => {
     { x: 2, y: 3, type: blockType.NOT_DEFINED },
     { x: 3, y: 3, type: blockType.NOT_DEFINED },
     { x: 4, y: 3, type: blockType.NOT_DEFINED },
-    { x: 5, y: 3, type: blockType.NOT_DEFINED },
+    { x: 5, y: 3, type: blockType.BODY },
     { x: 6, y: 3, type: blockType.NOT_DEFINED },
     { x: 7, y: 3, type: blockType.NOT_DEFINED },
     { x: 8, y: 3, type: blockType.NOT_DEFINED },
@@ -954,9 +965,9 @@ xit("hxits near plane", () => {
     { x: 1, y: 2, type: blockType.NOT_DEFINED },
     { x: 2, y: 2, type: blockType.NOT_DEFINED },
     { x: 3, y: 2, type: blockType.NOT_DEFINED },
-    { x: 4, y: 2, type: blockType.NOT_DEFINED },
-    { x: 5, y: 2, type: blockType.NOT_DEFINED },
-    { x: 6, y: 2, type: blockType.NOT_DEFINED },
+    { x: 4, y: 2, type: blockType.BODY },
+    { x: 5, y: 2, type: blockType.BODY },
+    { x: 6, y: 2, type: blockType.BODY },
     { x: 7, y: 2, type: blockType.NOT_DEFINED },
     { x: 8, y: 2, type: blockType.NOT_DEFINED },
     { x: 9, y: 2, type: blockType.NOT_DEFINED },
@@ -985,13 +996,13 @@ xit("hxits near plane", () => {
   ]);
 });
 
-xit("hxits plane head", () => {
+it("hits plane head", () => {
   const gameboard = Gameboard();
   const plane = Plane({ x: 5, y: 5 });
 
   gameboard.addPlane(plane);
 
-  gameboard.hxit({ x: 5, y: 5 });
+  gameboard.hit({ x: 5, y: 5 });
 
   expect(gameboard.getBlocks()).toStrictEqual([
     { x: 0, y: 9, type: blockType.NOT_DEFINED },
@@ -1009,9 +1020,9 @@ xit("hxits plane head", () => {
     { x: 1, y: 8, type: blockType.NOT_DEFINED },
     { x: 2, y: 8, type: blockType.NOT_DEFINED },
     { x: 3, y: 8, type: blockType.NOT_DEFINED },
-    { x: 4, y: 8, type: blockType.Hxit },
-    { x: 5, y: 8, type: blockType.Hxit },
-    { x: 6, y: 8, type: blockType.Hxit },
+    { x: 4, y: 8, type: blockType.NOT_DEFINED },
+    { x: 5, y: 8, type: blockType.NOT_DEFINED },
+    { x: 6, y: 8, type: blockType.NOT_DEFINED },
     { x: 7, y: 8, type: blockType.NOT_DEFINED },
     { x: 8, y: 8, type: blockType.NOT_DEFINED },
     { x: 9, y: 8, type: blockType.NOT_DEFINED },
@@ -1021,7 +1032,7 @@ xit("hxits plane head", () => {
     { x: 2, y: 7, type: blockType.NOT_DEFINED },
     { x: 3, y: 7, type: blockType.NOT_DEFINED },
     { x: 4, y: 7, type: blockType.NOT_DEFINED },
-    { x: 5, y: 7, type: blockType.Hxit },
+    { x: 5, y: 7, type: blockType.NOT_DEFINED },
     { x: 6, y: 7, type: blockType.NOT_DEFINED },
     { x: 7, y: 7, type: blockType.NOT_DEFINED },
     { x: 8, y: 7, type: blockType.NOT_DEFINED },
@@ -1031,9 +1042,9 @@ xit("hxits plane head", () => {
     { x: 1, y: 6, type: blockType.NOT_DEFINED },
     { x: 2, y: 6, type: blockType.NOT_DEFINED },
     { x: 3, y: 6, type: blockType.NOT_DEFINED },
-    { x: 4, y: 6, type: blockType.Hxit },
-    { x: 5, y: 6, type: blockType.Hxit },
-    { x: 6, y: 6, type: blockType.Hxit },
+    { x: 4, y: 6, type: blockType.NOT_DEFINED },
+    { x: 5, y: 6, type: blockType.NOT_DEFINED },
+    { x: 6, y: 6, type: blockType.NOT_DEFINED },
     { x: 7, y: 6, type: blockType.NOT_DEFINED },
     { x: 8, y: 6, type: blockType.NOT_DEFINED },
     { x: 9, y: 6, type: blockType.NOT_DEFINED },
@@ -1043,7 +1054,7 @@ xit("hxits plane head", () => {
     { x: 2, y: 5, type: blockType.NOT_DEFINED },
     { x: 3, y: 5, type: blockType.NOT_DEFINED },
     { x: 4, y: 5, type: blockType.NOT_DEFINED },
-    { x: 5, y: 5, type: blockType.Hxit },
+    { x: 5, y: 5, type: blockType.HIT },
     { x: 6, y: 5, type: blockType.NOT_DEFINED },
     { x: 7, y: 5, type: blockType.NOT_DEFINED },
     { x: 8, y: 5, type: blockType.NOT_DEFINED },
@@ -1053,9 +1064,9 @@ xit("hxits plane head", () => {
     { x: 1, y: 4, type: blockType.NOT_DEFINED },
     { x: 2, y: 4, type: blockType.NOT_DEFINED },
     { x: 3, y: 4, type: blockType.NOT_DEFINED },
-    { x: 4, y: 4, type: blockType.NOT_DEFINED },
-    { x: 5, y: 4, type: blockType.NOT_DEFINED },
-    { x: 6, y: 4, type: blockType.NOT_DEFINED },
+    { x: 4, y: 4, type: blockType.HIT },
+    { x: 5, y: 4, type: blockType.HIT },
+    { x: 6, y: 4, type: blockType.HIT },
     { x: 7, y: 4, type: blockType.NOT_DEFINED },
     { x: 8, y: 4, type: blockType.NOT_DEFINED },
     { x: 9, y: 4, type: blockType.NOT_DEFINED },
@@ -1065,7 +1076,7 @@ xit("hxits plane head", () => {
     { x: 2, y: 3, type: blockType.NOT_DEFINED },
     { x: 3, y: 3, type: blockType.NOT_DEFINED },
     { x: 4, y: 3, type: blockType.NOT_DEFINED },
-    { x: 5, y: 3, type: blockType.NOT_DEFINED },
+    { x: 5, y: 3, type: blockType.HIT },
     { x: 6, y: 3, type: blockType.NOT_DEFINED },
     { x: 7, y: 3, type: blockType.NOT_DEFINED },
     { x: 8, y: 3, type: blockType.NOT_DEFINED },
@@ -1075,9 +1086,9 @@ xit("hxits plane head", () => {
     { x: 1, y: 2, type: blockType.NOT_DEFINED },
     { x: 2, y: 2, type: blockType.NOT_DEFINED },
     { x: 3, y: 2, type: blockType.NOT_DEFINED },
-    { x: 4, y: 2, type: blockType.NOT_DEFINED },
-    { x: 5, y: 2, type: blockType.NOT_DEFINED },
-    { x: 6, y: 2, type: blockType.NOT_DEFINED },
+    { x: 4, y: 2, type: blockType.HIT },
+    { x: 5, y: 2, type: blockType.HIT },
+    { x: 6, y: 2, type: blockType.HIT },
     { x: 7, y: 2, type: blockType.NOT_DEFINED },
     { x: 8, y: 2, type: blockType.NOT_DEFINED },
     { x: 9, y: 2, type: blockType.NOT_DEFINED },
@@ -1106,7 +1117,7 @@ xit("hxits plane head", () => {
   ]);
 });
 
-xit("adds multiple planes hxits one in the head", () => {
+it("adds multiple planes hits one in the head", () => {
   const gameboard = Gameboard();
   const plane1 = Plane({ x: 5, y: 5 });
   const plane2 = Plane({ x: 3, y: 4 });
@@ -1116,7 +1127,7 @@ xit("adds multiple planes hxits one in the head", () => {
   expect(gameboard.addPlane(plane2)).toStrictEqual(true);
   expect(gameboard.addPlane(plane3)).toStrictEqual(true);
 
-  gameboard.hxit({ x: 5, y: 5 });
+  gameboard.hit({ x: 5, y: 5 });
 
   expect(gameboard.getBlocks()).toStrictEqual([
     { x: 0, y: 9, type: blockType.NOT_DEFINED },
@@ -1134,89 +1145,89 @@ xit("adds multiple planes hxits one in the head", () => {
     { x: 1, y: 8, type: blockType.NOT_DEFINED },
     { x: 2, y: 8, type: blockType.NOT_DEFINED },
     { x: 3, y: 8, type: blockType.NOT_DEFINED },
-    { x: 4, y: 8, type: blockType.Hxit },
-    { x: 5, y: 8, type: blockType.Hxit },
-    { x: 6, y: 8, type: blockType.Hxit },
+    { x: 4, y: 8, type: blockType.NOT_DEFINED },
+    { x: 5, y: 8, type: blockType.NOT_DEFINED },
+    { x: 6, y: 8, type: blockType.NOT_DEFINED },
     { x: 7, y: 8, type: blockType.NOT_DEFINED },
     { x: 8, y: 8, type: blockType.NOT_DEFINED },
     { x: 9, y: 8, type: blockType.NOT_DEFINED },
 
     { x: 0, y: 7, type: blockType.NOT_DEFINED },
     { x: 1, y: 7, type: blockType.NOT_DEFINED },
-    { x: 2, y: 7, type: blockType.BODY },
-    { x: 3, y: 7, type: blockType.BODY },
-    { x: 4, y: 7, type: blockType.BODY },
-    { x: 5, y: 7, type: blockType.Hxit },
+    { x: 2, y: 7, type: blockType.NOT_DEFINED },
+    { x: 3, y: 7, type: blockType.NOT_DEFINED },
+    { x: 4, y: 7, type: blockType.NOT_DEFINED },
+    { x: 5, y: 7, type: blockType.NOT_DEFINED },
     { x: 6, y: 7, type: blockType.NOT_DEFINED },
-    { x: 7, y: 7, type: blockType.BODY },
-    { x: 8, y: 7, type: blockType.BODY },
-    { x: 9, y: 7, type: blockType.BODY },
+    { x: 7, y: 7, type: blockType.NOT_DEFINED },
+    { x: 8, y: 7, type: blockType.NOT_DEFINED },
+    { x: 9, y: 7, type: blockType.NOT_DEFINED },
 
     { x: 0, y: 6, type: blockType.NOT_DEFINED },
     { x: 1, y: 6, type: blockType.NOT_DEFINED },
     { x: 2, y: 6, type: blockType.NOT_DEFINED },
-    { x: 3, y: 6, type: blockType.BODY },
-    { x: 4, y: 6, type: blockType.Hxit },
-    { x: 5, y: 6, type: blockType.Hxit },
-    { x: 6, y: 6, type: blockType.Hxit },
+    { x: 3, y: 6, type: blockType.NOT_DEFINED },
+    { x: 4, y: 6, type: blockType.NOT_DEFINED },
+    { x: 5, y: 6, type: blockType.NOT_DEFINED },
+    { x: 6, y: 6, type: blockType.NOT_DEFINED },
     { x: 7, y: 6, type: blockType.NOT_DEFINED },
-    { x: 8, y: 6, type: blockType.BODY },
+    { x: 8, y: 6, type: blockType.NOT_DEFINED },
     { x: 9, y: 6, type: blockType.NOT_DEFINED },
 
     { x: 0, y: 5, type: blockType.NOT_DEFINED },
     { x: 1, y: 5, type: blockType.NOT_DEFINED },
-    { x: 2, y: 5, type: blockType.BODY },
-    { x: 3, y: 5, type: blockType.BODY },
-    { x: 4, y: 5, type: blockType.BODY },
-    { x: 5, y: 5, type: blockType.Hxit },
+    { x: 2, y: 5, type: blockType.NOT_DEFINED },
+    { x: 3, y: 5, type: blockType.NOT_DEFINED },
+    { x: 4, y: 5, type: blockType.NOT_DEFINED },
+    { x: 5, y: 5, type: blockType.HIT },
     { x: 6, y: 5, type: blockType.NOT_DEFINED },
-    { x: 7, y: 5, type: blockType.BODY },
-    { x: 8, y: 5, type: blockType.BODY },
-    { x: 9, y: 5, type: blockType.BODY },
+    { x: 7, y: 5, type: blockType.NOT_DEFINED },
+    { x: 8, y: 5, type: blockType.NOT_DEFINED },
+    { x: 9, y: 5, type: blockType.NOT_DEFINED },
 
     { x: 0, y: 4, type: blockType.NOT_DEFINED },
     { x: 1, y: 4, type: blockType.NOT_DEFINED },
     { x: 2, y: 4, type: blockType.NOT_DEFINED },
     { x: 3, y: 4, type: blockType.HEAD },
-    { x: 4, y: 4, type: blockType.NOT_DEFINED },
-    { x: 5, y: 4, type: blockType.NOT_DEFINED },
-    { x: 6, y: 4, type: blockType.NOT_DEFINED },
+    { x: 4, y: 4, type: blockType.HIT },
+    { x: 5, y: 4, type: blockType.HIT },
+    { x: 6, y: 4, type: blockType.HIT },
     { x: 7, y: 4, type: blockType.NOT_DEFINED },
     { x: 8, y: 4, type: blockType.HEAD },
     { x: 9, y: 4, type: blockType.NOT_DEFINED },
 
     { x: 0, y: 3, type: blockType.NOT_DEFINED },
     { x: 1, y: 3, type: blockType.NOT_DEFINED },
-    { x: 2, y: 3, type: blockType.NOT_DEFINED },
-    { x: 3, y: 3, type: blockType.NOT_DEFINED },
-    { x: 4, y: 3, type: blockType.NOT_DEFINED },
-    { x: 5, y: 3, type: blockType.NOT_DEFINED },
+    { x: 2, y: 3, type: blockType.BODY },
+    { x: 3, y: 3, type: blockType.BODY },
+    { x: 4, y: 3, type: blockType.BODY },
+    { x: 5, y: 3, type: blockType.HIT },
     { x: 6, y: 3, type: blockType.NOT_DEFINED },
-    { x: 7, y: 3, type: blockType.NOT_DEFINED },
-    { x: 8, y: 3, type: blockType.NOT_DEFINED },
-    { x: 9, y: 3, type: blockType.NOT_DEFINED },
+    { x: 7, y: 3, type: blockType.BODY },
+    { x: 8, y: 3, type: blockType.BODY },
+    { x: 9, y: 3, type: blockType.BODY },
 
     { x: 0, y: 2, type: blockType.NOT_DEFINED },
     { x: 1, y: 2, type: blockType.NOT_DEFINED },
     { x: 2, y: 2, type: blockType.NOT_DEFINED },
-    { x: 3, y: 2, type: blockType.NOT_DEFINED },
-    { x: 4, y: 2, type: blockType.NOT_DEFINED },
-    { x: 5, y: 2, type: blockType.NOT_DEFINED },
-    { x: 6, y: 2, type: blockType.NOT_DEFINED },
+    { x: 3, y: 2, type: blockType.BODY },
+    { x: 4, y: 2, type: blockType.HIT },
+    { x: 5, y: 2, type: blockType.HIT },
+    { x: 6, y: 2, type: blockType.HIT },
     { x: 7, y: 2, type: blockType.NOT_DEFINED },
-    { x: 8, y: 2, type: blockType.NOT_DEFINED },
+    { x: 8, y: 2, type: blockType.BODY },
     { x: 9, y: 2, type: blockType.NOT_DEFINED },
 
     { x: 0, y: 1, type: blockType.NOT_DEFINED },
     { x: 1, y: 1, type: blockType.NOT_DEFINED },
-    { x: 2, y: 1, type: blockType.NOT_DEFINED },
-    { x: 3, y: 1, type: blockType.NOT_DEFINED },
-    { x: 4, y: 1, type: blockType.NOT_DEFINED },
+    { x: 2, y: 1, type: blockType.BODY },
+    { x: 3, y: 1, type: blockType.BODY },
+    { x: 4, y: 1, type: blockType.BODY },
     { x: 5, y: 1, type: blockType.NOT_DEFINED },
     { x: 6, y: 1, type: blockType.NOT_DEFINED },
-    { x: 7, y: 1, type: blockType.NOT_DEFINED },
-    { x: 8, y: 1, type: blockType.NOT_DEFINED },
-    { x: 9, y: 1, type: blockType.NOT_DEFINED },
+    { x: 7, y: 1, type: blockType.BODY },
+    { x: 8, y: 1, type: blockType.BODY },
+    { x: 9, y: 1, type: blockType.BODY },
 
     { x: 0, y: 0, type: blockType.NOT_DEFINED },
     { x: 1, y: 0, type: blockType.NOT_DEFINED },
@@ -1231,7 +1242,7 @@ xit("adds multiple planes hxits one in the head", () => {
   ]);
 });
 
-xit("moves plane selected on head", () => {
+it("moves plane selected on head", () => {
   const gameboard = Gameboard();
   const plane = Plane({ x: 5, y: 5 });
 
@@ -1247,9 +1258,9 @@ xit("moves plane selected on head", () => {
     { x: 3, y: 9, type: blockType.NOT_DEFINED },
     { x: 4, y: 9, type: blockType.NOT_DEFINED },
     { x: 5, y: 9, type: blockType.NOT_DEFINED },
-    { x: 6, y: 9, type: blockType.BODY },
-    { x: 7, y: 9, type: blockType.BODY },
-    { x: 8, y: 9, type: blockType.BODY },
+    { x: 6, y: 9, type: blockType.NOT_DEFINED },
+    { x: 7, y: 9, type: blockType.NOT_DEFINED },
+    { x: 8, y: 9, type: blockType.NOT_DEFINED },
     { x: 9, y: 9, type: blockType.NOT_DEFINED },
 
     { x: 0, y: 8, type: blockType.NOT_DEFINED },
@@ -1259,7 +1270,7 @@ xit("moves plane selected on head", () => {
     { x: 4, y: 8, type: blockType.NOT_DEFINED },
     { x: 5, y: 8, type: blockType.NOT_DEFINED },
     { x: 6, y: 8, type: blockType.NOT_DEFINED },
-    { x: 7, y: 8, type: blockType.BODY },
+    { x: 7, y: 8, type: blockType.NOT_DEFINED },
     { x: 8, y: 8, type: blockType.NOT_DEFINED },
     { x: 9, y: 8, type: blockType.NOT_DEFINED },
 
@@ -1269,9 +1280,9 @@ xit("moves plane selected on head", () => {
     { x: 3, y: 7, type: blockType.NOT_DEFINED },
     { x: 4, y: 7, type: blockType.NOT_DEFINED },
     { x: 5, y: 7, type: blockType.NOT_DEFINED },
-    { x: 6, y: 7, type: blockType.BODY },
-    { x: 7, y: 7, type: blockType.BODY },
-    { x: 8, y: 7, type: blockType.BODY },
+    { x: 6, y: 7, type: blockType.NOT_DEFINED },
+    { x: 7, y: 7, type: blockType.NOT_DEFINED },
+    { x: 8, y: 7, type: blockType.NOT_DEFINED },
     { x: 9, y: 7, type: blockType.NOT_DEFINED },
 
     { x: 0, y: 6, type: blockType.NOT_DEFINED },
@@ -1291,9 +1302,9 @@ xit("moves plane selected on head", () => {
     { x: 3, y: 5, type: blockType.NOT_DEFINED },
     { x: 4, y: 5, type: blockType.NOT_DEFINED },
     { x: 5, y: 5, type: blockType.NOT_DEFINED },
-    { x: 6, y: 5, type: blockType.NOT_DEFINED },
-    { x: 7, y: 5, type: blockType.NOT_DEFINED },
-    { x: 8, y: 5, type: blockType.NOT_DEFINED },
+    { x: 6, y: 5, type: blockType.BODY },
+    { x: 7, y: 5, type: blockType.BODY },
+    { x: 8, y: 5, type: blockType.BODY },
     { x: 9, y: 5, type: blockType.NOT_DEFINED },
 
     { x: 0, y: 4, type: blockType.NOT_DEFINED },
@@ -1303,7 +1314,7 @@ xit("moves plane selected on head", () => {
     { x: 4, y: 4, type: blockType.NOT_DEFINED },
     { x: 5, y: 4, type: blockType.NOT_DEFINED },
     { x: 6, y: 4, type: blockType.NOT_DEFINED },
-    { x: 7, y: 4, type: blockType.NOT_DEFINED },
+    { x: 7, y: 4, type: blockType.BODY },
     { x: 8, y: 4, type: blockType.NOT_DEFINED },
     { x: 9, y: 4, type: blockType.NOT_DEFINED },
 
@@ -1313,131 +1324,9 @@ xit("moves plane selected on head", () => {
     { x: 3, y: 3, type: blockType.NOT_DEFINED },
     { x: 4, y: 3, type: blockType.NOT_DEFINED },
     { x: 5, y: 3, type: blockType.NOT_DEFINED },
-    { x: 6, y: 3, type: blockType.NOT_DEFINED },
-    { x: 7, y: 3, type: blockType.NOT_DEFINED },
-    { x: 8, y: 3, type: blockType.NOT_DEFINED },
-    { x: 9, y: 3, type: blockType.NOT_DEFINED },
-
-    { x: 0, y: 2, type: blockType.NOT_DEFINED },
-    { x: 1, y: 2, type: blockType.NOT_DEFINED },
-    { x: 2, y: 2, type: blockType.NOT_DEFINED },
-    { x: 3, y: 2, type: blockType.NOT_DEFINED },
-    { x: 4, y: 2, type: blockType.NOT_DEFINED },
-    { x: 5, y: 2, type: blockType.NOT_DEFINED },
-    { x: 6, y: 2, type: blockType.NOT_DEFINED },
-    { x: 7, y: 2, type: blockType.NOT_DEFINED },
-    { x: 8, y: 2, type: blockType.NOT_DEFINED },
-    { x: 9, y: 2, type: blockType.NOT_DEFINED },
-
-    { x: 0, y: 1, type: blockType.NOT_DEFINED },
-    { x: 1, y: 1, type: blockType.NOT_DEFINED },
-    { x: 2, y: 1, type: blockType.NOT_DEFINED },
-    { x: 3, y: 1, type: blockType.NOT_DEFINED },
-    { x: 4, y: 1, type: blockType.NOT_DEFINED },
-    { x: 5, y: 1, type: blockType.NOT_DEFINED },
-    { x: 6, y: 1, type: blockType.NOT_DEFINED },
-    { x: 7, y: 1, type: blockType.NOT_DEFINED },
-    { x: 8, y: 1, type: blockType.NOT_DEFINED },
-    { x: 9, y: 1, type: blockType.NOT_DEFINED },
-
-    { x: 0, y: 0, type: blockType.NOT_DEFINED },
-    { x: 1, y: 0, type: blockType.NOT_DEFINED },
-    { x: 2, y: 0, type: blockType.NOT_DEFINED },
-    { x: 3, y: 0, type: blockType.NOT_DEFINED },
-    { x: 4, y: 0, type: blockType.NOT_DEFINED },
-    { x: 5, y: 0, type: blockType.NOT_DEFINED },
-    { x: 6, y: 0, type: blockType.NOT_DEFINED },
-    { x: 7, y: 0, type: blockType.NOT_DEFINED },
-    { x: 8, y: 0, type: blockType.NOT_DEFINED },
-    { x: 9, y: 0, type: blockType.NOT_DEFINED },
-  ]);
-});
-
-xit("moves plane selected on body", () => {
-  const gameboard = Gameboard();
-  const plane = Plane({ x: 5, y: 5 });
-
-  expect(gameboard.addPlane(plane)).toStrictEqual(true);
-
-  gameboard.selectPlane({ x: 4, y: 6 });
-  gameboard.moveSelectedPlane({ x: 4, y: 6 }, { x: 6, y: 7 });
-
-  expect(gameboard.getBlocks()).toStrictEqual([
-    { x: 0, y: 9, type: blockType.NOT_DEFINED },
-    { x: 1, y: 9, type: blockType.NOT_DEFINED },
-    { x: 2, y: 9, type: blockType.NOT_DEFINED },
-    { x: 3, y: 9, type: blockType.NOT_DEFINED },
-    { x: 4, y: 9, type: blockType.NOT_DEFINED },
-    { x: 5, y: 9, type: blockType.NOT_DEFINED },
-    { x: 6, y: 9, type: blockType.BODY },
-    { x: 7, y: 9, type: blockType.BODY },
-    { x: 8, y: 9, type: blockType.BODY },
-    { x: 9, y: 9, type: blockType.NOT_DEFINED },
-
-    { x: 0, y: 8, type: blockType.NOT_DEFINED },
-    { x: 1, y: 8, type: blockType.NOT_DEFINED },
-    { x: 2, y: 8, type: blockType.NOT_DEFINED },
-    { x: 3, y: 8, type: blockType.NOT_DEFINED },
-    { x: 4, y: 8, type: blockType.NOT_DEFINED },
-    { x: 5, y: 8, type: blockType.NOT_DEFINED },
-    { x: 6, y: 8, type: blockType.NOT_DEFINED },
-    { x: 7, y: 8, type: blockType.BODY },
-    { x: 8, y: 8, type: blockType.NOT_DEFINED },
-    { x: 9, y: 8, type: blockType.NOT_DEFINED },
-
-    { x: 0, y: 7, type: blockType.NOT_DEFINED },
-    { x: 1, y: 7, type: blockType.NOT_DEFINED },
-    { x: 2, y: 7, type: blockType.NOT_DEFINED },
-    { x: 3, y: 7, type: blockType.NOT_DEFINED },
-    { x: 4, y: 7, type: blockType.NOT_DEFINED },
-    { x: 5, y: 7, type: blockType.NOT_DEFINED },
-    { x: 6, y: 7, type: blockType.BODY },
-    { x: 7, y: 7, type: blockType.BODY },
-    { x: 8, y: 7, type: blockType.BODY },
-    { x: 9, y: 7, type: blockType.NOT_DEFINED },
-
-    { x: 0, y: 6, type: blockType.NOT_DEFINED },
-    { x: 1, y: 6, type: blockType.NOT_DEFINED },
-    { x: 2, y: 6, type: blockType.NOT_DEFINED },
-    { x: 3, y: 6, type: blockType.NOT_DEFINED },
-    { x: 4, y: 6, type: blockType.NOT_DEFINED },
-    { x: 5, y: 6, type: blockType.NOT_DEFINED },
-    { x: 6, y: 6, type: blockType.NOT_DEFINED },
-    { x: 7, y: 6, type: blockType.HEAD },
-    { x: 8, y: 6, type: blockType.NOT_DEFINED },
-    { x: 9, y: 6, type: blockType.NOT_DEFINED },
-
-    { x: 0, y: 5, type: blockType.NOT_DEFINED },
-    { x: 1, y: 5, type: blockType.NOT_DEFINED },
-    { x: 2, y: 5, type: blockType.NOT_DEFINED },
-    { x: 3, y: 5, type: blockType.NOT_DEFINED },
-    { x: 4, y: 5, type: blockType.NOT_DEFINED },
-    { x: 5, y: 5, type: blockType.NOT_DEFINED },
-    { x: 6, y: 5, type: blockType.NOT_DEFINED },
-    { x: 7, y: 5, type: blockType.NOT_DEFINED },
-    { x: 8, y: 5, type: blockType.NOT_DEFINED },
-    { x: 9, y: 5, type: blockType.NOT_DEFINED },
-
-    { x: 0, y: 4, type: blockType.NOT_DEFINED },
-    { x: 1, y: 4, type: blockType.NOT_DEFINED },
-    { x: 2, y: 4, type: blockType.NOT_DEFINED },
-    { x: 3, y: 4, type: blockType.NOT_DEFINED },
-    { x: 4, y: 4, type: blockType.NOT_DEFINED },
-    { x: 5, y: 4, type: blockType.NOT_DEFINED },
-    { x: 6, y: 4, type: blockType.NOT_DEFINED },
-    { x: 7, y: 4, type: blockType.NOT_DEFINED },
-    { x: 8, y: 4, type: blockType.NOT_DEFINED },
-    { x: 9, y: 4, type: blockType.NOT_DEFINED },
-
-    { x: 0, y: 3, type: blockType.NOT_DEFINED },
-    { x: 1, y: 3, type: blockType.NOT_DEFINED },
-    { x: 2, y: 3, type: blockType.NOT_DEFINED },
-    { x: 3, y: 3, type: blockType.NOT_DEFINED },
-    { x: 4, y: 3, type: blockType.NOT_DEFINED },
-    { x: 5, y: 3, type: blockType.NOT_DEFINED },
-    { x: 6, y: 3, type: blockType.NOT_DEFINED },
-    { x: 7, y: 3, type: blockType.NOT_DEFINED },
-    { x: 8, y: 3, type: blockType.NOT_DEFINED },
+    { x: 6, y: 3, type: blockType.BODY },
+    { x: 7, y: 3, type: blockType.BODY },
+    { x: 8, y: 3, type: blockType.BODY },
     { x: 9, y: 3, type: blockType.NOT_DEFINED },
 
     { x: 0, y: 2, type: blockType.NOT_DEFINED },

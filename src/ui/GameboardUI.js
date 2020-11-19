@@ -25,6 +25,20 @@ class GameboardUI extends Component {
     this.createRandomPlanes();
 
     this.pubsub = props.pubsub;
+
+    if (this.state.boardType === "ai") {
+      this.pubsub.unsubscribe("player");
+      this.pubsub.subscribe("player", (data) => {
+        if (data === "playerdidhit") {
+          this.setState({ status: gameStatus.locked });
+          this.pubsub.publish("ai", "aitriggerhit");
+        }
+        if (data === "aididhit") {
+          this.setState({ status: gameStatus.hitting });
+        }
+      });
+    }
+
     if (this.state.boardType === "player") {
       this.pubsub.unsubscribe("ai");
       this.pubsub.subscribe("ai", (data) => {
@@ -50,6 +64,7 @@ class GameboardUI extends Component {
                 x: block.x,
                 y: block.y,
               });
+              this.pubsub.publish("player", "aididhit");
             }
           });
 
@@ -226,7 +241,7 @@ class GameboardUI extends Component {
     this.lastmove = e;
     if (this.state.status === gameStatus.locked) return;
     if (this.state.status === gameStatus.selecting)
-      if (e.target.dataset != undefined) {
+      if (e.target.dataset !== undefined) {
         this.clicks++;
         setTimeout(
           function () {
@@ -254,7 +269,6 @@ class GameboardUI extends Component {
             x: e.target.dataset.x,
             y: e.target.dataset.y,
           });
-          console.log("selected plane");
           this.gameBoard.moveOrigin = {
             x: block.dataset.x,
             y: block.dataset.y,
