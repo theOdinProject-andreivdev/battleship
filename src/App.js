@@ -64,9 +64,8 @@ class App extends Component {
                   className="alert alert-primary"
                   role="alert"
                   style={{
-                    width: "50%",
-                    marginLeft: "25%",
-                    marginRight: "25%",
+                    width: "100%",
+                    textAlign: "center",
                   }}
                 >
                   Place the planes!
@@ -75,9 +74,8 @@ class App extends Component {
                   className="alert alert-info"
                   role="alert"
                   style={{
-                    width: "50%",
-                    marginLeft: "25%",
-                    marginRight: "25%",
+                    width: "100%",
+                    textAlign: "center",
                   }}
                 >
                   Drag them around, double click to rotate
@@ -85,63 +83,71 @@ class App extends Component {
               </div>
             )}
 
-            {this.winner === "player" && (
+            {this.board1Status === gameStatus.selecting && (
               <div>
-                <div
-                  className="alert alert-primary"
-                  role="alert"
+                <button
+                  type="button"
+                  className="btn btn-dark"
+                  onClick={this.onPlayClick.bind(this)}
                   style={{
                     width: "50%",
                     marginLeft: "25%",
                     marginRight: "25%",
                   }}
                 >
-                  YOU WON!
-                </div>
-                <div className="row justify-content-center">
-                  <div className="col-auto">
-                    <button
-                      type="button"
-                      className="btn btn-dark m-3"
-                      onClick={this.onPlayAgain.bind(this)}
-                    >
-                      Play again!
-                    </button>
-                  </div>
-                </div>
+                  Play!
+                </button>
+              </div>
+            )}
+
+            {this.winner === "player" && (
+              <div
+                className="alert alert-success"
+                role="alert"
+                style={{
+                  width: "50%",
+                  marginLeft: "25%",
+                  marginRight: "25%",
+                  textAlign: "center",
+                }}
+              >
+                YOU WON!
               </div>
             )}
 
             {this.winner === "ai" && (
-              <div>
-                <div
-                  className="alert alert-primary"
-                  role="alert"
-                  style={{
-                    width: "50%",
-                    marginLeft: "25%",
-                    marginRight: "25%",
-                  }}
-                >
-                  YOU LOST!
-                </div>
-                <div className="row justify-content-center">
-                  <div className="col-auto">
-                    <button
-                      type="button"
-                      className="btn btn-dark m-3"
-                      onClick={this.onPlayAgain.bind(this)}
-                    >
-                      Play again!
-                    </button>
-                  </div>
-                </div>
+              <div
+                className="alert alert-danger"
+                role="alert"
+                style={{
+                  width: "50%",
+                  marginLeft: "25%",
+                  marginRight: "25%",
+                  textAlign: "center",
+                }}
+              >
+                YOU LOST!
               </div>
+            )}
+
+            {(this.winner === "ai" || this.winner === "player") && (
+              <button
+                type="button"
+                className="btn btn-dark"
+                onClick={this.onPlayAgain.bind(this)}
+                style={{
+                  width: "50%",
+                  marginLeft: "25%",
+                  marginRight: "25%",
+                }}
+              >
+                Play again!
+              </button>
             )}
 
             <div className="container">
               <div className="row justify-content-center">
-                <div className="col-auto mx-auto">
+                <div className="col-auto mx-auto" style={{ marginTop: "10px" }}>
                   <GameboardUI
                     gameStatus={this.board1Status}
                     visible={true}
@@ -149,24 +155,12 @@ class App extends Component {
                     pubsub={this.pubsub}
                   ></GameboardUI>
                 </div>
-                {this.board1Status === gameStatus.selecting && (
-                  <div className="row justify-content-center">
-                    <div className="col-auto">
-                      <button
-                        type="button"
-                        className="btn btn-dark m-3"
-                        onClick={this.onPlayClick.bind(this)}
-                      >
-                        Play!
-                      </button>
-                    </div>
-                  </div>
-                )}
-                <div className="col-auto mx-auto">
+
+                <div className="col-auto mx-auto" style={{ marginTop: "10px" }}>
                   {this.board1Status !== gameStatus.selecting && (
                     <GameboardUI
                       gameStatus={this.board2Status}
-                      visible={false}
+                      visible={true}
                       boardType="ai"
                       pubsub={this.pubsub}
                     ></GameboardUI>
