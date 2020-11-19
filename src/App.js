@@ -160,7 +160,7 @@ class App extends Component {
                   {this.board1Status !== gameStatus.selecting && (
                     <GameboardUI
                       gameStatus={this.board2Status}
-                      visible={true}
+                      visible={false}
                       boardType="ai"
                       pubsub={this.pubsub}
                     ></GameboardUI>
